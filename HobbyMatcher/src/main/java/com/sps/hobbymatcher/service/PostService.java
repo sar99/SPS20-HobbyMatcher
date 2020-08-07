@@ -8,6 +8,15 @@ import com.sps.hobbymatcher.domain.Hobby;
 import com.sps.hobbymatcher.domain.Post;
 import com.sps.hobbymatcher.repository.PostRepository;
 import com.sps.hobbymatcher.repository.HobbyRepository;
+// import com.google.cloud.datastore.Datastore;
+// import com.google.cloud.datastore.DatastoreService;
+// import com.google.cloud.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 
 import java.awt.Image;
 import java.util.Date;
@@ -20,19 +29,33 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
-    public Post uploadPost(String text, String video, Image image, Long votes, User user, Hobby hobby) {
+    @Autowired 
+    private HobbyService hobbyService;
+
+    @Autowired
+    private UserService userService;
+    
+    public Post uploadPost(User user, Hobby hobby) {
         
         Post post = new Post();
 
-        post.setText(text);
-        post.setVideo(video);
-        post.setImage(image);
-        post.setVotes(votes);
         post.setUser(user);
         post.setHobby(hobby);
-        user.getMyPosts().add(post);
-        hobby.getPosts().add(post);
-        return postRepository.save(post);
+        Post saved = postRepository.save(post);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Entity userEntity = new Entity("users", user.getId());
+        System.out.println("a");
+        userEntity.setProperty("myPosts", post);
+        System.out.println("a");
+        datastore.put(userEntity);
+        System.out.println("a");
+        Entity hobbyEntity = new Entity("hobbies", hobby.getId());
+        hobbyEntity.setProperty("posts", post);
+        datastore.put(hobbyEntity);
+        System.out.println(user);
+        System.out.println(post);
+        System.out.println(hobby);
+        return saved;
     }
 
     public void likePost(Post post, User user) {

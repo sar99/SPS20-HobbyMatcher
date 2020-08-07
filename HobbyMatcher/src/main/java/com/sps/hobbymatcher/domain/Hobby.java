@@ -12,7 +12,7 @@ public class Hobby {
 	@Id
 	private Long id;
 	private String name;
-	private Set<User> users=new HashSet<>();
+	private Set<Long> users=new HashSet<>();
 	private Set<Post> posts=new HashSet<>();
 
 	public Long getId() {
@@ -31,11 +31,11 @@ public class Hobby {
 		this.name = name;
 	}
 
-	public Set<User> getUsers() {
+	public Set<Long> getUsers() {
 		return users;
 	}
 
-	public void setUsers(Set<User> users) {
+	public void setUsers(Set<Long> users) {
 		this.users = users;
 	}
 

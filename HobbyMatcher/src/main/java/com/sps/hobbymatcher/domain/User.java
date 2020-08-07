@@ -14,8 +14,8 @@ public class User {
 	private String name;
 	private String username;
 	private String password; 
-	private Set<User> connections=new HashSet<>();
-	private Set<Hobby> myHobbies=new HashSet<>();
+	private Set<String> connections=new HashSet<>();
+	private Set<Long> myHobbies=new HashSet<>();
 	private Set<Post> myPosts=new HashSet<>();
 	
 	public Long getId() {
@@ -42,16 +42,16 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Set<User> getConnections() {
+	public Set<String> getConnections() {
 		return connections;
 	}
-	public void setConnections(Set<User> connections) {
+	public void setConnections(Set<String> connections) {
 		this.connections = connections;
 	}
-	public Set<Hobby> getMyHobbies() {
+	public Set<Long> getMyHobbies() {
 		return myHobbies;
 	}
-	public void setMyHobbies(Set<Hobby> myHobbies) {
+	public void setMyHobbies(Set<Long> myHobbies) {
 		this.myHobbies = myHobbies;
 	}
 	public Set<Post> getMyPosts() {

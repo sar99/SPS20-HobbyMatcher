@@ -1,6 +1,6 @@
 package com.sps.hobbymatcher.repository;
 
-import java.util.List;
+import java.util.*;
 import com.sps.hobbymatcher.domain.Post;
 
 import org.springframework.cloud.gcp.data.datastore.repository.DatastoreRepository;

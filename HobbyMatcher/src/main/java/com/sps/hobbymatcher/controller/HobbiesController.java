@@ -51,36 +51,57 @@ public class HobbiesController {
         return "hobbies";
     }
 
+    @PostMapping("/hobbies/{hobbyId}/register")
+    public String register(@PathVariable Long hobbyId, @AuthenticationPrincipal User user) {   
+        
+        Optional<Hobby> hobby = hobbyRepository.findById(hobbyId);
+        userService.addHobby(user, hobby);
+        
+        return "redirect: /hobbies/"+hobbyId;
+    }
+
+    @PostMapping("/hobbies/{hobbyId}/unregister")
+    public String unregister(@PathVariable Long hobbyId, @AuthenticationPrincipal User user) {   
+        
+        Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
+        if(hobbyOpt.isPresent()) {
+            Hobby hobby=hobbyOpt.get();
+            userService.removeHobby(user, hobby);
+        }
+        return "redirect: /hobbies/"+hobbyId;
+    }
+
     @GetMapping("/hobbies/{hobbyId}/users")
     public String users(@PathVariable Long hobbyId, ModelMap model) {   
         
-        Set<User> users = hobbyRepository.findById(hobbyId).getUsers();
-        model.put("users", users);
-        
-        return "hobbies";
+        Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
+        if(hobbyOpt.isPresent()) {
+            Hobby hobby = hobbyOpt.get();
+            Set<Long> users = hobby.getUsers();
+            model.put("users", users);
+        }
+        return "hobby";
     }
 
-    @GetMapping("/hobbies/{hobbyId}/posts")
+    @GetMapping("/hobbies/{hobbyId}")
     public String posts(@PathVariable Long hobbyId, ModelMap model) {   
         
-        Set<Post> posts = hobbyRepository.findById(hobbyId).getPosts();
-        model.put("posts", posts);
-        
-        return "hobbies";
+        Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
+        if(hobbyOpt.isPresent()) {
+            Hobby hobby = hobbyOpt.get();
+            Set<Post> posts = hobby.getPosts();
+            model.put("posts", posts);
+        }
+        return "hobby";
     }
 
     @GetMapping("/createhobby/{hobbyId}")
     public String createHobby(@PathVariable Long hobbyId, ModelMap model, HttpServletResponse response) throws IOException {
 
-        Optional<Hobby> hobbyOpt = hobbyRepository.findByIdWithUser(hobbyId);
-        
-        if (hobbyOpt.isPresent()) {
+        Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
+        if(hobbyOpt.isPresent()) {
             Hobby hobby = hobbyOpt.get();
             model.put("hobby", hobby);
-        } 
-        else {
-            response.sendError(HttpStatus.NOT_FOUND.value(), "Hobby with id " + hobbyId + " was not found");
-            return "hobby";
         }
         
         return "hobby";
@@ -94,10 +115,10 @@ public class HobbiesController {
 
     @PostMapping("/createhobby")
     public String createHobby(@AuthenticationPrincipal User user) {   
-        Hobby hobby=hobbyService.createHobby();
-        hobby.getUsers().add(user);
-        user.getMyHobbies().add(hobby);
+        Hobby hobby=new Hobby();
+        hobby.getUsers().add(user.getId());
         hobby = hobbyRepository.save(hobby);
+        user.getMyHobbies().add(hobby.getId());
         return "redirect: /createhobby/"+hobby.getId();
     }
 }
