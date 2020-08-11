@@ -43,15 +43,43 @@ public class PostController {
     @Autowired
     private PostRepository postRepository;
 
-    @PostMapping("")
-    public String createHobby(@PathVariable Long hobbyId, @AuthenticationPrincipal User user) {   
+    @GetMapping("/login")
+    public String login() {
+        
+        return "login";
+    }
+    
+    @GetMapping("")
+    public String createPost (ModelMap model) {
 
+        model.put("post", new Post());
+
+        return "post";
+
+    }
+    
+    @PostMapping("")
+    public String uploadPost (@PathVariable Long hobbyId, @AuthenticationPrincipal User user,Post post) {
+        
+        Post savedPost = postRepository.save(post);
         Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
-        Post post = new Post();
         if(hobbyOpt.isPresent()) {
             Hobby hobby = hobbyOpt.get();
             post = postService.uploadPost(user, hobby);
         }
-        return "redirect:/hobbies/"+hobbyId+"/post/"+post.getId();
+        
+        return "redirect:/";
     }
+
+    // @PostMapping("")
+    // public String createHobby(@PathVariable Long hobbyId, @AuthenticationPrincipal User user) {   
+
+    //     Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
+    //     Post post = new Post();
+    //     if(hobbyOpt.isPresent()) {
+    //         Hobby hobby = hobbyOpt.get();
+    //         post = postService.uploadPost(user, hobby);
+    //     }
+    //     return "redirect:/hobbies/"+hobbyId+"/post/"+post.getId();
+    // }
 }

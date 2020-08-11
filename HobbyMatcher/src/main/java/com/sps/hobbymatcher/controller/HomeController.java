@@ -42,11 +42,9 @@ public class HomeController {
 
         Set<Long> hobbies = user.getMyHobbies();
         Set<String> users = user.getConnections();
-        Set<Post> posts = user.getMyPosts();
             
         model.put("hobbies", hobbies);
         model.put("connections", users);
-        model.put("posts", posts);
         
         return "dashboard";
     }

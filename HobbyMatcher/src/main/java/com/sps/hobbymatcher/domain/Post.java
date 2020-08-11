@@ -10,23 +10,13 @@ import org.springframework.data.annotation.Id;
 
 @Entity
 public class Post {
-	
-    @Id
-	private Long id;
+
 	private String text;
 	private String video;
 	private Image image;
 	private Long votes;
-	private User user;
-	private Hobby hobby;
 	private Set<User> usersVoted=new HashSet<>();
 	
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
 	public String getText() {
 		return text;
 	}
@@ -57,22 +47,10 @@ public class Post {
 	public void setUsersVoted(Set<User> usersVoted) {
 		this.usersVoted = usersVoted;
 	}
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	public Hobby getHobby() {
-		return hobby;
-	}
-	public void setHobby(Hobby hobby) {
-		this.hobby = hobby;
-	}
 
 	@Override
 	public String toString() {
-		return "Post [id=" + id + ", text=" + text + ", video=" + video + ", image=" + image
+		return "Post [text=" + text + ", video=" + video + ", image=" + image
 				+ ", votes=" + votes + ", usersVoted=" + usersVoted + "]";
 	}
 }

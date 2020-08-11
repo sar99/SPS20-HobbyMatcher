@@ -17,6 +17,9 @@ import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.DatastoreServiceConfig;
+import com.google.appengine.api.datastore.ReadPolicy.Consistency;
 
 import java.awt.Image;
 import java.util.Date;
@@ -38,23 +41,30 @@ public class PostService {
     public Post uploadPost(User user, Hobby hobby) {
         
         Post post = new Post();
-
-        post.setUser(user);
-        post.setHobby(hobby);
         Post saved = postRepository.save(post);
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        Entity userEntity = new Entity("users", user.getId());
-        System.out.println("a");
-        userEntity.setProperty("myPosts", post);
-        System.out.println("a");
-        datastore.put(userEntity);
-        System.out.println("a");
-        Entity hobbyEntity = new Entity("hobbies", hobby.getId());
-        hobbyEntity.setProperty("posts", post);
-        datastore.put(hobbyEntity);
-        System.out.println(user);
-        System.out.println(post);
-        System.out.println(hobby);
+       
+        try {
+            Entity hobbyEntity = datastore.get(KeyFactory.createKey("hobbies", hobby.getId()));
+            Set<Post> posts = hobby.getPosts();
+            posts.add(saved);
+            hobbyEntity.setProperty("posts", posts);
+            datastore.put(hobbyEntity);
+        } catch (EntityNotFoundException e) {
+        // This should never happen
+        }
+        // Entity userEntity = new Entity("users", user.getId());
+        // System.out.println("a");
+        // userEntity.setProperty("myPosts", post);
+        // System.out.println("a");
+        // datastore.put(userEntity);
+        // System.out.println("a");
+        // Entity hobbyEntity = new Entity("hobbies", hobby.getId());
+        // hobbyEntity.setProperty("posts", post);
+        // datastore.put(hobbyEntity);
+        // System.out.println(user);
+        // System.out.println(post);
+        // System.out.println(hobby);
         return saved;
     }
 
@@ -82,8 +92,8 @@ public class PostService {
     }
 
     public void deletePost(Post post) {
-        post.getUser().getMyPosts().remove(post);
-        post.getHobby().getPosts().remove(post);
-        postRepository.deleteById(post.getId());
+        // post.getUser().getMyPosts().remove(post);
+        // post.getHobby().getPosts().remove(post);
+        // postRepository.deleteById(post.getId());
     }
 }
