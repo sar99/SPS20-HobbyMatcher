@@ -11,12 +11,20 @@ import org.springframework.data.annotation.Id;
 @Entity
 public class Post {
 
+    @Id
+    private Long id;
 	private String text;
 	private String video;
 	private Image image;
 	private Long votes;
 	private Set<User> usersVoted=new HashSet<>();
 	
+    public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getText() {
 		return text;
 	}
@@ -50,7 +58,7 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return "Post [text=" + text + ", video=" + video + ", image=" + image
+		return "Post [id=" + id +", text=" + text + ", video=" + video + ", image=" + image
 				+ ", votes=" + votes + ", usersVoted=" + usersVoted + "]";
 	}
 }
