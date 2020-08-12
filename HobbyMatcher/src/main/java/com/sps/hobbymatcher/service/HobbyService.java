@@ -8,9 +8,15 @@ import com.sps.hobbymatcher.domain.User;
 import com.sps.hobbymatcher.domain.Post;
 import com.sps.hobbymatcher.repository.HobbyRepository;
 import com.sps.hobbymatcher.repository.UserRepository;
-import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.EntityNotFoundException;
+import com.google.appengine.api.datastore.DatastoreServiceConfig;
+import com.google.appengine.api.datastore.ReadPolicy.Consistency;
 
 import java.util.*;
 
@@ -33,9 +39,16 @@ public class HobbyService {
                 hobby.setName(name);
                 hobby.getUsers().add(user.getId());
                 Hobby saved=hobbyRepository.save(hobby);
-                user.getMyHobbies().add(hobby.getId());
-                System.out.println(saved);
-                System.out.println(user);
+                DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+                try {
+                    Entity userEntity = datastore.get(KeyFactory.createKey("users", user.getId()));
+                    Set<Long> myHobbies = user.getMyHobbies();
+                    myHobbies.add(saved.getId());
+                    userEntity.setProperty("myHobbies", myHobbies);
+                    datastore.put(userEntity);
+                } catch (EntityNotFoundException e) {
+                // This should never happen
+                }
                 return saved;
             }
             else {

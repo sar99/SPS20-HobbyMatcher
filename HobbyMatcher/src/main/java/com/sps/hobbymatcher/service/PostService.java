@@ -38,34 +38,20 @@ public class PostService {
     @Autowired
     private UserService userService;
     
-    public Post uploadPost(User user, Hobby hobby) {
-        
-        Post post = new Post();
-        Post saved = postRepository.save(post);
+    public Post uploadPost(Hobby hobby, Post post) {
+
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-       
         try {
             Entity hobbyEntity = datastore.get(KeyFactory.createKey("hobbies", hobby.getId()));
             Set<Post> posts = hobby.getPosts();
-            posts.add(saved);
+            posts.add(post);
             hobbyEntity.setProperty("posts", posts);
             datastore.put(hobbyEntity);
         } catch (EntityNotFoundException e) {
         // This should never happen
         }
-        // Entity userEntity = new Entity("users", user.getId());
-        // System.out.println("a");
-        // userEntity.setProperty("myPosts", post);
-        // System.out.println("a");
-        // datastore.put(userEntity);
-        // System.out.println("a");
-        // Entity hobbyEntity = new Entity("hobbies", hobby.getId());
-        // hobbyEntity.setProperty("posts", post);
-        // datastore.put(hobbyEntity);
-        // System.out.println(user);
-        // System.out.println(post);
-        // System.out.println(hobby);
-        return saved;
+
+        return post;
     }
 
     public void likePost(Post post, User user) {

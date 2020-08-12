@@ -42,12 +42,6 @@ public class PostController {
 
     @Autowired
     private PostRepository postRepository;
-
-    @GetMapping("/login")
-    public String login() {
-        
-        return "login";
-    }
     
     @GetMapping("")
     public String createPost (ModelMap model) {
@@ -65,10 +59,10 @@ public class PostController {
         Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
         if(hobbyOpt.isPresent()) {
             Hobby hobby = hobbyOpt.get();
-            post = postService.uploadPost(user, hobby);
+            post = postService.uploadPost(hobby, savedPost);
         }
         
-        return "redirect:/";
+        return "redirect:/hobbies/"+hobbyId;
     }
 
     // @PostMapping("")

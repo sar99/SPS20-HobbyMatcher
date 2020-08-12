@@ -21,7 +21,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.*;
 
-@ShellComponent
 @SpringBootApplication
 public class DemoApplication {
 
@@ -45,67 +44,6 @@ public class DemoApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
-    }
-
-    @ShellMethod("saves a user")
-	public void createUser() {
-        userService.registerUser("Maliha", "Maliha", "123");
-	}
-
-	@ShellMethod("saves a hobby")
-	public void createHobby() throws UsernameNotFoundException {
-
-        List<User> user = userRepository.findByUsername("Maliha");
-        if(user!=null) {
-            System.out.println(user);
-            hobbyService.createHobby("Singing", user.get(0));
-        }
-        else {
-            throw new UsernameNotFoundException("Invalid User");
-        }
-    }
-
-    @ShellMethod("saves a post")
-	public void createPost() throws UsernameNotFoundException{
-
-        List<User> user = userRepository.findByUsername("Maliha");
-        if(user==null) {
-            throw new UsernameNotFoundException("Invalid User");
-        }
-        else {
-            List<Hobby> hobby = hobbyRepository.findByName("Singing");
-            if(hobby.size()>0&&user.size()>0) {
-                postService.uploadPost(user.get(0), hobby.get(0));
-            }
-        }
-	}
-    @ShellMethod("removes a hobby")
-    public void removeHobby() {
-        List<User> user = userRepository.findByUsername("Maliha");
-        if(user==null) {
-            throw new UsernameNotFoundException("Invalid User");
-        }
-        else {
-            List<Hobby> hobby = hobbyRepository.findByName("Singing");
-            if(hobby.size()>0&&user.size()>0) {
-                userService.removeHobby(user.get(0), hobby.get(0));
-            }
-        }
-    }
-
-    @ShellMethod("removes a hobby")
-    public void addHobby() {
-        List<User> user = userRepository.findByUsername("Maliha");
-        if(user==null) {
-            throw new UsernameNotFoundException("Invalid User");
-        }
-        else {
-            List<Hobby> hobby = hobbyRepository.findByName("Singing");
-            if(hobby.size()>0&&user.size()>0) {
-                Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobby.get(0).getId());
-                userService.addHobby(user.get(0), hobbyOpt);
-            }
-        }
     }
 
 }
