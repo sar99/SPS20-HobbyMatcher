@@ -22,7 +22,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.*;
 
 @SpringBootApplication
-public class DemoApplication {
+public class HobbyMatcherApplication {
 
     @Autowired
     private HobbyService hobbyService;
@@ -43,7 +43,7 @@ public class DemoApplication {
     private PostRepository postRepository;
 
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(HobbyMatcherApplication.class, args);
     }
 
 }
