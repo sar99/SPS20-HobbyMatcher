@@ -12,11 +12,10 @@ import com.sps.hobbymatcher.repository.HobbyRepository;
 import com.sps.hobbymatcher.repository.UserRepository;
 import com.sps.hobbymatcher.repository.PostRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.*;
