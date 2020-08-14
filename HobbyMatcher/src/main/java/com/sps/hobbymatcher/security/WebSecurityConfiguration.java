@@ -13,17 +13,30 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 
 
 
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Bean
+	public PasswordEncoder getPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+
+    @Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication().passwordEncoder(getPasswordEncoder()).withUser("saniya").password(getPasswordEncoder().encode("abcd")).roles("USER");
+	}
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
         .authorizeRequests()
-				.antMatchers("/", "/home").permitAll()
+				.antMatchers("/", "/home", "/register", "/datastore", "/css/**" , "/js/**","/img/**", "/_ah/admin/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
@@ -31,7 +44,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.permitAll()
 				.and()
 			.logout()
-				.permitAll();
+				.invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .permitAll();
+
     }
     @Bean
 	@Override

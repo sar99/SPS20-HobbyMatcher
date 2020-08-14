@@ -1,1 +1,79 @@
-Hello World!
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<title>Home</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<body>
+
+
+    <!-- Just an image -->
+    <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand" href="#">
+            <img src="../static/img/logo.png" th:src="@{img/logo.png}" width="50" height="50" alt="">
+        </a>
+        <div sec:authorize="isAnonymous()">
+            <a href="/" th:href="@{/login}" ><button type="button" class="btn btn-primary">Log In</button></a>
+            <a href="/" th:href="@{/register}" ><button type="button" class="btn btn-primary">Sign Up</button></a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a href="/" th:href="@{/logout}" ><button type="button" class="btn btn-primary">Log Out</button></a>
+            <!-- <a href="/" th:href="@{/register}" ><button type="button" class="btn btn-primary">Sign Up</button></a> -->
+        </div>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="aboutus.html">About Us</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="hobbyLobby.html">The Hobby Lobby</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="yourHobbies.html">Your Hobbies</a>
+        </li>
+
+    </ul>
+
+
+
+    <div class="jumbotron">
+        <h1 class="display-4">Fact of the day!</h1>
+        <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint quae commodi libero qui doloremque
+            recusandae magni. Accusantium eaque voluptatum quis possimus itaque consequuntur corrupti, provident eos,
+            vero consectetur iure exercitationem!</p>
+        <hr class="my-4">
+        <p>We currently have 73 users interested in this hobby. Would you like to give it a try?</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Try out this hobby</a>
+        </p>
+    </div>
+
+
+    <div class="card" style="width: 18rem;margin: auto;">
+        <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">Reading</h5>
+            <p class="card-text">This is the hobby we have selected for you to try today. You never know when a random
+                hobby may become your favourite</p>
+            <a href="#" class="btn btn-primary">Try it out</a>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
