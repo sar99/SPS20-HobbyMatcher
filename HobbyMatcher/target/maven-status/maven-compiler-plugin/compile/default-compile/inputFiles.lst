@@ -1,7 +1,7 @@
 /home/mbakhshi/SPS-20-Team-82/HobbyMatcher/src/main/java/com/sps/hobbymatcher/controller/HobbiesController.java
 /home/mbakhshi/SPS-20-Team-82/HobbyMatcher/src/main/java/com/sps/hobbymatcher/repository/UserRepository.java
-/home/mbakhshi/SPS-20-Team-82/HobbyMatcher/src/main/java/com/sps/hobbymatcher/DemoApplication.java
 /home/mbakhshi/SPS-20-Team-82/HobbyMatcher/src/main/java/com/sps/hobbymatcher/domain/Hobby.java
+/home/mbakhshi/SPS-20-Team-82/HobbyMatcher/src/main/java/com/sps/hobbymatcher/HobbyMatcherApplication.java
 /home/mbakhshi/SPS-20-Team-82/HobbyMatcher/src/main/java/com/sps/hobbymatcher/repository/PostRepository.java
 /home/mbakhshi/SPS-20-Team-82/HobbyMatcher/src/main/java/com/sps/hobbymatcher/ServletInitializer.java
 /home/mbakhshi/SPS-20-Team-82/HobbyMatcher/src/main/java/com/sps/hobbymatcher/service/PostService.java

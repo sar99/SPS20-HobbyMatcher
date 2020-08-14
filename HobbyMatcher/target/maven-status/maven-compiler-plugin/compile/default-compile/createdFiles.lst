@@ -4,6 +4,7 @@ com/sps/hobbymatcher/controller/HobbiesController.class
 com/sps/hobbymatcher/domain/Post.class
 com/sps/hobbymatcher/repository/PostRepository.class
 com/sps/hobbymatcher/service/UserService.class
+com/sps/hobbymatcher/HobbyMatcherApplication.class
 com/sps/hobbymatcher/ServletInitializer.class
 com/sps/hobbymatcher/controller/HomeController.class
 com/sps/hobbymatcher/repository/HobbyRepository.class
@@ -12,5 +13,4 @@ com/sps/hobbymatcher/domain/Hobby.class
 com/sps/hobbymatcher/security/WebSecurityConfiguration.class
 com/sps/hobbymatcher/service/PostService.class
 com/sps/hobbymatcher/controller/LoginController.class
-com/sps/hobbymatcher/DemoApplication.class
 com/sps/hobbymatcher/controller/PostController.class
