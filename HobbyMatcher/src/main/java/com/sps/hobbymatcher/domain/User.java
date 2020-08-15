@@ -16,6 +16,7 @@ public class User {
 	private String password; 
 	private Set<String> connections=new HashSet<>();
 	private Set<Long> myHobbies=new HashSet<>();
+    private Set<Authority> authorities = new HashSet<>();
 	
 	public Long getId() {
 		return id;
@@ -53,9 +54,17 @@ public class User {
 	public void setMyHobbies(Set<Long> myHobbies) {
 		this.myHobbies = myHobbies;
 	}
+    public Set<Authority> getAuthorities() {
+		return authorities;
+	}
+	public void setAuthorities (Set<Authority> authorities) {
+		this.authorities = authorities;
+	}
     
     @Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + ", connections=" + connections + ", myHobbies=" + myHobbies +"]";
+		return "User [id=" + id + ", name=" + name + ", username=" + username + 
+                      ", password=" + password + ", connections=" + connections + 
+                      ", myHobbies=" + myHobbies +", authorities=" + authorities+"]";
 	}
 }

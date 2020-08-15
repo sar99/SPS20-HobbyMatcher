@@ -39,7 +39,8 @@ public class HomeController {
     
     @GetMapping("/dashboard")
     public String home(@AuthenticationPrincipal User user, ModelMap model) {
-
+        
+        System.out.println(user);
         Set<Long> hobbies = user.getMyHobbies();
         Set<String> users = user.getConnections();
             

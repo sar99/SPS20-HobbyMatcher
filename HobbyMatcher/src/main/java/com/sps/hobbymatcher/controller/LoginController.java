@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.sps.hobbymatcher.domain.User;
 import com.sps.hobbymatcher.service.UserService;
 import com.sps.hobbymatcher.repository.UserRepository;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class LoginController {
@@ -35,9 +36,9 @@ public class LoginController {
     }
     
     @PostMapping("/register")
-    public String registerPost (User user) {
+    public String registerPost (@ModelAttribute User user) {
 
-        User savedUser = userRepository.save(user);
+        userService.registerUser(user);
         
         return "redirect:/login";
     }
