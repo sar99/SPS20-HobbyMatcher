@@ -5,9 +5,12 @@ import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.cloud.gcp.data.datastore.core.mapping.Entity;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity(name="users")
-public class User {
+public class User implements UserDetails {
+
+    private static final long serialVersionUID = -8351482943638214015L;
 	
 	@Id
 	private Long id;
@@ -17,6 +20,26 @@ public class User {
 	private Set<String> connections=new HashSet<>();
 	private Set<Long> myHobbies=new HashSet<>();
     private Set<Authority> authorities = new HashSet<>();
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 	
 	public Long getId() {
 		return id;
