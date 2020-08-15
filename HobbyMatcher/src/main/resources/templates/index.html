@@ -18,8 +18,8 @@
             <a href="/" th:href="@{/register}" ><button type="button" class="btn btn-primary">Sign Up</button></a>
         </div>
         <div sec:authorize="isAuthenticated()">
+            <a href="/" th:href="@{/dashboard}" ><button type="button" class="btn btn-primary">Welcome, <span sec:authentication="name"></span></button></a>
             <a href="/" th:href="@{/logout}" ><button type="button" class="btn btn-primary">Log Out</button></a>
-            <!-- <a href="/" th:href="@{/register}" ><button type="button" class="btn btn-primary">Sign Up</button></a> -->
         </div>
     </nav>
 
@@ -31,7 +31,7 @@
             <a class="nav-link" href="aboutus.html">About Us</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="hobbyLobby.html">The Hobby Lobby</a>
+            <a class="nav-link"  href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="yourHobbies.html">Your Hobbies</a>

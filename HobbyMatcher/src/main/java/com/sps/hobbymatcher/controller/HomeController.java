@@ -40,10 +40,22 @@ public class HomeController {
     @GetMapping("/dashboard")
     public String home(@AuthenticationPrincipal User user, ModelMap model) {
 
+
+        System.out.println(user);
+        
         Set<Long> hobbies = user.getMyHobbies();
         Set<String> users = user.getConnections();
+
+        
             
+        if(hobbies==null)
+        model.put("hobbies", new HashSet<>());    
+        else 
         model.put("hobbies", hobbies);
+
+        if(users==null)
+        model.put("connections", new HashSet<>());    
+        else 
         model.put("connections", users);
         
         return "dashboard";

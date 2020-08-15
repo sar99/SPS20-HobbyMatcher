@@ -1,8 +1,11 @@
+com/sps/hobbymatcher/domain/Authority.class
 com/sps/hobbymatcher/repository/UserRepository.class
 com/sps/hobbymatcher/service/UserService.class
 com/sps/hobbymatcher/service/PostService.class
 com/sps/hobbymatcher/controller/LoginController.class
+com/sps/hobbymatcher/security/CustomSecurityUser.class
 com/sps/hobbymatcher/controller/PostController.class
+com/sps/hobbymatcher/domain/service/UserDetailsServiceImpl.class
 com/sps/hobbymatcher/service/HobbyService.class
 com/sps/hobbymatcher/controller/HobbiesController.class
 com/sps/hobbymatcher/domain/Post.class
