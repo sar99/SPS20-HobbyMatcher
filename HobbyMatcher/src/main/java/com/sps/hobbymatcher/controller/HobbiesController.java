@@ -43,10 +43,27 @@ public class HobbiesController {
     private PostRepository postRepository;
     
     @GetMapping("/hobbies")
-    public String hobbies(ModelMap model) {   
-        
+    public String hobbies(@AuthenticationPrincipal User user, ModelMap model) {   
+
         Set<Hobby> hobbies = hobbyRepository.findAll();
-        model.put("hobbies", hobbies);
+        if(user == null) {
+            model.put("hobbies", hobbies);
+        } else {
+
+            Set<Long> hobbiesId = user.getMyHobbies();
+            Set<Hobby> otherHobbies  = new HashSet<>();
+
+            for (Iterator<Hobby> it = hobbies.iterator(); it.hasNext(); ) {
+
+                Long id = it.next().getId();
+                if(hobbiesId.contains(id)) {
+                    continue;
+                } else {
+                    otherHobbies.add(it.next());
+                }
+            }
+            model.put("hobbies", otherHobbies);
+        }
 
         return "hobbies";
     }
