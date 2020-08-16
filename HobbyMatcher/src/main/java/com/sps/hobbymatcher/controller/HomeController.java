@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.sps.hobbymatcher.domain.User;
 import com.sps.hobbymatcher.service.UserService;
@@ -31,6 +32,9 @@ public class HomeController {
 
     @Autowired
     private HobbyRepository hobbyRepository;
+
+    @Autowired
+    private UserRepository userRepository;
     
     @GetMapping("/")
     public String rootView () {
@@ -40,10 +44,48 @@ public class HomeController {
     @GetMapping("/dashboard")
     public String home(@AuthenticationPrincipal User user, ModelMap model) {
         
-        System.out.println(user);
         Set<Long> hobbies = user.getMyHobbies();
         Set<String> users = user.getConnections();
-            
+        
+        model.put("user", user);
+        model.put("hobbies", hobbies);
+        model.put("connections", users);
+        
+        return "dashboard";
+    }
+
+    @GetMapping("/dashboard/{userId}")
+    public String home(@PathVariable Long userId, ModelMap model) {
+
+        Optional<User> userOpt = userRepository.findById(userId);
+
+        User user = new User();
+
+        if(userOpt.isPresent()) {
+            user = userOpt.get();
+        }
+        Set<Long> hobbiesId = user.getMyHobbies();
+        Set<String> usersName = user.getConnections();
+        Set<Hobby> hobbies = new HashSet<>();
+        Set<User> users = new HashSet<>();
+
+        for (Iterator<Long> it = hobbiesId.iterator(); it.hasNext(); ) {
+            Optional<Hobby> hobby = hobbyRepository.findById(it.next());
+            if(hobby.isPresent()) {
+                hobbies.add(hobby.get());
+            }
+        }
+        
+        for (Iterator<String> it = usersName.iterator(); it.hasNext(); ) {
+
+            List<User> userList = userRepository.findByUsername(it.next());
+
+            if(userList.size()>0) {
+                users.add(userList.get(0));
+            }
+        }
+ 
+        model.put("user", user);
         model.put("hobbies", hobbies);
         model.put("connections", users);
         

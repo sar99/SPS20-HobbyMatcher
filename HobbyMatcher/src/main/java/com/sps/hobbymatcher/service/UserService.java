@@ -26,12 +26,14 @@ public class UserService {
 	private PasswordEncoder passwordEncoder;
 
     public User registerUser(User user) {
+
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 		Authority authority = new Authority();
 		authority.setAuthority("ROLE_USER");
 		user.getAuthorities().add(authority);
 		return userRepository.save(user);
+        
 	}
 
     public void addHobby(User user, Optional<Hobby> hobbyOpt) {
@@ -39,17 +41,14 @@ public class UserService {
             Hobby hobby=hobbyOpt.get();
             user.getMyHobbies().add(hobby.getId());
             hobby.getUsers().add(user.getId());
-            System.out.println(user);
-            System.out.println(hobby);
         }
         return;
     }
 
     public void removeHobby(User user, Hobby hobby) {
+
         user.getMyHobbies().remove(hobby.getId());
         hobby.getUsers().remove(user.getId());
-        System.out.println(user);
-        System.out.println(hobby);
         return;
     }
 
