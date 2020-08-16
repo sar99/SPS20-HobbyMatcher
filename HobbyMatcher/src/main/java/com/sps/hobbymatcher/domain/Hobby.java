@@ -14,7 +14,7 @@ public class Hobby {
 	private String name;
     private String about;
 	private Set<Long> users=new HashSet<>();
-	private Set<Post> posts=new HashSet<>();
+	private Set<Long> posts=new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -48,11 +48,11 @@ public class Hobby {
 		this.users = users;
 	}
 
-	public Set<Post> getPosts() {
+	public Set<Long> getPosts() {
 		return posts;
 	}
 
-	public void setPosts(Set<Post> posts) {
+	public void setPosts(Set<Long> posts) {
 		this.posts = posts;
 	}
 

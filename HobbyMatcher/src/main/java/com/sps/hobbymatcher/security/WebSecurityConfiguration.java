@@ -8,12 +8,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
@@ -36,11 +33,16 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-		.authorizeRequests().antMatchers("/").permitAll()
+		.authorizeRequests().antMatchers("/", "/hobbies", "/img/**", "/css/**", "/js/**").permitAll()
 		.antMatchers("/register").permitAll()
 		.antMatchers("/admin/**").hasRole("ADMIN")
 		.anyRequest().hasRole("USER").and()
 		.formLogin().loginPage("/login").defaultSuccessUrl("/dashboard").permitAll()
-		.and().logout().logoutUrl("/logout").permitAll();
+		.and().logout()
+				.invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/")
+                .permitAll();
 	}
 }

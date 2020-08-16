@@ -43,9 +43,28 @@ public class HomeController {
     
     @GetMapping("/dashboard")
     public String home(@AuthenticationPrincipal User user, ModelMap model) {
+
+        Set<Long> hobbiesId = user.getMyHobbies();
+        Set<String> usersName = user.getConnections();
+
+        Set<Hobby> hobbies = new HashSet<>();
+        Set<User> users = new HashSet<>();
+
+        for (Iterator<Long> it = hobbiesId.iterator(); it.hasNext(); ) {
+            Optional<Hobby> hobby = hobbyRepository.findById(it.next());
+            if(hobby.isPresent()) {
+                hobbies.add(hobby.get());
+            }
+        }
         
-        Set<Long> hobbies = user.getMyHobbies();
-        Set<String> users = user.getConnections();
+        for (Iterator<String> it = usersName.iterator(); it.hasNext(); ) {
+
+            List<User> userList = userRepository.findByUsername(it.next());
+
+            if(userList.size()>0) {
+                users.add(userList.get(0));
+            }
+        }
         
         model.put("user", user);
         model.put("hobbies", hobbies);

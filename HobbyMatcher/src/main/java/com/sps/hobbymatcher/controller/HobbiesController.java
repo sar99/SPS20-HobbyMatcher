@@ -55,11 +55,12 @@ public class HobbiesController {
 
             for (Iterator<Hobby> it = hobbies.iterator(); it.hasNext(); ) {
 
-                Long id = it.next().getId();
+                Hobby hobby = it.next();
+                Long id = hobby.getId();
                 if(hobbiesId.contains(id)) {
                     continue;
                 } else {
-                    otherHobbies.add(it.next());
+                    otherHobbies.add(hobby);
                 }
             }
             model.put("hobbies", otherHobbies);
@@ -106,8 +107,17 @@ public class HobbiesController {
         Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
         if(hobbyOpt.isPresent()) {
             Hobby hobby = hobbyOpt.get();
-            Set<Post> posts = hobby.getPosts();
+            Set<Long> postsId = hobby.getPosts();
+            Set<Post> posts = new HashSet<>();
+            for (Iterator<Long> it = postsId.iterator(); it.hasNext(); ) {
+
+                Optional<Post> post = postRepository.findById(it.next());
+                if(post.isPresent()) {
+                    posts.add(post.get());
+                }
+            }
             model.put("posts", posts);
+            model.put("hobby", hobby);
         }
         return "hobby";
     }

@@ -45,6 +45,7 @@ public class LoginController {
     public String registerPost (@ModelAttribute User user) {
 
         userService.registerUser(user);
+        
         return "redirect:/dashboard";
     }
 }

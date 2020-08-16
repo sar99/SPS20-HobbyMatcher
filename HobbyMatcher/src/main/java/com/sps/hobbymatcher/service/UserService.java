@@ -26,14 +26,12 @@ public class UserService {
 	private PasswordEncoder passwordEncoder;
 
     public User registerUser(User user) {
-
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 		Authority authority = new Authority();
 		authority.setAuthority("ROLE_USER");
 		user.getAuthorities().add(authority);
 		return userRepository.save(user);
-        
 	}
 
     public void addHobby(User user, Optional<Hobby> hobbyOpt) {
