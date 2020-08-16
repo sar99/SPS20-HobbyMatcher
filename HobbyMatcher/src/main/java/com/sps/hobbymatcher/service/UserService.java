@@ -24,6 +24,9 @@ public class UserService {
     private UserRepository userRepository;
 
     @Autowired
+    private HobbyRepository hobbyRepository;
+
+    @Autowired
 	private PasswordEncoder passwordEncoder;
 
     public User registerUser(User user) throws AlreadyExistsException {
@@ -45,6 +48,8 @@ public class UserService {
             Hobby hobby=hobbyOpt.get();
             user.getMyHobbies().add(hobby.getId());
             hobby.getUsers().add(user.getId());
+            userRepository.save(user);
+            hobbyRepository.save(hobby);
         }
         return;
     }
