@@ -55,6 +55,7 @@ public class PostController {
     @PostMapping("")
     public String uploadPost (@PathVariable Long hobbyId, @AuthenticationPrincipal User user,Post post) {
         
+        post.setUserId(user.getId());
         Post savedPost = postRepository.save(post);
         Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
         if(hobbyOpt.isPresent()) {

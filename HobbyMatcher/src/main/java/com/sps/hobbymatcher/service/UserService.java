@@ -3,6 +3,7 @@ package com.sps.hobbymatcher.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.acls.model.AlreadyExistsException;
 
 import com.sps.hobbymatcher.domain.User;
 import com.sps.hobbymatcher.domain.Hobby;
@@ -25,13 +26,18 @@ public class UserService {
     @Autowired
 	private PasswordEncoder passwordEncoder;
 
-    public User registerUser(User user) {
+    public User registerUser(User user) throws AlreadyExistsException {
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 		Authority authority = new Authority();
 		authority.setAuthority("ROLE_USER");
 		user.getAuthorities().add(authority);
-		return userRepository.save(user);
+        List<User> users = userRepository.findByUsername(user.getUsername());
+        if(users.size()==0) {
+		    return userRepository.save(user);
+        } else {
+            throw new AlreadyExistsException("Username already exists!");
+        }
 	}
 
     public void addHobby(User user, Optional<Hobby> hobbyOpt) {

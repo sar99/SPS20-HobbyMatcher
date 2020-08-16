@@ -45,6 +45,7 @@ public class PostService {
 
         Set<Long> posts = hobby.getPosts();
         posts.add(post.getId());
+        post.setCreatedDate(new Date());
         hobbyRepository.save(hobby);
         // DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         // try {
