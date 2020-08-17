@@ -23,6 +23,7 @@ import com.sps.hobbymatcher.service.HobbyService;
 import com.sps.hobbymatcher.service.PostService;
 import com.sps.hobbymatcher.repository.HobbyRepository;
 import com.sps.hobbymatcher.repository.PostRepository;
+import com.sps.hobbymatcher.repository.UserRepository;
 
 @Controller
 public class HobbiesController {
@@ -41,6 +42,9 @@ public class HobbiesController {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private UserRepository userRepository;
     
     @GetMapping("/hobbies")
     public String hobbies(@AuthenticationPrincipal User user, ModelMap model) {   
@@ -96,17 +100,6 @@ public class HobbiesController {
         return "redirect: /hobbies/"+hobbyId;
     }
 
-    @GetMapping("/hobbies/{hobbyId}/users")
-    public String users(@PathVariable Long hobbyId, ModelMap model) {   
-        
-        Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
-        if(hobbyOpt.isPresent()) {
-            Hobby hobby = hobbyOpt.get();
-            Set<Long> users = hobby.getUsers();
-            model.put("users", users);
-        }
-        return "hobby";
-    }
 
     @GetMapping("/hobbies/{hobbyId}")
     public String posts(@PathVariable Long hobbyId, ModelMap model) {   
@@ -115,7 +108,9 @@ public class HobbiesController {
         if(hobbyOpt.isPresent()) {
             Hobby hobby = hobbyOpt.get();
             Set<Long> postsId = hobby.getPosts();
+            Set<Long> usersId = hobby.getUsers();
             Set<Post> posts = new HashSet<>();
+            Set<User> users = new HashSet<>();
             for (Iterator<Long> it = postsId.iterator(); it.hasNext(); ) {
 
                 Optional<Post> post = postRepository.findById(it.next());
@@ -123,6 +118,15 @@ public class HobbiesController {
                     posts.add(post.get());
                 }
             }
+
+            for (Iterator<Long> it = usersId.iterator(); it.hasNext(); ) {
+
+                Optional<User> user = userRepository.findById(it.next());
+                if(user.isPresent()) {
+                    users.add(user.get());
+                }
+            }
+            model.put("users", users);
             model.put("posts", posts);
             model.put("hobby", hobby);
         }
