@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.*;
 import java.io.UnsupportedEncodingException;
@@ -53,23 +54,22 @@ public class PostController {
     }
     
     @PostMapping("")
-    public String uploadPost (@PathVariable Long hobbyId, @AuthenticationPrincipal User user,Post post) {
+    public String uploadPost (@PathVariable Long hobbyId, @AuthenticationPrincipal User user, @ModelAttribute Post post) {
         
         post.setUserId(user.getId());
-        Post savedPost = postRepository.save(post);
         Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
         if(hobbyOpt.isPresent()) {
             Hobby hobby = hobbyOpt.get();
-            post = postService.uploadPost(hobby, savedPost);
+            post = postService.uploadPost(hobby, post);
         }
         
         return "redirect:/hobbies/"+hobbyId;
     }
 
-    @PostMapping("")
-    public String deletePost (@PathVariable Long hobbyId, Post post) {
+    @PostMapping("/{postId}")
+    public String deletePost (@PathVariable Long hobbyId, @PathVariable Long postId) {
         
-        postService.deletePost(post, hobbyId);
+        postService.deletePost(postId, hobbyId);
         
         return "redirect:/hobbies/"+hobbyId;
     }

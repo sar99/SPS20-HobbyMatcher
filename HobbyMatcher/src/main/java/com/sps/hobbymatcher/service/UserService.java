@@ -30,17 +30,20 @@ public class UserService {
 	private PasswordEncoder passwordEncoder;
 
     public User registerUser(User user) throws AlreadyExistsException {
+
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 		Authority authority = new Authority();
 		authority.setAuthority("ROLE_USER");
 		user.getAuthorities().add(authority);
+
         List<User> users = userRepository.findByUsername(user.getUsername());
         if(users.size()==0) {
 		    return userRepository.save(user);
         } else {
             throw new AlreadyExistsException("Username already exists!");
         }
+
 	}
 
     public void addHobby(User user, Optional<Hobby> hobbyOpt) {
@@ -74,8 +77,10 @@ public class UserService {
     public void removeConnection(User user1, User user2) {
         user1.getConnections().remove(user2.getUsername());
         user2.getConnections().remove(user1.getUsername());
+
         userRepository.save(user1);
         userRepository.save(user2);
+
     }
 
     public void deleteUser(User user) {

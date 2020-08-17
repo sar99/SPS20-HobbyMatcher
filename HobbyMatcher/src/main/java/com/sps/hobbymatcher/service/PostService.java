@@ -44,8 +44,9 @@ public class PostService {
     public Post uploadPost(Hobby hobby, Post post) {
 
         Set<Long> posts = hobby.getPosts();
-        posts.add(post.getId());
         post.setCreatedDate(new Date());
+        postRepository.save(post);
+        posts.add(post.getId());
         hobbyRepository.save(hobby);
 
         return post;
@@ -75,14 +76,17 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public void deletePost(Post post, Long id) {
+    public void deletePost(Long postId, Long hobbyId) {
 
-        Optional<Hobby> hobbyOpt = hobbyRepository.findById(id);
-        if(hobbyOpt.isPresent()) {
-            Set<Long> posts = hobbyOpt.get().getPosts();
-            posts.remove(post.getId());
-            hobbyRepository.save(hobbyOpt.get());
+        Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
+        Optional<Post> postOpt = postRepository.findById(postId);
+
+        if(hobbyOpt.isPresent() && postOpt.isPresent()) {
+            Hobby hobby = hobbyOpt.get();
+            Set<Long> posts = hobby.getPosts();
+            posts.remove(postId);
+            hobbyRepository.save(hobby);
         }
-        postRepository.deleteById(post.getId());
+        postRepository.deleteById(postId);
     }
 }

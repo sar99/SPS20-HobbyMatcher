@@ -43,7 +43,7 @@ public class HomeController {
     
     @GetMapping("/dashboard")
     public String home(@AuthenticationPrincipal User user, ModelMap model) {
-
+        
         Set<Long> hobbiesId = user.getMyHobbies();
         Set<String> usersName = user.getConnections();
 
@@ -98,7 +98,6 @@ public class HomeController {
         for (Iterator<String> it = usersName.iterator(); it.hasNext(); ) {
 
             List<User> userList = userRepository.findByUsername(it.next());
-
             if(userList.size()>0) {
                 users.add(userList.get(0));
             }
