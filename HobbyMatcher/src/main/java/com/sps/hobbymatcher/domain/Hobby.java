@@ -12,8 +12,9 @@ public class Hobby {
 	@Id
 	private Long id;
 	private String name;
+    private String about;
 	private Set<Long> users=new HashSet<>();
-	private Set<Post> posts=new HashSet<>();
+	private Set<Long> posts=new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -31,6 +32,14 @@ public class Hobby {
 		this.name = name;
 	}
 
+    public String getAbout() {
+		return about;
+	}
+
+	public void setAbout(String about) {
+		this.about = about;
+	}
+
 	public Set<Long> getUsers() {
 		return users;
 	}
@@ -39,16 +48,16 @@ public class Hobby {
 		this.users = users;
 	}
 
-	public Set<Post> getPosts() {
+	public Set<Long> getPosts() {
 		return posts;
 	}
 
-	public void setPosts(Set<Post> posts) {
+	public void setPosts(Set<Long> posts) {
 		this.posts = posts;
 	}
 
     @Override
 	public String toString() {
-		return "Hobby [id=" + id + ", name=" + name + ", users=" + users + ", posts=" + posts + "]";
+		return "Hobby [id=" + id + ", name=" + name + ", about=" + about + ", users=" + users + ", posts=" + posts + "]";
 	}
 }

@@ -17,6 +17,8 @@ public class Post {
 	private String video;
 	private Image image;
 	private Long votes;
+    private Long userId;
+    private Date createdDate;
 	private Set<User> usersVoted=new HashSet<>();
 	
     public Long getId() {
@@ -49,6 +51,18 @@ public class Post {
 	public void setVotes(Long votes) {
 		this.votes = votes;
 	}
+    public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+    public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 	public Set<User> getUsersVoted() {
 		return usersVoted;
 	}
@@ -59,6 +73,7 @@ public class Post {
 	@Override
 	public String toString() {
 		return "Post [id=" + id +", text=" + text + ", video=" + video + ", image=" + image
-				+ ", votes=" + votes + ", usersVoted=" + usersVoted + "]";
+				+ ", votes=" + votes + ", userId=" + userId + ", createdDate=" + createdDate 
+                +", usersVoted=" + usersVoted + "]";
 	}
 }

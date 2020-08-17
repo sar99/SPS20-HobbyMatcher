@@ -28,14 +28,12 @@
             <a class="nav-link" href="/" th:href="@{/}">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="aboutus.html">About Us</a>
+            <a class="nav-link" href="/" th:href="@{/about}">About Us</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="yourHobbies.html">Your Hobbies</a>
-        </li>
+
 
     </ul>
 
@@ -80,7 +78,7 @@
                         <h5 th:text="${hobby.name}" class="card-title">Card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                             card's content.</p>
-                        <a th:href="@{/hobby/{hobby_id} (hobby_id=${hobby.id})}" class="btn btn-primary">Try this hobby</a>
+                        <a th:href="@{/hobbies/{hobby_id} (hobby_id=${hobby.id})}" class="btn btn-primary">Try this hobby</a>
                     </div>
                 </div>
 

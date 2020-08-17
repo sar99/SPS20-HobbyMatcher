@@ -28,179 +28,31 @@
             <a class="nav-link" href="#">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="aboutus.html">About Us</a>
+            <a class="nav-link" th:href="@{/about}">About Us</a>
         </li>
         <li class="nav-item">
             <a class="nav-link  active"  href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="yourHobbies.html">Your Hobbies</a>
-        </li>
+
 
     </ul>
 
 
+    <h2 style="margin: auto; padding-top: 5vh">More to Explore..</h2>
+
     <div style="width: 90vw; display: flex; flex-direction: row; flex-wrap: wrap; margin: auto; ">
 
-        <div class="card" style="width: 18rem; margin: 10px">
+        <div th:each="hobby : ${hobbies}" class="card" style="width: 18rem; margin: 10px">
             <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                <h5 th:text="${hobby.name}" class="card-title">Card title</h5>
+                <p th:text="${hobby.about}" class="card-text">Some quick example text to build on the card title and make up the bulk of the
                     card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
+                <a href="/" th:href="@{/hobbies/{hobby_id} (hobby_id=${hobby.id})}" class="btn btn-primary">Try this hobby</a>
             </div>
         </div>
 
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
-
-        <div class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's content.</p>
-                <a href="#" class="btn btn-primary">Try this hobby</a>
-            </div>
-        </div>
+        
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

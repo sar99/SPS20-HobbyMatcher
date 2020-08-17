@@ -32,6 +32,9 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private HobbyRepository hobbyRepository;
+
     @Autowired 
     private HobbyService hobbyService;
 
@@ -40,16 +43,19 @@ public class PostService {
     
     public Post uploadPost(Hobby hobby, Post post) {
 
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        try {
-            Entity hobbyEntity = datastore.get(KeyFactory.createKey("hobbies", hobby.getId()));
-            Set<Post> posts = hobby.getPosts();
-            posts.add(post);
-            hobbyEntity.setProperty("posts", posts);
-            datastore.put(hobbyEntity);
-        } catch (EntityNotFoundException e) {
-        // This should never happen
-        }
+        Set<Long> posts = hobby.getPosts();
+        posts.add(post.getId());
+        hobbyRepository.save(hobby);
+        // DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        // try {
+        //     Entity hobbyEntity = datastore.get(KeyFactory.createKey("hobbies", hobby.getId()));
+        //     Set<Long> posts = hobby.getPosts();
+        //     posts.add(post.getId());
+        //     hobbyEntity.setProperty("posts", posts);
+        //     datastore.put(hobbyEntity);
+        // } catch (EntityNotFoundException e) {
+        // // This should never happen
+        // }
 
         return post;
     }

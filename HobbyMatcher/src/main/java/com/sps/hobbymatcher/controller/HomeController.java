@@ -40,6 +40,11 @@ public class HomeController {
     public String rootView () {
         return "index";
     }
+
+    @GetMapping("/about")
+    public String about () {
+        return "about";
+    }
     
     @GetMapping("/dashboard")
     public String home(@AuthenticationPrincipal User user, ModelMap model) {
