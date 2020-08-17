@@ -66,6 +66,13 @@ public class PostController {
         return "redirect:/hobbies/"+hobbyId;
     }
 
+    @PostMapping("")
+    public String deletePost (@PathVariable Long hobbyId, Post post) {
+        
+        postService.deletePost(post, hobbyId);
+        
+        return "redirect:/hobbies/"+hobbyId;
+    }
     // @PostMapping("")
     // public String createHobby(@PathVariable Long hobbyId, @AuthenticationPrincipal User user) {   
 

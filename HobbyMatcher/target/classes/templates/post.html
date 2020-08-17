@@ -46,16 +46,16 @@
         <div class="col-md-8 mt-5">
             <form method="post" th:object="${post}">
 
-                <!-- <div class="form-group">
+                <div class="form-group">
                     <label for="title">Title:</label>
                     <input type="text" id="title" placeholder="Title" autocomplete="off" class="form-control"
                            th:field="*{title}"/>
-                </div> -->
+                </div>
 
                 <div class="form-group">
                     <label for="content">Content:</label>
                     <textarea type="text" rows="4" id="content" placeholder="Content" class="form-control"
-                              th:field="*{text}" autocomplete="off"></textarea>
+                              th:field="*{content}" autocomplete="off"></textarea>
                 </div>
 
                 <button class="btn btn-primary" type="submit">Submit form</button>

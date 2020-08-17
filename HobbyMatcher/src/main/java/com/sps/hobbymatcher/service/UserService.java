@@ -48,8 +48,10 @@ public class UserService {
             Hobby hobby=hobbyOpt.get();
             user.getMyHobbies().add(hobby.getId());
             hobby.getUsers().add(user.getId());
+
             userRepository.save(user);
             hobbyRepository.save(hobby);
+            
         }
         return;
     }
@@ -58,17 +60,22 @@ public class UserService {
 
         user.getMyHobbies().remove(hobby.getId());
         hobby.getUsers().remove(user.getId());
+        userRepository.save(user);
+        hobbyRepository.save(hobby);
         return;
     }
 
     public void addConnection(User user1, User user2) {
         user1.getConnections().add(user2.getUsername());
+        userRepository.save(user1);
         return;
     }
 
     public void removeConnection(User user1, User user2) {
         user1.getConnections().remove(user2.getUsername());
         user2.getConnections().remove(user1.getUsername());
+        userRepository.save(user1);
+        userRepository.save(user2);
     }
 
     public void deleteUser(User user) {

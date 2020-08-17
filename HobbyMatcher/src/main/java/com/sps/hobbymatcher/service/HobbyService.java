@@ -29,26 +29,15 @@ public class HobbyService {
     @Autowired
     private UserRepository userRepository;
 
-    public Hobby createHobby(String name, User user) {
-        
-        Hobby hobby = new Hobby();
+    public Hobby createHobby(Hobby hobby, User user) {
 
-        List<Hobby> hobbyOpt=hobbyRepository.findByName(name);
+        List<Hobby> hobbyOpt=hobbyRepository.findByName(hobby.getName());
         if(hobbyOpt!=null) {
             if(hobbyOpt.size()==0) {
-                hobby.setName(name);
-                hobby.getUsers().add(user.getId());
+                
                 Hobby saved=hobbyRepository.save(hobby);
-                DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-                try {
-                    Entity userEntity = datastore.get(KeyFactory.createKey("users", user.getId()));
-                    Set<Long> myHobbies = user.getMyHobbies();
-                    myHobbies.add(saved.getId());
-                    userEntity.setProperty("myHobbies", myHobbies);
-                    datastore.put(userEntity);
-                } catch (EntityNotFoundException e) {
-                // This should never happen
-                }
+                user.getMyHobbies().add(hobby.getId());
+                userRepository.save(user);
                 return saved;
             }
             else {

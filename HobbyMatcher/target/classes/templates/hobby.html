@@ -53,13 +53,15 @@
         </div>
     </div>
 
-
-    <div class="card text-center" style="width: 18rem;margin: auto;">
-        <div class="card-body">
-            <p class="card-text">Get started to explore this magical world!</p>
-            <a href="#" class="btn btn-primary">Register Now!</a>
+    <form th:action = "@{/hobbies/{hobbyId}/unregister(hobbyId=${hobby.id})}" method = "post">
+        <div class="card text-center" style="width: 18rem;margin: auto;">
+            <div class="card-body">
+                <p class="card-text">Get started to explore this magical world!</p>
+                <button type="submit" class="btn btn-success">Unregister</button>
+            </div>
         </div>
-    </div>
+    </form>
+
 
     <div style="margin-top: 10vh;">
         <div class="card text-center" style="margin: auto;margin-top:2vh ;width: 80vw;">
