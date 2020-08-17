@@ -67,12 +67,12 @@
         <div th:each="post : ${posts}" class="card text-center" style="margin: auto;margin-top:2vh ;width: 80vw;">
 
             <div class="card-body">
-                <h5 class="card-title">By: <span th:text="${post.userid}">Author Name</span></h5>
-                <p th:text="${post.text}" class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum est temporibus
+                <h5 class="card-title">By: <span th:text="${post.userId}">Author Name</span></h5>
+                <p th:utext="${post.text}" class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum est temporibus
                     praesentium
                     beatae voluptate ut obcaecati atque, ipsa amet dolorem natus excepturi a vel sit, corporis tenetur,
                     officiis eaque animi.</p>
-                <a th:href="@{/dashboard/{user_id} (user_id=${connection.id})}" class="btn btn-primary">Go to author's profile</a>
+                <a th:href="@{/dashboard/{user_id} (user_id=${post.userId})}" class="btn btn-primary">Go to author's profile</a>
             </div>
             <div th:text="${post.createdDate}" class="card-footer text-muted" >
                 2 days ago
