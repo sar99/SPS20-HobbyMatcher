@@ -44,19 +44,12 @@ public class PostService {
     public Post uploadPost(Hobby hobby, Post post) {
 
         Set<Long> posts = hobby.getPosts();
-        posts.add(post.getId());
+       
         post.setCreatedDate(new Date());
+        postRepository.save(post);
+        posts.add(post.getId());
         hobbyRepository.save(hobby);
-        // DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        // try {
-        //     Entity hobbyEntity = datastore.get(KeyFactory.createKey("hobbies", hobby.getId()));
-        //     Set<Long> posts = hobby.getPosts();
-        //     posts.add(post.getId());
-        //     hobbyEntity.setProperty("posts", posts);
-        //     datastore.put(hobbyEntity);
-        // } catch (EntityNotFoundException e) {
-        // // This should never happen
-        // }
+
 
         return post;
     }
@@ -77,6 +70,7 @@ public class PostService {
             votes++;
             post.setVotes(votes);
         }
+        postRepository.save(post);
         return;
     }
 
@@ -84,9 +78,17 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public void deletePost(Post post) {
-        // post.getUser().getMyPosts().remove(post);
-        // post.getHobby().getPosts().remove(post);
-        // postRepository.deleteById(post.getId());
+    public void deletePost(Long postId, Long hobbyId) {
+
+        Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
+        Optional<Post> postOpt = postRepository.findById(postId);
+
+        if(hobbyOpt.isPresent() && postOpt.isPresent()) {
+            Hobby hobby = hobbyOpt.get();
+            Set<Long> posts = hobby.getPosts();
+            posts.remove(postId);
+            hobbyRepository.save(hobby);
+        }
+        postRepository.deleteById(postId);
     }
 }

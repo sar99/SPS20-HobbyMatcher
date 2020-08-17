@@ -23,6 +23,7 @@ import com.sps.hobbymatcher.service.HobbyService;
 import com.sps.hobbymatcher.service.PostService;
 import com.sps.hobbymatcher.repository.HobbyRepository;
 import com.sps.hobbymatcher.repository.PostRepository;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 @RequestMapping("/hobbies/{hobbyId}/post")
@@ -53,19 +54,24 @@ public class PostController {
     }
     
     @PostMapping("")
-    public String uploadPost (@PathVariable Long hobbyId, @AuthenticationPrincipal User user,Post post) {
-        
+    public String uploadPost (@PathVariable Long hobbyId, @AuthenticationPrincipal User user, @ModelAttribute Post post) {
         post.setUserId(user.getId());
-        Post savedPost = postRepository.save(post);
         Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
         if(hobbyOpt.isPresent()) {
             Hobby hobby = hobbyOpt.get();
-            post = postService.uploadPost(hobby, savedPost);
+            post = postService.uploadPost(hobby, post);
         }
         
         return "redirect:/hobbies/"+hobbyId;
     }
 
+    @PostMapping("/{postId}")
+    public String deletePost (@PathVariable Long hobbyId, @PathVariable Long postId) {
+        
+        postService.deletePost(postId, hobbyId);
+        
+        return "redirect:/hobbies/"+hobbyId;
+    }
     // @PostMapping("")
     // public String createHobby(@PathVariable Long hobbyId, @AuthenticationPrincipal User user) {   
 

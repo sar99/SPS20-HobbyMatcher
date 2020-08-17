@@ -146,17 +146,20 @@ public class HobbiesController {
     }
 
     @PostMapping("/createhobby/{hobbyId}")
-    public String saveHobby(@PathVariable Long hobbyId, Hobby hobby) {   
-        hobby = hobbyService.save(hobby);
-        return "redirect: /createhobby/"+hobby.getId();
+    public String saveHobby(@AuthenticationPrincipal User user, @PathVariable Long hobbyId) {   
+        Optional<Hobby> hobbyOpt  = hobbyRepository.findById(hobbyId);
+        Hobby hobby = new Hobby();
+        if(hobbyOpt.isPresent()) {
+            hobby = hobbyService.createHobby(hobbyOpt.get(), user);
+        }
+
+        return "redirect: /hobbies/"+hobby.getId();
     }
 
     @PostMapping("/createhobby")
-    public String createHobby(@AuthenticationPrincipal User user) {   
+    public String createHobby() {   
         Hobby hobby=new Hobby();
-        hobby.getUsers().add(user.getId());
         hobby = hobbyRepository.save(hobby);
-        user.getMyHobbies().add(hobby.getId());
         return "redirect: /createhobby/"+hobby.getId();
     }
 }
