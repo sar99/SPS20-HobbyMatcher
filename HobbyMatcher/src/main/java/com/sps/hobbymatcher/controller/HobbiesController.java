@@ -102,8 +102,9 @@ public class HobbiesController {
 
 
     @GetMapping("/hobbies/{hobbyId}")
-    public String posts(@PathVariable Long hobbyId, ModelMap model) {   
+    public String posts(@PathVariable Long hobbyId, ModelMap model, @AuthenticationPrincipal User loggedUser) {   
         
+        boolean isRegistered = false;
         Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
         if(hobbyOpt.isPresent()) {
             Hobby hobby = hobbyOpt.get();
@@ -120,12 +121,22 @@ public class HobbiesController {
             }
 
             for (Iterator<Long> it = usersId.iterator(); it.hasNext(); ) {
-
-                Optional<User> user = userRepository.findById(it.next());
+                
+                Long id = it.next();
+                             
+                if(loggedUser!=null && id.equals(loggedUser.getId()))
+                {
+                    
+                    isRegistered=true;
+                }
+                Optional<User> user = userRepository.findById(id);
                 if(user.isPresent()) {
                     users.add(user.get());
                 }
             }
+            
+            if(loggedUser!=null)
+                model.put("isRegistered", isRegistered);
             model.put("users", users);
             model.put("posts", posts);
             model.put("hobby", hobby);
