@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.cloud.gcp.data.datastore.core.mapping.Entity;
+import org.springframework.cloud.gcp.data.datastore.core.mapping.Unindexed;
 import org.springframework.data.annotation.Id;
 
 @Entity
@@ -13,6 +14,8 @@ public class Post {
 
     @Id
     private Long id;
+
+    @Unindexed
 	private String text;
 	private String video;
 	private Image image;
