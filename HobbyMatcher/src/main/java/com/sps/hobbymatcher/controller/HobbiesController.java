@@ -94,7 +94,7 @@ public class HobbiesController {
     }
 
     @GetMapping("/hobbies/{hobbyId}")
-    public String posts(@PathVariable Long hobbyId, ModelMap model) {   
+    public String posts(@AuthenticationPrincipal User user, @PathVariable Long hobbyId, ModelMap model) {   
         
         Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
         if(hobbyOpt.isPresent()) {
@@ -112,11 +112,12 @@ public class HobbiesController {
             }
             for (Iterator<Long> it = usersId.iterator(); it.hasNext(); ) {
 
-                Optional<User> user = userRepository.findById(it.next());
-                if(user.isPresent()) {
-                    users.add(user.get());
+                Optional<User> userOpt = userRepository.findById(it.next());
+                if(userOpt.isPresent()) {
+                    users.add(userOpt.get());
                 }
             }
+            model.put("user", user);
             model.put("users", users);
             model.put("posts", posts);
             model.put("hobby", hobby);

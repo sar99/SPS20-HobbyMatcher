@@ -109,4 +109,24 @@ public class HomeController {
         
         return "dashboard";
     }
+
+    @PostMapping("/follow/{userId}")
+    public String addConnection(@AuthenticationPrincipal User user, @PathVariable Long userId) {
+
+        Optional<User> userOpt = userRepository.findById(userId);
+        if(userOpt.isPresent()) {
+            userService.addConnection(user, userOpt.get());
+        }
+        return "redirect:/dashboard";
+    }
+
+    @PostMapping("/unfollow/{userId}")
+    public String addConnection(@AuthenticationPrincipal User user, @PathVariable Long userId) {
+
+        Optional<User> userOpt = userRepository.findById(userId);
+        if(userOpt.isPresent()) {
+            userService.removeConnection(user, userOpt.get());
+        }
+        return "redirect:/dashboard";
+    }
 }

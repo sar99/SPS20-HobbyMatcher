@@ -75,12 +75,9 @@ public class UserService {
     }
 
     public void removeConnection(User user1, User user2) {
+
         user1.getConnections().remove(user2.getUsername());
-        user2.getConnections().remove(user1.getUsername());
-
         userRepository.save(user1);
-        userRepository.save(user2);
-
     }
 
     public void deleteUser(User user) {
