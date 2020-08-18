@@ -84,6 +84,15 @@
     </div>
 
 
+     <div class="card text-center" style="width: 18rem;margin: auto;" >
+
+        <div sec:authorize="isAuthenticated()" class="card-body" th:if="${isRegistered eq true}">
+            <p class="card-text">Share your feelings with the world</p>
+            <a th:href="@{/hobbies/{hobby_id}/post (hobby_id=${hobby.id})}" class="btn btn-primary">Write a post</a>
+        </div>
+    </div>
+
+
 
     <div style="margin-top: 5vh;">
         <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
@@ -97,6 +106,7 @@
             </li>
         </ul>
     </div>
+
 
 
     <div class="tab-content" id="pills-tabContent">
@@ -145,16 +155,26 @@
 
         <div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab"
             style="display: flex;flex-direction: row;flex-wrap: wrap;">
+            <div th:each="user : ${users}">
+                <div th:if="${user.username eq #authentication.getPrincipal().getUsername()}" class="card mb-3 text-white bg-info" style="margin: auto;margin-top: 10vh; width: 90vw;">
 
-            <div th:each="user : ${users}" class="card" style="margin: auto;margin-top: 10vh; width: 90vw;">
-
-                <div class="card-body" style="margin: 5px;">
-                    <div th:text="${user.name}"> This is some text within a card body.</div>
-                    <a th:href="@{/dashboard/{user_id} (user_id=${user.id})}"><button type="button" class="btn btn-primary" style="margin: 3px;">Go to Profile</button></a>
+                    <div class="card-body" style="margin: 5px;">
+                        <div th:text="${user.name}"> This is some text within a card body.</div>
+                        <a th:href="@{/dashboard/{user_id} (user_id=${user.id})}"><button type="button" class="btn btn-primary" style="margin: 3px;">Go to Profile</button></a>
+                    </div>
+                    
                 </div>
-                
+
+
+                <div th:unless="${user.username eq #authentication.getPrincipal().getUsername()}" class="card mb-3 " style="margin: auto;margin-top: 10vh; width: 90vw;">
+
+                    <div class="card-body" style="margin: 5px;">
+                        <div th:text="${user.name}"> This is some text within a card body.</div>
+                        <a th:href="@{/dashboard/{user_id} (user_id=${user.id})}"><button type="button" class="btn btn-primary" style="margin: 3px;">Go to Profile</button></a>
+                    </div>
+                    
+                </div>
             </div>
-            
         </div>
     </div>
 
