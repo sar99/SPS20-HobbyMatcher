@@ -59,9 +59,10 @@
 
         <div sec:authorize="isAnonymous()" class="card-body" th:if="${isRegistered eq false}">
             <p class="card-text">Get started to explore this magical world!</p>
-            <a th:href="@{/hobbies/{hobby_id}/register (hobby_id=${hobby.id})}">
+            <!-- <a th:href="@{/hobbies/{hobby_id}/register (hobby_id=${hobby.id})}"> -->
+            <form th:action="@{/}" method="post" 
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".LoginToRegister">Register Now</button>
-            </a>
+            <!-- </a> -->
 
             <div class="modal fade LoginToRegister" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
@@ -74,12 +75,32 @@
 
         <div sec:authorize="isAuthenticated()" class="card-body" th:if="${isRegistered eq false}">
             <p class="card-text">Get started to explore this magical world!</p>
-            <a th:href="@{/hobbies/{hobby_id}/register (hobby_id=${hobby.id})}" class="btn btn-primary">Register Now!</a>
+            <!-- <a th:href="@{/hobbies/{hobby_id}/register (hobby_id=${hobby.id})}" class="btn btn-primary">Register Now!</a> -->
+            <form method="post" th:action="@{/hobbies/{hobby_id}/register (hobby_id=${hobby.id})}">
+                <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3" style="margin: auto;">
+                                <input type="submit" name="login-submit" id="login-submit"
+                                class="form-control btn btn-primary" value="Register" />
+                            </div>
+                        </div>
+                </div>
+            </form>
         </div>
 
         <div sec:authorize="isAuthenticated()" class="card-body" th:if="${isRegistered eq true}">
             <p class="card-text">Not sure if you like this hobby?</p>
-            <a th:href="@{/hobbies/{hobby_id}/unregister (hobby_id=${hobby.id})}" class="btn btn-primary">Unregister</a>
+            <!-- <a th:href="@{/hobbies/{hobby_id}/unregister (hobby_id=${hobby.id})}" class="btn btn-primary">Unregister</a> -->
+            <form method="post" th:action="@{/hobbies/{hobby_id}/unregister (hobby_id=${hobby.id})}">
+                <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3" style="margin: auto;">
+                                <input type="submit" name="login-submit" id="login-submit"
+                                class="form-control btn btn-primary" value="Unregister" />
+                            </div>
+                        </div>
+                </div>
+            </form>
         </div>
     </div>
 

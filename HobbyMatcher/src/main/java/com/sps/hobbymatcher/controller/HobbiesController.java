@@ -53,9 +53,10 @@ public class HobbiesController {
         if(user == null) {
             model.put("hobbies", hobbies);
 
-            // for (Iterator<Hobby> it = hobbies.iterator(); it.hasNext(); ){
-            // System.out.println(it.next());
-            // }
+            System.out.println(user);
+            for (Iterator<Hobby> it = hobbies.iterator(); it.hasNext(); ){
+            System.out.println(it.next());
+            }
         } else {
 
             Set<Long> hobbiesId = user.getMyHobbies();
@@ -72,24 +73,26 @@ public class HobbiesController {
                 }
             }
             model.put("hobbies", otherHobbies);
-            // for (Iterator<Hobby> it = otherHobbies.iterator(); it.hasNext(); ){
-            // System.out.println(it.next());
-            // }
+
+            System.out.println(user);
+            for (Iterator<Hobby> it = otherHobbies.iterator(); it.hasNext(); ){
+            System.out.println(it.next());
+            }
         }
 
         return "hobbies";
     }
 
-    @GetMapping("/hobbies/{hobbyId}/register")
+    @PostMapping("/hobbies/{hobbyId}/register")
     public String register(@PathVariable Long hobbyId, @AuthenticationPrincipal User user) {   
         
         Optional<Hobby> hobby = hobbyRepository.findById(hobbyId);
         userService.addHobby(user, hobby);
         
-        return "redirect: /hobbies/"+hobbyId;
+        return "redirect:/hobbies/"+hobbyId;
     }
 
-    @GetMapping("/hobbies/{hobbyId}/unregister")
+    @PostMapping("/hobbies/{hobbyId}/unregister")
     public String unregister(@PathVariable Long hobbyId, @AuthenticationPrincipal User user) {   
         
         Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
@@ -97,7 +100,7 @@ public class HobbiesController {
             Hobby hobby=hobbyOpt.get();
             userService.removeHobby(user, hobby);
         }
-        return "redirect: /hobbies/"+hobbyId;
+        return "redirect:/hobbies/"+hobbyId;
     }
 
 
