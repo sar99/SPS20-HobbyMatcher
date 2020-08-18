@@ -16,34 +16,33 @@
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-    <div class="container">
-        <a class="navbar-brand" href="/">Thymeleaf - Bootstrap Rich Text Editor</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-            </ul>
+    <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand" href="#">
+            <img  th:src="@{../../img/logo.png}" width="50" height="50" alt="">
+        </a>
+        <div sec:authorize="isAnonymous()">
+            <a href="/" th:href="@{/login}"><button type="button" class="btn btn-primary">Log In</button></a>
+            <a href="/" th:href="@{/register}"><button type="button" class="btn btn-primary">Sign Up</button></a>
         </div>
-    </div>
-</nav>
+        <div sec:authorize="isAuthenticated()">
+            <a href="/" th:href="@{/dashboard/}" ><button type="button" class="btn btn-primary">Welcome, <span sec:authentication="name"></span></button></a>
+            <a href="/" th:href="@{/logout}"><button type="button" class="btn btn-primary">Log Out</button></a>
+        </div>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="/" th:href="@{/}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/" th:href="@{/about}">About Us</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+        </li>
+
+
+    </ul>
 
 <div class="container">
 

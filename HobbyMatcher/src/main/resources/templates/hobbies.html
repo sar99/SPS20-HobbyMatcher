@@ -25,20 +25,22 @@
 
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#">Home</a>
+            <a class="nav-link" href="/" th:href="@{/}">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" th:href="@{/about}">About Us</a>
+            <a class="nav-link" href="/" th:href="@{/about}">About Us</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link  active"  href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+            <a class="nav-link" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
         </li>
 
 
     </ul>
 
 
-    <h2 style="margin: auto; padding-top: 5vh">More to Explore..</h2>
+    <div style="margin: auto; margin-top:5vh;text-align: center">
+        <div style="font-size: 2.5vh;" ><b>More to Explore..</b></div>
+    </div>
 
     <div style="width: 90vw; display: flex; flex-direction: row; flex-wrap: wrap; margin: auto; ">
 
