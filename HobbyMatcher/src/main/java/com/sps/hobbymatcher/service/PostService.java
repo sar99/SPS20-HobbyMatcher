@@ -54,16 +54,16 @@ public class PostService {
 
     public void likePost(Post post, User user) {
 
-        if(post.getUsersVoted().contains(user))
+        if(post.getUsersVoted().contains(user.getId()))
         {
-            post.getUsersVoted().remove(user);
+            post.getUsersVoted().remove(user.getId());
             Long votes=post.getVotes();
             votes--;
             post.setVotes(votes);
         }
         else
         {
-            post.getUsersVoted().add(user);
+            post.getUsersVoted().add(user.getId());
             Long votes=post.getVotes();
             votes++;
             post.setVotes(votes);

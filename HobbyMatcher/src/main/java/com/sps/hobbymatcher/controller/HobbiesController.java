@@ -79,7 +79,7 @@ public class HobbiesController {
         Optional<Hobby> hobby = hobbyRepository.findById(hobbyId);
         userService.addHobby(user, hobby);
         
-        return "redirect: /hobbies/"+hobbyId;
+        return "redirect:/hobbies/"+hobbyId;
     }
 
     @PostMapping("/hobbies/{hobbyId}/unregister")
@@ -90,7 +90,7 @@ public class HobbiesController {
             Hobby hobby=hobbyOpt.get();
             userService.removeHobby(user, hobby);
         }
-        return "redirect: /hobbies/"+hobbyId;
+        return "redirect:/hobbies/"+hobbyId;
     }
 
     @GetMapping("/hobbies/{hobbyId}")
@@ -145,7 +145,7 @@ public class HobbiesController {
             hobby = hobbyService.createHobby(hobbyOpt.get(), user);
         }
 
-        return "redirect: /hobbies/"+hobby.getId();
+        return "redirect:/hobbies/"+hobby.getId();
     }
 
     @PostMapping("/createhobby")
@@ -153,6 +153,6 @@ public class HobbiesController {
         Hobby hobby=new Hobby();
         hobby = hobbyRepository.save(hobby);
 
-        return "redirect: /createhobby/"+hobby.getId();
+        return "redirect:/createhobby/"+hobby.getId();
     }
 }

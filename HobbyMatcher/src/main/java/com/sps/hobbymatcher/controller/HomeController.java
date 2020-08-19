@@ -121,7 +121,7 @@ public class HomeController {
     }
 
     @PostMapping("/unfollow/{userId}")
-    public String addConnection(@AuthenticationPrincipal User user, @PathVariable Long userId) {
+    public String removeConnection(@AuthenticationPrincipal User user, @PathVariable Long userId) {
 
         Optional<User> userOpt = userRepository.findById(userId);
         if(userOpt.isPresent()) {

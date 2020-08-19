@@ -21,7 +21,7 @@ public class Post {
 	private Long votes;
     private Long userId;
     private Date createdDate;
-	private Set<User> usersVoted=new HashSet<>();
+	private Set<Long> usersVoted=new HashSet<>();
 	
     public Long getId() {
 		return id;
@@ -65,10 +65,10 @@ public class Post {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public Set<User> getUsersVoted() {
+	public Set<Long> getUsersVoted() {
 		return usersVoted;
 	}
-	public void setUsersVoted(Set<User> usersVoted) {
+	public void setUsersVoted(Set<Long> usersVoted) {
 		this.usersVoted = usersVoted;
 	}
 
