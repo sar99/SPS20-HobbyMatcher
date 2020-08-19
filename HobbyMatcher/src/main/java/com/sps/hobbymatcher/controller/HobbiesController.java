@@ -50,16 +50,26 @@ public class HobbiesController {
     public String hobbies(@AuthenticationPrincipal User user, ModelMap model) {   
 
         Set<Hobby> hobbies = hobbyRepository.findAll();
+
+        List<Hobby> hobbyList = new ArrayList<>(hobbies);
+        Collections.sort(hobbyList, new Comparator<Hobby>(){
+            @Override
+            public int compare(Hobby hobby1, Hobby hobby2) {
+                return hobby1.getName().compareTo(hobby2.getName());
+            }
+        });
+
         if(user == null) {
-            model.put("hobbies", hobbies);
+            model.put("hobbies", hobbyList);
         } else {
 
             Set<Long> hobbiesId = user.getMyHobbies();
             Set<Hobby> otherHobbies  = new HashSet<>();
 
-            for (Iterator<Hobby> it = hobbies.iterator(); it.hasNext(); ) {
+            for (Iterator<Hobby> it = hobbyList.iterator(); it.hasNext(); ) {
 
                 Hobby hobby = it.next();
+
                 Long id = hobby.getId();
                 if(hobbiesId.contains(id)) {
                     continue;
@@ -110,6 +120,16 @@ public class HobbiesController {
                     posts.add(post.get());
                 }
             }
+
+            List<Post> postsList = new ArrayList<>(posts);
+
+            Collections.sort(postsList, new Comparator<Post>(){
+                @Override
+                public int compare(Post post1, Post post2) {
+                    return post2.getCreatedDate().compareTo(post1.getCreatedDate());
+                }
+            });
+
             for (Iterator<Long> it = usersId.iterator(); it.hasNext(); ) {
 
                 Optional<User> userOpt = userRepository.findById(it.next());
@@ -119,7 +139,7 @@ public class HobbiesController {
             }
             model.put("user", user);
             model.put("users", users);
-            model.put("posts", posts);
+            model.put("posts", postsList);
             model.put("hobby", hobby);
         }
         return "hobby";
