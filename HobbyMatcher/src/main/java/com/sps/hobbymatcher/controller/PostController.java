@@ -24,6 +24,7 @@ import com.sps.hobbymatcher.service.HobbyService;
 import com.sps.hobbymatcher.service.PostService;
 import com.sps.hobbymatcher.repository.HobbyRepository;
 import com.sps.hobbymatcher.repository.PostRepository;
+import com.sps.hobbymatcher.repository.UserRepository;
 
 @Controller
 @RequestMapping("/hobbies/{hobbyId}/post")
@@ -43,6 +44,9 @@ public class PostController {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private UserRepository userRepository;
     
     @GetMapping("")
     public String createPost (ModelMap model) {
@@ -72,7 +76,7 @@ public class PostController {
     }
 
     @PostMapping("/{postId}")
-    public String displayPost(@PathVariable Long HobbyId, @PathVariable Long postId, ModelMap model) {
+    public String displayPost(@PathVariable Long hobbyId, @PathVariable Long postId, ModelMap model) {
 
         Set<String> usersVoted = new HashSet<>();
         Optional<Post> postOpt = postRepository.findById(postId);
