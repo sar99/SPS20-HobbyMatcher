@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /home/mbakhshi/SPS-20-Team-82/HobbyMatcher/src/main/java/com/sps/hobbymatcher/controller/HobbiesController.java
 /home/mbakhshi/SPS-20-Team-82/HobbyMatcher/src/main/java/com/sps/hobbymatcher/domain/Authority.java
 /home/mbakhshi/SPS-20-Team-82/HobbyMatcher/src/main/java/com/sps/hobbymatcher/repository/UserRepository.java
@@ -17,3 +18,21 @@
 /home/mbakhshi/SPS-20-Team-82/HobbyMatcher/src/main/java/com/sps/hobbymatcher/security/CustomSecurityUser.java
 /home/mbakhshi/SPS-20-Team-82/HobbyMatcher/src/main/java/com/sps/hobbymatcher/controller/HomeController.java
 /home/mbakhshi/SPS-20-Team-82/HobbyMatcher/src/main/java/com/sps/hobbymatcher/repository/HobbyRepository.java
+=======
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/controller/HobbiesController.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/service/UserService.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/controller/PostController.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/repository/HobbyRepository.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/controller/HomeController.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/service/PostService.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/controller/LoginController.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/domain/Post.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/domain/Hobby.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/ServletInitializer.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/domain/User.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/service/HobbyService.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/repository/PostRepository.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/security/WebSecurityConfiguration.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/repository/UserRepository.java
+/home/sarora/SPS20-HobbyMatcher/HobbyMatcher/src/main/java/com/sps/hobbymatcher/HobbyMatcherApplication.java
+>>>>>>> d265752e961696de4e7f002ed2e6ccc9564d0099

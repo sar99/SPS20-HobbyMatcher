@@ -1,4 +1,6 @@
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <title>Home</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -6,140 +8,199 @@
 <body>
 
 
-
-
     <!-- Just an image -->
     <nav class="navbar navbar-light bg-light justify-content-between">
         <a class="navbar-brand" href="#">
-            <img src="img/logo.png" width="50" height="50" alt="">
+            <img  th:src="@{../img/logo.png}" width="50" height="50" alt="">
         </a>
-        <div>
-            <button type="button" class="btn btn-primary">Log In</button>
-            <button type="button" class="btn btn-primary">Sign Up</button>
+        <div sec:authorize="isAnonymous()">
+            <a href="/" th:href="@{/login}"><button type="button" class="btn btn-primary">Log In</button></a>
+            <a href="/" th:href="@{/register}"><button type="button" class="btn btn-primary">Sign Up</button></a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a href="/" th:href="@{/dashboard/}" ><button type="button" class="btn btn-primary">Welcome, <span sec:authentication="name"></span></button></a>
+            <a href="/" th:href="@{/logout}"><button type="button" class="btn btn-primary">Log Out</button></a>
         </div>
     </nav>
 
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="/" th:href="@{/}">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="aboutus.html">About Us</a>
+            <a class="nav-link" href="/" th:href="@{/about}">About Us</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="#">The Hobby Lobby</a>
+            <a class="nav-link" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="yourHobbies.html">Your Hobbies</a>
-        </li>
+
 
     </ul>
-
-
+<!-- 
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="hobbyLobby.html">Hobbies</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/hobbies}">Hobbies</a></li>
             <li class="breadcrumb-item active" aria-current="page">Hobby Page</li>
         </ol>
-    </nav>
+    </nav> -->
 
     <div class="card mb-3" style="width: 90vw; margin: auto;">
-        <img class="card-img-top" src="img/hiking.jpg" alt="Card image cap">
+        <img class="card-img-top" th:src="@{../img/hiking.jpg}" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title">Hobby Title</h5>
-            <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugit nemo harum voluptate
+            <h5 th:text="${hobby.name}" class="card-title">Hobby Title</h5>
+            <p th:text="${hobby.about}" class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugit nemo harum voluptate
                 quibusdam debitis quasi, ullam unde at a itaque laudantium consectetur quas illum distinctio, eaque esse
                 tempore dolores maxime!</p>
         </div>
     </div>
 
-    <form th:action = "@{/hobbies/{hobbyId}/unregister(hobbyId=${hobby.id})}" method = "post">
-        <div class="card text-center" style="width: 18rem;margin: auto;">
-            <div class="card-body">
-                <p class="card-text">Get started to explore this magical world!</p>
-                <button type="submit" class="btn btn-success">Unregister</button>
-            </div>
-        </div>
-    </form>
 
+    <div class="card text-center" style="width: 18rem;margin: auto;" >
 
-    <div style="margin-top: 10vh;">
-        <div class="card text-center" style="margin: auto;margin-top:2vh ;width: 80vw;">
+        <div sec:authorize="isAnonymous()" class="card-body" th:if="${isRegistered eq false}">
+            <p class="card-text">Get started to explore this magical world!</p>
+            <!-- <a th:href="@{/hobbies/{hobby_id}/register (hobby_id=${hobby.id})}"> -->
+            <form th:action="@{/}" method="post" 
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".LoginToRegister">Register Now</button>
+            <!-- </a> -->
 
-            <div class="card-body">
-                <h5 class="card-title">Post title</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum est temporibus
-                    praesentium
-                    beatae voluptate ut obcaecati atque, ipsa amet dolorem natus excepturi a vel sit, corporis tenetur,
-                    officiis eaque animi.</p>
-                <a href="#" class="btn btn-primary">Go to the post</a>
+            <div class="modal fade LoginToRegister" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                    Please Log In or Sign Up to continue with any hobby.
+                    </div>
+                </div>
             </div>
-            <div class="card-footer text-muted">
-                2 days ago
-            </div>
-        </div>
+        </div>        
 
-        <div class="card text-center" style="margin: auto;margin-top:2vh ;width: 80vw;">
-
-            <div class="card-body">
-                <h5 class="card-title">Post title</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum est temporibus
-                    praesentium
-                    beatae voluptate ut obcaecati atque, ipsa amet dolorem natus excepturi a vel sit, corporis tenetur,
-                    officiis eaque animi.</p>
-                <a href="#" class="btn btn-primary">Go to the post</a>
-            </div>
-            <div class="card-footer text-muted">
-                2 days ago
-            </div>
+        <div  class="card-body" >
+            <p class="card-text">Get started to explore this magical world!</p>
+            <!-- <a th:href="@{/hobbies/{hobby_id}/register (hobby_id=${hobby.id})}" class="btn btn-primary">Register Now!</a> -->
+            <form method="post" th:action="@{/hobbies/{hobbyId}/register (hobbyId=${hobby.id})}">
+                <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3" style="margin: auto;">
+                                <button type="submit" name="login-submit" id="login-submit"
+                                class="form-control btn btn-primary">Register Now!</button>
+                            </div>
+                        </div>
+                </div>
+            </form>
         </div>
 
-        <div class="card text-center" style="margin: auto;margin-top:2vh ;width: 80vw;">
-
-            <div class="card-body">
-                <h5 class="card-title">Post title</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum est temporibus
-                    praesentium
-                    beatae voluptate ut obcaecati atque, ipsa amet dolorem natus excepturi a vel sit, corporis tenetur,
-                    officiis eaque animi.</p>
-                <a href="#" class="btn btn-primary">Go to the post</a>
-            </div>
-            <div class="card-footer text-muted">
-                2 days ago
-            </div>
+        <div sec:authorize="isAuthenticated()" class="card-body" th:if="${isRegistered eq true}">
+            <p class="card-text">Not sure if you like this hobby?</p>
+            <!-- <a th:href="@{/hobbies/{hobby_id}/unregister (hobby_id=${hobby.id})}" class="btn btn-primary">Unregister</a> -->
+            <form method="post" th:action="@{/hobbies/{hobbyId}/unregister (hobbyId=${hobby.id})}">
+                <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3" style="margin: auto;">
+                                <button type="submit" name="login-submit" id="login-submit"
+                                class="form-control btn btn-primary">Unregister</button>
+                            </div>
+                        </div>
+                </div>
+            </form>
         </div>
-
-        <div class="card text-center" style="margin: auto;margin-top:2vh ;width: 80vw;">
-
-            <div class="card-body">
-                <h5 class="card-title">Post title</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum est temporibus
-                    praesentium
-                    beatae voluptate ut obcaecati atque, ipsa amet dolorem natus excepturi a vel sit, corporis tenetur,
-                    officiis eaque animi.</p>
-                <a href="#" class="btn btn-primary">Go to the post</a>
-            </div>
-            <div class="card-footer text-muted">
-                2 days ago
-            </div>
-        </div>
-
-        <div class="card text-center" style="margin: auto;margin-top:2vh ;width: 80vw;">
-
-            <div class="card-body">
-                <h5 class="card-title">Post title</h5>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum est temporibus
-                    praesentium
-                    beatae voluptate ut obcaecati atque, ipsa amet dolorem natus excepturi a vel sit, corporis tenetur,
-                    officiis eaque animi.</p>
-                <a href="#" class="btn btn-primary">Go to the post</a>
-            </div>
-            <div class="card-footer text-muted">
-                2 days ago
-            </div>
-        </div>
-
     </div>
+
+
+     <div class="card text-center" style="width: 18rem;margin: auto;" >
+
+        <div sec:authorize="isAuthenticated()" class="card-body" th:if="${isRegistered eq true}">
+            <p class="card-text">Share your feelings with the world</p>
+            <a th:href="@{/hobbies/{hobby_id}/post (hobby_id=${hobby.id})}" class="btn btn-primary">Write a post</a>
+        </div>
+    </div>
+
+
+
+    <div style="margin-top: 5vh;">
+        <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-posts-tab" data-toggle="pill" href="#pills-posts" role="tab"
+                    aria-controls="pills-posts" aria-selected="true">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-users-tab" data-toggle="pill" href="#pills-users" role="tab"
+                    aria-controls="pills-users" aria-selected="false">Users Registered</a>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <div class="tab-content" id="pills-tabContent">
+        
+        <div class="tab-pane fade" id="pills-posts" role="tabpanel" aria-labelledby="pills-posts-tab">
+
+           
+
+            <div style="margin-top: 10vh; width: 90vw;">
+
+                <div sec:authorize="isAnonymous()" class="card">
+                    <div class="card-body">
+                        Please register to this hobby to see the posts.
+                    </div>
+                </div>
+                <div sec:authorize="isAuthenticated()" th:each="post : ${posts}" class="card text-center" style="margin: auto;margin-top:2vh ;width: 80vw;">
+
+
+                    <div class="card" th:if="${isRegistered eq false}">
+                        <div class="card-body">
+                            Please register to this hobby to see the posts.
+                        </div>
+                    </div>
+
+
+                    <div class="card-body" th:if="${isRegistered eq true}">
+                        <h5 class="card-title">By: <span th:text="${post.userId}">Author Name</span></h5>
+                        <p th:utext="${post.text}" class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum est temporibus
+                            praesentium
+                            beatae voluptate ut obcaecati atque, ipsa amet dolorem natus excepturi a vel sit, corporis tenetur,
+                            officiis eaque animi.</p>
+                        <a th:href="@{/dashboard/{user_id} (user_id=${post.userId})}" class="btn btn-primary">Go to author's profile</a>
+                    </div>
+                    <div th:text="${post.createdDate}" class="card-footer text-muted" >
+                        2 days ago
+                    </div>
+                </div>
+
+                
+            </div>
+
+       
+
+        </div>
+
+
+        <div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab"
+            style="display: flex;flex-direction: row;flex-wrap: wrap;">
+            <div th:each="user : ${users}">
+                <div th:if="${user.username eq #authentication.getPrincipal().getUsername()}" class="card mb-3 text-white bg-info" style="margin: auto;margin-top: 10vh; width: 90vw;">
+
+                    <div class="card-body" style="margin: 5px;">
+                        <div th:text="${user.name}"> This is some text within a card body.</div>
+                        <a th:href="@{/dashboard/{user_id} (user_id=${user.id})}"><button type="button" class="btn btn-primary" style="margin: 3px;">Go to Profile</button></a>
+                    </div>
+                    
+                </div>
+
+
+                <div th:unless="${user.username eq #authentication.getPrincipal().getUsername()}" class="card mb-3 " style="margin: auto;margin-top: 10vh; width: 90vw;">
+
+                    <div class="card-body" style="margin: 5px;">
+                        <div th:text="${user.name}"> This is some text within a card body.</div>
+                        <a th:href="@{/dashboard/{user_id} (user_id=${user.id})}"><button type="button" class="btn btn-primary" style="margin: 3px;">Go to Profile</button></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
 
 
 

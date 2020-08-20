@@ -17,8 +17,8 @@ public class User implements UserDetails {
 	private String name;
 	private String username;
 	private String password; 
-	private Set<String> connections=new HashSet<>();
-	private Set<Long> myHobbies=new HashSet<>();
+	private Set<String> connections = new HashSet<>();
+	private Set<Long> myHobbies = new HashSet<>();
     private Set<Authority> authorities = new HashSet<>();
 
 	@Override
