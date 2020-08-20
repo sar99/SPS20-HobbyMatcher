@@ -2,6 +2,7 @@ package com.sps.hobbymatcher.domain;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.io.*; 
 
 import org.springframework.data.annotation.Id;
 import org.springframework.cloud.gcp.data.datastore.core.mapping.Entity;
@@ -17,6 +18,8 @@ public class User implements UserDetails {
 	private String name;
 	private String username;
 	private String password; 
+    private String bio;
+    private File profilePic;
 	private Set<String> connections = new HashSet<>();
 	private Set<Long> myHobbies = new HashSet<>();
     private Set<Authority> authorities = new HashSet<>();
@@ -65,6 +68,18 @@ public class User implements UserDetails {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+    public String getBio() {
+		return bio;
+	}
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
+    public File getProfilePic() {
+		return profilePic;
+	}
+	public void setProfilePic(File profilePic) {
+		this.profilePic = profilePic;
+	}
 	public Set<String> getConnections() {
 		return connections;
 	}
@@ -87,7 +102,7 @@ public class User implements UserDetails {
     @Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", username=" + username + 
-                      ", password=" + password + ", connections=" + connections + 
-                      ", myHobbies=" + myHobbies +", authorities=" + authorities+"]";
+                      ", password=" + password + ", bio=" + bio + ", profilePic=" + profilePic + 
+                      ", connections=" + connections + ", myHobbies=" + myHobbies +", authorities=" + authorities+"]";
 	}
 }
