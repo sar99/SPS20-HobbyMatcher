@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.sps.hobbymatcher.domain.User;
 import com.sps.hobbymatcher.service.UserService;
@@ -87,6 +88,22 @@ public class HomeController {
         model.put("connections", users);
         
         return "dashboard";
+    }
+
+    @GetMapping("/dashboard/edit")
+    public String edit(@AuthenticationPrincipal User user, ModelMap model) {
+
+        Optional<User> user1 = userRepository.findById(user.getId());
+        model.put("user", user1.get());
+        return "edit";
+    }
+
+    @PostMapping("/dashboard/edit")
+    public String edit(@ModelAttribute User user) {
+
+        userRepository.save(user);
+        return "redirect:/dashboard";
+
     }
 
     @GetMapping("/dashboard/{userId}")

@@ -151,7 +151,7 @@ public class HobbiesController {
 
             model.put("user", user1.get());
             model.put("users", users);
-            model.put("posts", postsList);
+            model.put("posts", posts);
             model.put("hobby", hobby);
         }
         return "hobby";

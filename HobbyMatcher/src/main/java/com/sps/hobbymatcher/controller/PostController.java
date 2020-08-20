@@ -121,12 +121,6 @@ public class PostController {
         return "redirect:/hobbies/"+hobbyId;
     }
 
-    @PostMapping("")
-    public String deletePost (@PathVariable Long hobbyId, Post post) {
-
-        return "redirect:/hobbies/"+hobbyId;
-    }
-
     @PostMapping("/like/{postId}")
     public String likePost (@AuthenticationPrincipal User user, @PathVariable Long postId, @PathVariable Long hobbyId) {
         
