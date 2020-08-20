@@ -56,6 +56,7 @@
     </div>
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+
             <div class="jumbotron jumbotron-fluid">
                 <div class="container">
                     <h1 th:text="${user.name}" class="display-4">Fluid jumbotron</h1>
@@ -63,6 +64,41 @@
                         parent.</p>
                 </div>
             </div>
+
+            <div class="card text-center" style="width: 18rem;margin: auto;" th:if="${user.username ne #authentication.getPrincipal().getUsername()}">       
+
+                <div sec:authorize="isAuthenticated()" class="card-body" th:if="${isFollowing eq false}">
+                    <p class="card-text">Want to know more about this user?</p>
+                    <!-- <a th:href="@{/hobbies/{hobby_id}/register (hobby_id=${hobby.id})}" class="btn btn-primary">Register Now!</a> -->
+                    <form method="post" th:action="@{/follow/{user_id} (user_id=${user.id})}">
+                        <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6 col-sm-offset-3" style="margin: auto;">
+                                        <input type="submit" name="login-submit" id="login-submit"
+                                        class="form-control btn btn-primary" value="Follow" />
+                                    </div>
+                                </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div sec:authorize="isAuthenticated()" class="card-body" th:if="${isFollowing eq true}">
+                    <p class="card-text">Not sure of this connection?</p>
+                    <!-- <a th:href="@{/hobbies/{hobby_id}/unregister (hobby_id=${hobby.id})}" class="btn btn-primary">Unregister</a> -->
+                    <form method="post" th:action="@{/unfollow/{user_id} (user_id=${user.id})}">
+                        <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6 col-sm-offset-3" style="margin: auto;">
+                                        <input type="submit" name="login-submit" id="login-submit"
+                                        class="form-control btn btn-primary" value="Unfollow" />
+                                    </div>
+                                </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+          
+            
         </div>
 
 

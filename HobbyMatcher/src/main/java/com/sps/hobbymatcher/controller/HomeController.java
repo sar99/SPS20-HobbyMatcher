@@ -79,7 +79,10 @@ public class HomeController {
     }
 
     @GetMapping("/dashboard/{userId}")
-    public String home(@PathVariable Long userId, ModelMap model) {
+    public String home(@PathVariable Long userId, ModelMap model, @AuthenticationPrincipal User loggedUser) {
+
+
+        boolean isFollowing = false;
 
         Optional<User> userOpt = userRepository.findById(userId);
 
@@ -102,17 +105,70 @@ public class HomeController {
         
         for (Iterator<String> it = usersName.iterator(); it.hasNext(); ) {
 
+
             List<User> userList = userRepository.findByUsername(it.next());
 
             if(userList.size()>0) {
                 users.add(userList.get(0));
             }
         }
- 
+
+
+
+        Optional<User> loggedUserOpt = userRepository.findById(loggedUser.getId()); 
+
+        User curUser = new User();
+
+        if(loggedUserOpt.isPresent()) {
+            curUser = loggedUserOpt.get();
+        }
+
+        Set<String> following = curUser.getConnections();
+
+        for (Iterator<String> it = following.iterator(); it.hasNext(); ) {
+
+            String id = it.next();
+
+            System.out.println("Logged: " + user.getUsername());
+            System.out.println("Current: " + id);
+            System.out.println(loggedUser!=null);
+            System.out.println(id.equals(user.getUsername()));
+            if(loggedUser!=null && id.equals(user.getUsername()))
+            {
+                isFollowing=true;
+            }
+        }
+
+
+
+        System.out.println("isFollowing: " + isFollowing);
+        if(loggedUser!=null)
+                model.put("isFollowing", isFollowing);
         model.put("user", user);
         model.put("hobbies", hobbies);
         model.put("connections", users);
         
         return "dashboard";
+    }
+
+
+    @PostMapping("/follow/{userId}")
+    public String addConnection(@AuthenticationPrincipal User user, @PathVariable Long userId) {
+
+        Optional<User> userOpt = userRepository.findById(userId);
+        if(userOpt.isPresent()) {
+            userService.addConnection(user, userOpt.get());
+        }
+        return "redirect:/dashboard/" + userId;
+    }
+
+    @PostMapping("/unfollow/{userId}")
+    public String removeConnection(@AuthenticationPrincipal User user, @PathVariable Long userId) {
+
+        Optional<User> userOpt = userRepository.findById(userId);
+        if(userOpt.isPresent()) {
+            userService.removeConnection(user, userOpt.get());
+        }
+        return "redirect:/dashboard/" + userId;
     }
 }

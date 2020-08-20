@@ -55,23 +55,7 @@
     </div>
 
 
-    <div class="card text-center" style="width: 18rem;margin: auto;" >
-
-        <div sec:authorize="isAnonymous()" class="card-body" th:if="${isRegistered eq false}">
-            <p class="card-text">Get started to explore this magical world!</p>
-            <!-- <a th:href="@{/hobbies/{hobby_id}/register (hobby_id=${hobby.id})}"> -->
-            <form th:action="@{/}" method="post" 
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".LoginToRegister">Register Now</button>
-            <!-- </a> -->
-
-            <div class="modal fade LoginToRegister" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                    Please Log In or Sign Up to continue with any hobby.
-                    </div>
-                </div>
-            </div>
-        </div>        
+    <div class="card text-center" style="width: 18rem;margin: auto;" >       
 
         <div sec:authorize="isAuthenticated()" class="card-body" th:if="${isRegistered eq false}">
             <p class="card-text">Get started to explore this magical world!</p>

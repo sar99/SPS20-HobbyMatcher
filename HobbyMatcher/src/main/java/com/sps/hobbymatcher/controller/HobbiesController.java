@@ -140,6 +140,7 @@ public class HobbiesController {
             
             if(loggedUser!=null)
                 model.put("isRegistered", isRegistered);
+            model.put("user", loggedUser);
             model.put("users", users);
             model.put("posts", posts);
             model.put("hobby", hobby);
