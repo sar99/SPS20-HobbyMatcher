@@ -188,7 +188,8 @@ public class HomeController {
 
         Optional<User> userOpt = userRepository.findById(userId);
         if(userOpt.isPresent()) {
-            userService.addConnection(user, userOpt.get());
+            Optional<User> user1 = userRepository.findById(user.getId());
+            userService.addConnection(user1.get(), userOpt.get());
         }
         return "redirect:/dashboard/" + userId;
     }
@@ -198,7 +199,8 @@ public class HomeController {
 
         Optional<User> userOpt = userRepository.findById(userId);
         if(userOpt.isPresent()) {
-            userService.removeConnection(user, userOpt.get());
+            Optional<User> user1 = userRepository.findById(user.getId());
+            userService.removeConnection(user1.get(), userOpt.get());
         }
         return "redirect:/dashboard/" + userId;
     }

@@ -83,6 +83,14 @@ public class HobbiesController {
                     otherHobbies.add(hobby);
                 }
             }
+
+            Collections.sort(otherHobbies, new Comparator<Hobby>(){
+                @Override
+                public int compare(Hobby hobby1, Hobby hobby2) {
+                    return hobby1.getName().compareTo(hobby2.getName());
+                }
+            });
+
             model.put("hobbies", otherHobbies);
 
             System.out.println(user);
@@ -98,7 +106,9 @@ public class HobbiesController {
     public String register(@PathVariable Long hobbyId, @AuthenticationPrincipal User user) {   
         
         Optional<Hobby> hobby = hobbyRepository.findById(hobbyId);
-        userService.addHobby(user, hobby);
+        Optional<User> user1 = userRepository.findById(user.getId());
+
+        userService.addHobby(user1.get(), hobby);
         
         return "redirect:/hobbies/"+hobbyId;
     }
@@ -107,9 +117,11 @@ public class HobbiesController {
     public String unregister(@PathVariable Long hobbyId, @AuthenticationPrincipal User user) {   
         
         Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
+
+        Optional<User> user1 = userRepository.findById(user.getId());
         if(hobbyOpt.isPresent()) {
             Hobby hobby=hobbyOpt.get();
-            userService.removeHobby(user, hobby);
+            userService.removeHobby(user1.get(), hobby);
         }
         return "redirect:/hobbies/"+hobbyId;
     }

@@ -127,7 +127,8 @@ public class PostController {
         Optional<Post> postOpt = postRepository.findById(postId);
 
         if(postOpt.isPresent()) {
-            postService.likePost(postOpt.get(), user);
+            Optional<User> user1 = userRepository.findById(user.getId());
+            postService.likePost(postOpt.get(), user1.get());
         }
            System.out.println("LIKKEDDDD!!!");
 
