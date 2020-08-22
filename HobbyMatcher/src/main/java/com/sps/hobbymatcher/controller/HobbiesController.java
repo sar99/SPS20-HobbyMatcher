@@ -168,13 +168,13 @@ public class HobbiesController {
             hobby = hobbyService.createHobby(hobbyOpt.get(), user);
         }
 
-        return "redirect: /hobbies/"+hobby.getId();
+        return "redirect:/hobbies/"+hobby.getId();
     }
 
     @PostMapping("/createhobby")
     public String createHobby() {   
         Hobby hobby=new Hobby();
         hobby = hobbyRepository.save(hobby);
-        return "redirect: /createhobby/"+hobby.getId();
+        return "redirect:/createhobby/"+hobby.getId();
     }
 }

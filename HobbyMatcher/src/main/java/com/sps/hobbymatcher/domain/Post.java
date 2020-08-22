@@ -19,11 +19,12 @@ public class Post {
 	private String text;
 	private String video;
 	private Image image;
-	private Long votes;
+	private long votes= 0L;
     private Long userId;
     private Date createdDate;
-	private Set<User> usersVoted=new HashSet<>();
+	private Set<Long> usersVoted=new HashSet<>();
 	
+
     public Long getId() {
 		return id;
 	}
@@ -48,10 +49,11 @@ public class Post {
 	public void setImage(Image image) {
 		this.image = image;
 	}
-	public Long getVotes() {
+	public long getVotes() {
+        // System.out.println("get votes: " + votes);
 		return votes;
 	}
-	public void setVotes(Long votes) {
+	public void setVotes(long votes) {
 		this.votes = votes;
 	}
     public Long getUserId() {
@@ -66,10 +68,10 @@ public class Post {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public Set<User> getUsersVoted() {
+	public Set<Long> getUsersVoted() {
 		return usersVoted;
 	}
-	public void setUsersVoted(Set<User> usersVoted) {
+	public void setUsersVoted(Set<Long> usersVoted) {
 		this.usersVoted = usersVoted;
 	}
 

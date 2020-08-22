@@ -56,21 +56,35 @@ public class PostService {
 
     public void likePost(Post post, User user) {
 
-        if(post.getUsersVoted().contains(user))
+        System.out.println("I am at start");
+        if(post.getUsersVoted().contains(user.getId()))
         {
-            post.getUsersVoted().remove(user);
+            System.out.println("I am in if");
+            post.getUsersVoted().remove(user.getId());
             Long votes=post.getVotes();
             votes--;
             post.setVotes(votes);
+            
         }
         else
         {
-            post.getUsersVoted().add(user);
-            Long votes=post.getVotes();
+            System.out.println("I am in else");
+            System.out.println(post);
+            System.out.println(user);
+            post.getUsersVoted().add(user.getId());
+
+            System.out.println("working fine");
+            long votes=post.getVotes();
+            System.out.println("working fine1");
+            System.out.println(votes);
             votes++;
+            System.out.println(votes);
             post.setVotes(votes);
+            System.out.println("working fine2");
+            
         }
         postRepository.save(post);
+        System.out.println("working fine3");
         return;
     }
 
