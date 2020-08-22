@@ -1,13 +1,3 @@
-// let button = document.querySelector(".like-button");
-
-// button.addEventListener("click", function(e) {
-//   e.preventDefault();
-//   this.classList.toggle("active");
-//   this.classList.add("animated");
-//   generateClones(this);
-// });
-
-
 function clickLike(postId, hobbyId)
 {
     let id = "#post" + postId;
@@ -15,28 +5,52 @@ function clickLike(postId, hobbyId)
 
     console.log(id);
 
-    // e.preventDefault();
-
     button.classList.toggle("active");
     button.classList.add("animated");
     generateClones(button);
 
-    // var csrfParam   = $("meta[name='_csrf_parameter']").attr("content");
-    // var data        = {};
-    // data[csrfParam] = csrfToken;
-
      let url = "/hobbies/" + hobbyId + "/post/like/" + postId;
-    // $.post(url, data, function(response) {
-    //     // getComments();
-    //     // $('input[name=comment').val('');
-
-    // });
 
     var xhttp = new XMLHttpRequest();
     var token = $("meta[name='_csrf']").attr("content"); 
     var header = $("meta[name='_csrf_header']").attr("content");
     xhttp.open("POST", url,  true);
     xhttp.setRequestHeader(header, token);
+    xhttp.send();
+}
+
+
+function initLike(postId, hobbyId)
+{
+    let id = "#post" + postId;
+    let button = document.querySelector(id);
+
+    console.log("onload" + id);
+
+    // button.classList.toggle("active");
+    // button.classList.add("animated");
+    // generateClones(button);
+
+     let url = "/hobbies/" + hobbyId + "/post/isliked/" + postId;
+
+    var xhttp = new XMLHttpRequest();
+    var token = $("meta[name='_csrf']").attr("content"); 
+    var header = $("meta[name='_csrf_header']").attr("content");
+    xhttp.open("GET", url,  true);
+    xhttp.setRequestHeader(header, token);
+
+    xhttp.onreadystatechange = function() {
+        if (xhttp.readyState === 4) {
+            console.log(xhttp.response);
+            if(xhttp.response == "true")
+            {
+                console.log("hi");
+                button.classList.add("active");
+            }
+
+        }
+    }
+
     xhttp.send();
 }
 

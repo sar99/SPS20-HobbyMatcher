@@ -130,6 +130,5 @@ public class PostController {
            System.out.println("LIKKEDDDD!!!");
 
         return "redirect:/hobbies/"+hobbyId;
-        // return "";
     }
 }
