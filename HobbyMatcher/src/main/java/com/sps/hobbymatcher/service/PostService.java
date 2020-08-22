@@ -32,6 +32,9 @@ public class PostService {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private HobbyRepository hobbyRepository;
+
     @Autowired 
     private HobbyService hobbyService;
 
@@ -40,36 +43,48 @@ public class PostService {
     
     public Post uploadPost(Hobby hobby, Post post) {
 
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        try {
-            Entity hobbyEntity = datastore.get(KeyFactory.createKey("hobbies", hobby.getId()));
-            Set<Post> posts = hobby.getPosts();
-            posts.add(post);
-            hobbyEntity.setProperty("posts", posts);
-            datastore.put(hobbyEntity);
-        } catch (EntityNotFoundException e) {
-        // This should never happen
-        }
+        Set<Long> posts = hobby.getPosts();
+       
+        post.setCreatedDate(new Date());
+        postRepository.save(post);
+        posts.add(post.getId());
+        hobbyRepository.save(hobby);
+
 
         return post;
     }
 
     public void likePost(Post post, User user) {
 
-        if(post.getUsersVoted().contains(user))
+        System.out.println("I am at start");
+        if(post.getUsersVoted().contains(user.getId()))
         {
-            post.getUsersVoted().remove(user);
+            System.out.println("I am in if");
+            post.getUsersVoted().remove(user.getId());
             Long votes=post.getVotes();
             votes--;
             post.setVotes(votes);
+            
         }
         else
         {
-            post.getUsersVoted().add(user);
-            Long votes=post.getVotes();
+            System.out.println("I am in else");
+            System.out.println(post);
+            System.out.println(user);
+            post.getUsersVoted().add(user.getId());
+
+            System.out.println("working fine");
+            long votes=post.getVotes();
+            System.out.println("working fine1");
+            System.out.println(votes);
             votes++;
+            System.out.println(votes);
             post.setVotes(votes);
+            System.out.println("working fine2");
+            
         }
+        postRepository.save(post);
+        System.out.println("working fine3");
         return;
     }
 
@@ -77,9 +92,17 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public void deletePost(Post post) {
-        // post.getUser().getMyPosts().remove(post);
-        // post.getHobby().getPosts().remove(post);
-        // postRepository.deleteById(post.getId());
+    public void deletePost(Long postId, Long hobbyId) {
+
+        Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
+        Optional<Post> postOpt = postRepository.findById(postId);
+
+        if(hobbyOpt.isPresent() && postOpt.isPresent()) {
+            Hobby hobby = hobbyOpt.get();
+            Set<Long> posts = hobby.getPosts();
+            posts.remove(postId);
+            hobbyRepository.save(hobby);
+        }
+        postRepository.deleteById(postId);
     }
 }
