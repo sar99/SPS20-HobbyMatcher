@@ -69,16 +69,10 @@ public class PostController {
         return "redirect:/hobbies/"+hobbyId;
     }
 
-
-     @GetMapping("/postId")
-    public String displayPost() {
-        return "post";
-    }
-
-    @PostMapping("/{postId}")
+    @GetMapping("/{postId}")
     public String displayPost(@PathVariable Long hobbyId, @PathVariable Long postId, ModelMap model) {
 
-        Set<String> usersVoted = new HashSet<>();
+        List<String> usersVoted = new ArrayList<>();
         Optional<Post> postOpt = postRepository.findById(postId);
 
         if(postOpt.isPresent()) {
@@ -102,12 +96,20 @@ public class PostController {
                     usersVoted.add(userVoted.get().getUsername());
                 }
             }
+
+            Collections.sort(usersVoted, new Comparator<String>(){
+                @Override
+                public int compare(String user1, String user2) {
+                    return user1.compareTo(user2);
+                }
+            });
         }
 
         model.put("usersVoted", usersVoted);
 
-        return "redirect:/hobbies/"+hobbyId+"/post/"+postId;
+        return "post";
     }
+
 
     @PostMapping("/delete/{postId}")
     public String deletePost (@PathVariable Long hobbyId, @PathVariable Long postId) {

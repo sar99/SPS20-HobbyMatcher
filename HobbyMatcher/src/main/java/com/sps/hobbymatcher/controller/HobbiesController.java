@@ -68,8 +68,10 @@ public class HobbiesController {
             }
         } else {
 
-            Set<Long> hobbiesId = user.getMyHobbies();
-            Set<Hobby> otherHobbies  = new HashSet<>();
+            Optional<User> user1 = userRepository.findById(user.getId());
+
+            Set<Long> hobbiesId = (user1.get()).getMyHobbies();
+            List<Hobby> otherHobbies  = new ArrayList<>();
 
             for (Iterator<Hobby> it = hobbies.iterator(); it.hasNext(); ) {
 
@@ -122,8 +124,8 @@ public class HobbiesController {
             Hobby hobby = hobbyOpt.get();
             Set<Long> postsId = hobby.getPosts();
             Set<Long> usersId = hobby.getUsers();
-            Set<Post> posts = new HashSet<>();
-            Set<User> users = new HashSet<>();
+            List<Post> posts = new ArrayList<>();
+            List<User> users = new ArrayList<>();
             for (Iterator<Long> it = postsId.iterator(); it.hasNext(); ) {
 
                 Optional<Post> post = postRepository.findById(it.next());
@@ -132,9 +134,7 @@ public class HobbiesController {
                 }
             }
 
-            List<Post> postsList = new ArrayList<>(posts);
-
-            Collections.sort(postsList, new Comparator<Post>(){
+            Collections.sort(posts, new Comparator<Post>(){
                 @Override
                 public int compare(Post post1, Post post2) {
                     return post2.getCreatedDate().compareTo(post1.getCreatedDate());
@@ -155,12 +155,23 @@ public class HobbiesController {
                     users.add(user.get());
                 }
             }
+
+            Collections.sort(users, new Comparator<User>(){
+                @Override
+                public int compare(User user1, User user2) {
+                    return user1.getName().compareTo(user2.getName());
+                }
+            });
+
+
+            Optional<User> user1 = userRepository.findById(loggedUser.getId());
+
+            model.put("user", user1.get());
             
             if(loggedUser!=null)
                 model.put("isRegistered", isRegistered);
-            model.put("user", loggedUser);
             model.put("users", users);
-            model.put("posts", postsList);
+            model.put("posts", posts);
             model.put("hobby", hobby);
         }
         return "hobby";
@@ -183,7 +194,8 @@ public class HobbiesController {
         Optional<Hobby> hobbyOpt  = hobbyRepository.findById(hobbyId);
         Hobby hobby = new Hobby();
         if(hobbyOpt.isPresent()) {
-            hobby = hobbyService.createHobby(hobbyOpt.get(), user);
+            Optional<User> user1 = userRepository.findById(user.getId());
+            hobby = hobbyService.createHobby(hobbyOpt.get(), user1.get());
         }
 
         return "redirect:/hobbies/"+hobby.getId();

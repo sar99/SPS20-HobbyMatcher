@@ -48,12 +48,15 @@ public class HomeController {
     
     @GetMapping("/dashboard")
     public String home(@AuthenticationPrincipal User user, ModelMap model) {
-        
-        Set<Long> hobbiesId = user.getMyHobbies();
-        Set<String> usersName = user.getConnections();
 
-        Set<Hobby> hobbies = new HashSet<>();
-        Set<User> users = new HashSet<>();
+        Optional<User> user1 = userRepository.findById(user.getId());
+        
+        Set<Long> hobbiesId = (user1.get()).getMyHobbies();
+        Set<String> usersName = (user1.get()).getConnections();
+
+
+        List<Hobby> hobbies = new ArrayList<>();
+        List<User> users = new ArrayList<>();
 
         for (Iterator<Long> it = hobbiesId.iterator(); it.hasNext(); ) {
             Optional<Hobby> hobby = hobbyRepository.findById(it.next());
@@ -61,6 +64,13 @@ public class HomeController {
                 hobbies.add(hobby.get());
             }
         }
+
+        Collections.sort(hobbies, new Comparator<Hobby>(){
+            @Override
+            public int compare(Hobby hobby1, Hobby hobby2) {
+                return hobby1.getName().compareTo(hobby2.getName());
+            }
+        });
         
         for (Iterator<String> it = usersName.iterator(); it.hasNext(); ) {
 
@@ -70,8 +80,15 @@ public class HomeController {
                 users.add(userList.get(0));
             }
         }
+
+        Collections.sort(users, new Comparator<User>(){
+            @Override
+            public int compare(User user1, User user2) {
+                return user1.getName().compareTo(user2.getName());
+            }
+        });
         
-        model.put("user", user);
+        model.put("user", (user1.get()));
         model.put("hobbies", hobbies);
         model.put("connections", users);
         
@@ -93,8 +110,8 @@ public class HomeController {
         }
         Set<Long> hobbiesId = user.getMyHobbies();
         Set<String> usersName = user.getConnections();
-        Set<Hobby> hobbies = new HashSet<>();
-        Set<User> users = new HashSet<>();
+        List<Hobby> hobbies = new ArrayList<>();
+        List<User> users = new ArrayList<>();
 
         for (Iterator<Long> it = hobbiesId.iterator(); it.hasNext(); ) {
             Optional<Hobby> hobby = hobbyRepository.findById(it.next());
@@ -102,6 +119,13 @@ public class HomeController {
                 hobbies.add(hobby.get());
             }
         }
+
+        Collections.sort(hobbies, new Comparator<Hobby>(){
+            @Override
+            public int compare(Hobby hobby1, Hobby hobby2) {
+                return hobby1.getName().compareTo(hobby2.getName());
+            }
+        });
         
         for (Iterator<String> it = usersName.iterator(); it.hasNext(); ) {
 
@@ -112,6 +136,13 @@ public class HomeController {
                 users.add(userList.get(0));
             }
         }
+
+        Collections.sort(users, new Comparator<User>(){
+            @Override
+            public int compare(User user1, User user2) {
+                return user1.getName().compareTo(user2.getName());
+            }
+        });
 
 
 
