@@ -98,8 +98,13 @@
                 </div>
             </div>
           
+            <div sec:authorize="isAuthenticated()" th:if="${user.username eq #authentication.getPrincipal().getUsername()}">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Edit profile</button>
+            </div>
             
         </div>
+
+    
 
 
         <div class="tab-pane fade" id="pills-posts" role="tabpanel" aria-labelledby="pills-posts-tab">
@@ -109,7 +114,7 @@
 
 
                 <div th:each="hobby : ${hobbies}" class="card" style="width: 18rem; margin: 10px">
-                    <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
+                    <img class="card-img-top" src="../img/reading.jpeg" alt="Card image cap">
                     <div class="card-body">
                         <h5 th:text="${hobby.name}" class="card-title">Card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
@@ -140,6 +145,50 @@
         </div>
     </div>
 
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/dashboard/edit}" method="post" th:object="${user}">
+                    <div class="modal-body">
+
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <input type="hidden" th:field="${user.id}"  id="id" name="id"/>
+                            <input type="hidden" th:field=${user.username} id="username" name="username" />
+                            <input type="hidden" th:field=${user.myHobbies} id="myHobbies" name="myHobbies" />
+                            <!-- <input type="hidden" th:field=${user.authorities} id="authorities" name="authorities" /> -->
+                            <input type="hidden" th:field=${user.password} id="password" name="password" />
+                            <input type="hidden" th:field=${user.connections} id="connections" name="connections" />
+                        
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">User Id</label>
+                                <input type="text" class="form-control" id="id" name="id" th:attr="value=${user.id}" th:field="*{id}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" th:attr="value=${user.username}" th:field="*{username}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Name </label>
+                                <input type="text" class="form-control" id="name" name="name" th:attr="value=${user.name}" th:field="*{name}">
+                            </div>
+            
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" id="submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 

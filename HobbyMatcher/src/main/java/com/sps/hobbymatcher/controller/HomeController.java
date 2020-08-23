@@ -20,6 +20,7 @@ import com.sps.hobbymatcher.service.PostService;
 import com.sps.hobbymatcher.repository.HobbyRepository;
 import com.sps.hobbymatcher.repository.PostRepository;
 import com.sps.hobbymatcher.repository.UserRepository;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class HomeController {
@@ -93,6 +94,22 @@ public class HomeController {
         model.put("connections", users);
         
         return "dashboard";
+    }
+
+    @GetMapping("/dashboard/edit")
+    public String edit(@AuthenticationPrincipal User user, ModelMap model) {
+
+        Optional<User> user1 = userRepository.findById(user.getId());
+        model.put("user", user1.get());
+        return "edit";
+    }
+
+    @PostMapping("/dashboard/edit")
+    public String edit(@ModelAttribute User user) {
+
+        userRepository.save(user);
+        return "redirect:/dashboard";
+
     }
 
     @GetMapping("/dashboard/{userId}")
@@ -188,7 +205,8 @@ public class HomeController {
 
         Optional<User> userOpt = userRepository.findById(userId);
         if(userOpt.isPresent()) {
-            userService.addConnection(user, userOpt.get());
+            Optional<User> user1 = userRepository.findById(user.getId());
+            userService.addConnection(user1.get(), userOpt.get());
         }
         return "redirect:/dashboard/" + userId;
     }
@@ -198,7 +216,8 @@ public class HomeController {
 
         Optional<User> userOpt = userRepository.findById(userId);
         if(userOpt.isPresent()) {
-            userService.removeConnection(user, userOpt.get());
+            Optional<User> user1 = userRepository.findById(user.getId());
+            userService.removeConnection(user1.get(), userOpt.get());
         }
         return "redirect:/dashboard/" + userId;
     }
