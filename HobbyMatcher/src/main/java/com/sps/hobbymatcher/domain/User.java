@@ -22,7 +22,6 @@ public class User implements UserDetails {
 	private Set<Long> myHobbies=new HashSet<>();
     private Set<Authority> authorities = new HashSet<>();
     private String bio;
-    private File profilePic;
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -92,17 +91,11 @@ public class User implements UserDetails {
 	public void setBio(String bio) {
 		this.bio = bio;
 	}
-    public File getProfilePic() {
-		return profilePic;
-	}
-	public void setProfilePic(File profilePic) {
-		this.profilePic = profilePic;
-	}
     
     @Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", username=" + username + 
-                       ", password=" + password + ", bio=" + bio + ", profilePic=" + profilePic + 
+                       ", password=" + password + ", bio=" + bio + 
                       ", connections=" + connections + ", myHobbies=" + myHobbies +", authorities=" + authorities+"]";
 	}
 }
