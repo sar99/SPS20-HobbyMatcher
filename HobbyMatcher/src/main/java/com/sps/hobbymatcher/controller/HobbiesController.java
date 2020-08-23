@@ -123,7 +123,9 @@ public class HobbiesController {
         Optional<User> user1 = userRepository.findById(user.getId());
         if(hobbyOpt.isPresent()) {
             Hobby hobby=hobbyOpt.get();
-             userService.removeHobby(user1.get(), hobby);
+
+            userService.removeHobby(user1.get(), hobby);
+
         }
         return "redirect:/hobbies/"+hobbyId;
     }
