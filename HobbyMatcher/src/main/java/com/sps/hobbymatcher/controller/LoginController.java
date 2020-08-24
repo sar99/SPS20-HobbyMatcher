@@ -23,10 +23,11 @@ public class LoginController {
     
     @GetMapping("/login")
     public String login(@AuthenticationPrincipal User user) {
-        System.out.println(user);
+        
         if(user != null) {
             return "redirect:/dashboard";
         }
+
         return "login";
     }
     
@@ -36,6 +37,7 @@ public class LoginController {
         if(user != null) {
             return "redirect:/dashboard";
         }
+        
         model.put("user", new User());
 
         return "register";

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sps.hobbymatcher.domain.User;
 import com.sps.hobbymatcher.domain.Post;
+import com.sps.hobbymatcher.domain.Comment;
 import com.sps.hobbymatcher.domain.Hobby;
 import com.sps.hobbymatcher.service.UserService;
 import com.sps.hobbymatcher.service.HobbyService;
@@ -49,18 +50,27 @@ public class PostController {
     private UserRepository userRepository;
     
     @GetMapping("")
-    public String createPost (ModelMap model) {
+    public String createPost (ModelMap model, @PathVariable Long hobbyId) {
 
-        model.put("post", new Post());
+        Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
+
+        if(hobbyOpt.isPresent()) {
+            model.put("post", new Post());
+        }
+        else {
+            model.put("ErrorMessage1","Invalid Hobby Id!");
+        }
 
         return "post";
-
     }
     
     @PostMapping("")
     public String uploadPost (@PathVariable Long hobbyId, @AuthenticationPrincipal User user, @ModelAttribute Post post) {
+        
         post.setUserId(user.getId());
+
         Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
+
         if(hobbyOpt.isPresent()) {
             Hobby hobby = hobbyOpt.get();
             post = postService.uploadPost(hobby, post);
@@ -72,21 +82,32 @@ public class PostController {
     @GetMapping("/{postId}")
     public String displayPost(@PathVariable Long hobbyId, @PathVariable Long postId, ModelMap model) {
 
-        List<String> usersVoted = new ArrayList<>();
         Optional<Post> postOpt = postRepository.findById(postId);
+        Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
+
+        if(!hobbyOpt.isPresent()) {
+            model.put("ErrorMessage2", "Invalid Hobby Id!");
+        }
 
         if(postOpt.isPresent()) {
+
             Post post = postOpt.get();
+            Hobby hobby = hobbyOpt.get();
 
             model.put("post", post);
+            model.put("hobby", hobby);
+            model.put("rootComment", new Comment());
 
             Set<Long> usersId = post.getUsersVoted();
             Long authorId = post.getUserId();
 
             Optional<User> authorOpt = userRepository.findById(authorId);
+            
             if(authorOpt.isPresent()) {
                 model.put("author", authorOpt.get());
             }
+
+            List<String> usersVoted = new ArrayList<>();
 
             for (Iterator<Long> it = usersId.iterator(); it.hasNext(); ) {
 
@@ -96,18 +117,31 @@ public class PostController {
                     usersVoted.add(userVoted.get().getUsername());
                 }
             }
-
+            
             Collections.sort(usersVoted, new Comparator<String>(){
                 @Override
                 public int compare(String user1, String user2) {
                     return user1.compareTo(user2);
                 }
             });
+
+            List<Comment> comments = post.getComments();
+
+            Collections.sort(comments, new Comparator<Comment>(){
+                @Override
+                public int compare(Comment comment1, Comment comment2) {
+                    return (comment2.getCreatedDate()).compareTo(comment1.getCreatedDate());
+                }
+            });
+            
+            model.put("comments", comments);
+            model.put("usersVoted", usersVoted);
+        }
+        else {
+            model.put("ErrorMessage3", "Post does not exists!");
         }
 
-        model.put("usersVoted", usersVoted);
-
-        return "post";
+        return "displayPost";
     }
 
 

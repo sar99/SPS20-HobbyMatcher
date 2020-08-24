@@ -97,14 +97,6 @@ public class HomeController {
         return "dashboard";
     }
 
-    @GetMapping("/dashboard/edit")
-    public String edit(@AuthenticationPrincipal User user, ModelMap model) {
-
-        Optional<User> user1 = userRepository.findById(user.getId());
-        model.put("user", user1.get());
-        return "edit";
-    }
-
     @PostMapping("/dashboard/edit")
     public String edit(User user) {
 
@@ -119,86 +111,81 @@ public class HomeController {
     @GetMapping("/dashboard/{userId}")
     public String home(@PathVariable Long userId, ModelMap model, @AuthenticationPrincipal User loggedUser) {
 
-
         boolean isFollowing = false;
 
         Optional<User> userOpt = userRepository.findById(userId);
 
-        User user = new User();
-
         if(userOpt.isPresent()) {
-            user = userOpt.get();
-        }
-        Set<Long> hobbiesId = user.getMyHobbies();
-        Set<String> usersName = user.getConnections();
-        List<Hobby> hobbies = new ArrayList<>();
-        List<User> users = new ArrayList<>();
 
-        for (Iterator<Long> it = hobbiesId.iterator(); it.hasNext(); ) {
-            Optional<Hobby> hobby = hobbyRepository.findById(it.next());
-            if(hobby.isPresent()) {
-                hobbies.add(hobby.get());
+            User user = userOpt.get();
+
+            Set<Long> hobbiesId = user.getMyHobbies();
+            Set<String> usersName = user.getConnections();
+    
+            List<Hobby> hobbies = new ArrayList<>();
+            List<User> users = new ArrayList<>();
+
+            for (Iterator<Long> it = hobbiesId.iterator(); it.hasNext(); ) {
+
+                Optional<Hobby> hobby = hobbyRepository.findById(it.next());
+                if(hobby.isPresent()) {
+                    hobbies.add(hobby.get());
+                }
             }
-        }
 
-        Collections.sort(hobbies, new Comparator<Hobby>(){
-            @Override
-            public int compare(Hobby hobby1, Hobby hobby2) {
-                return hobby1.getName().compareTo(hobby2.getName());
+            Collections.sort(hobbies, new Comparator<Hobby>(){
+                @Override
+                public int compare(Hobby hobby1, Hobby hobby2) {
+                    return hobby1.getName().compareTo(hobby2.getName());
+                }
+            });
+            
+            for (Iterator<String> it = usersName.iterator(); it.hasNext(); ) {
+
+                List<User> userList = userRepository.findByUsername(it.next());
+
+                if(userList.size()>0) {
+                    users.add(userList.get(0));
+                }
             }
-        });
-        
-        for (Iterator<String> it = usersName.iterator(); it.hasNext(); ) {
 
+            Collections.sort(users, new Comparator<User>(){
+                @Override
+                public int compare(User user1, User user2) {
+                    return user1.getName().compareTo(user2.getName());
+                }
+            });
 
-            List<User> userList = userRepository.findByUsername(it.next());
+            model.put("user", user);
+            model.put("hobbies", hobbies);
+            model.put("connections", users);
 
-            if(userList.size()>0) {
-                users.add(userList.get(0));
-            }
-        }
+            if(loggedUser != null) {
 
-        Collections.sort(users, new Comparator<User>(){
-            @Override
-            public int compare(User user1, User user2) {
-                return user1.getName().compareTo(user2.getName());
-            }
-        });
+                Optional<User> loggedUserOpt = userRepository.findById(loggedUser.getId()); 
 
+                User curUser = loggedUserOpt.get();
 
+                Set<String> following = curUser.getConnections();
 
-        Optional<User> loggedUserOpt = userRepository.findById(loggedUser.getId()); 
+                for (Iterator<String> it = following.iterator(); it.hasNext(); ) {
 
-        User curUser = new User();
+                    String id = it.next();
 
-        if(loggedUserOpt.isPresent()) {
-            curUser = loggedUserOpt.get();
-        }
+                    if(id.equals(user.getUsername())) {
+                        isFollowing=true;
+                        break;
+                    }
+                }
 
-        Set<String> following = curUser.getConnections();
-
-        for (Iterator<String> it = following.iterator(); it.hasNext(); ) {
-
-            String id = it.next();
-
-            System.out.println("Logged: " + user.getUsername());
-            System.out.println("Current: " + id);
-            System.out.println(loggedUser!=null);
-            System.out.println(id.equals(user.getUsername()));
-            if(loggedUser!=null && id.equals(user.getUsername()))
-            {
-                isFollowing=true;
-            }
-        }
-
-
-
-        System.out.println("isFollowing: " + isFollowing);
-        if(loggedUser!=null)
                 model.put("isFollowing", isFollowing);
-        model.put("user", user);
-        model.put("hobbies", hobbies);
-        model.put("connections", users);
+                
+            }
+
+        }
+        else {
+            model.put("errorMessage1", "Invalid User Id!");
+        }
         
         return "dashboard";
     }

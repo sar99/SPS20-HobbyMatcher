@@ -61,11 +61,6 @@ public class HobbiesController {
 
         if(user == null) {
             model.put("hobbies", hobbyList);
-
-            System.out.println(user);
-            for (Iterator<Hobby> it = hobbyList.iterator(); it.hasNext(); ){
-            System.out.println(it.next());
-            }
         } else {
 
             Optional<User> user1 = userRepository.findById(user.getId());
@@ -92,13 +87,6 @@ public class HobbiesController {
             });
 
             model.put("hobbies", otherHobbies);
-
-            
-
-            System.out.println(user);
-            for (Iterator<Hobby> it = otherHobbies.iterator(); it.hasNext(); ){
-            System.out.println(it.next());
-            }
         }
 
         return "hobbies";
@@ -119,29 +107,30 @@ public class HobbiesController {
     public String unregister(@PathVariable Long hobbyId, @AuthenticationPrincipal User user) {   
         
         Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
-
         Optional<User> user1 = userRepository.findById(user.getId());
+
         if(hobbyOpt.isPresent()) {
             Hobby hobby=hobbyOpt.get();
-
             userService.removeHobby(user1.get(), hobby);
-
         }
         return "redirect:/hobbies/"+hobbyId;
     }
-
 
     @GetMapping("/hobbies/{hobbyId}")
     public String posts(@PathVariable Long hobbyId, ModelMap model, @AuthenticationPrincipal User loggedUser) {   
         
         boolean isRegistered = false;
+
         Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
+
         if(hobbyOpt.isPresent()) {
+
             Hobby hobby = hobbyOpt.get();
             Set<Long> postsId = hobby.getPosts();
             Set<Long> usersId = hobby.getUsers();
             List<Post> posts = new ArrayList<>();
             List<User> users = new ArrayList<>();
+
             for (Iterator<Long> it = postsId.iterator(); it.hasNext(); ) {
 
                 Optional<Post> post = postRepository.findById(it.next());
@@ -186,10 +175,15 @@ public class HobbiesController {
             
             if(loggedUser!=null)
                 model.put("isRegistered", isRegistered);
+                
             model.put("users", users);
             model.put("posts", posts);
             model.put("hobby", hobby);
         }
+        else {
+            model.put("errorMessage", "No Such Hobby!");
+        }
+        
         return "hobby";
     }
 
