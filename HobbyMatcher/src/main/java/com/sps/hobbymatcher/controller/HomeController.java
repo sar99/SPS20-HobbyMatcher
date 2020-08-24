@@ -39,7 +39,61 @@ public class HomeController {
     private UserRepository userRepository;
     
     @GetMapping("/")
-    public String rootView () {
+    public String rootView (@AuthenticationPrincipal User user, ModelMap model) {
+
+        Set<Hobby> hobbies = hobbyRepository.findAll();
+
+        List<Hobby> hobbyList = new ArrayList<>(hobbies);
+        Collections.sort(hobbyList, new Comparator<Hobby>(){
+            @Override
+            public int compare(Hobby hobby1, Hobby hobby2) {
+                return hobby1.getName().compareTo(hobby2.getName());
+            }
+        });
+
+        if(user == null) {
+            model.put("hobbies", hobbyList);
+
+            System.out.println(user);
+            for (Iterator<Hobby> it = hobbyList.iterator(); it.hasNext(); ){
+            System.out.println(it.next());
+            }
+        } else {
+
+            Optional<User> user1 = userRepository.findById(user.getId());
+
+            Set<Long> hobbiesId = (user1.get()).getMyHobbies();
+            List<Hobby> otherHobbies  = new ArrayList<>();
+
+            for (Iterator<Hobby> it = hobbies.iterator(); it.hasNext(); ) {
+
+                Hobby hobby = it.next();
+                Long id = hobby.getId();
+                if(hobbiesId.contains(id)) {
+                    continue;
+                } else {
+                    otherHobbies.add(hobby);
+                }
+            }
+
+            Collections.sort(otherHobbies, new Comparator<Hobby>(){
+                @Override
+                public int compare(Hobby hobby1, Hobby hobby2) {
+                    return hobby1.getName().compareTo(hobby2.getName());
+                }
+            });
+
+            model.put("hobbies", otherHobbies);
+
+            
+
+            System.out.println(user);
+            for (Iterator<Hobby> it = otherHobbies.iterator(); it.hasNext(); ){
+            System.out.println(it.next());
+            }
+        }
+
+
         return "index";
     }
 
