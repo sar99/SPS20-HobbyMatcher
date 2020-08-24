@@ -1,6 +1,5 @@
 package com.sps.hobbymatcher.domain;
 
-import java.awt.Image;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,8 +16,6 @@ public class Post {
 
     @Unindexed
 	private String text;
-	private String video;
-	private Image image;
 	private long votes= 0L;
     private Long userId;
     private Date createdDate;
@@ -36,18 +33,6 @@ public class Post {
 	}
 	public void setText(String text) {
 		this.text = text;
-	}
-	public String getVideo() {
-		return video;
-	}
-	public void setVideo(String video) {
-		this.video = video;
-	}
-	public Image getImage() {
-		return image;
-	}
-	public void setImage(Image image) {
-		this.image = image;
 	}
 	public long getVotes() {
         // System.out.println("get votes: " + votes);
@@ -77,8 +62,7 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return "Post [id=" + id +", text=" + text + ", video=" + video + ", image=" + image
-				+ ", votes=" + votes + ", userId=" + userId + ", createdDate=" + createdDate 
+		return "Post [id=" + id +", text=" + text + ", votes=" + votes + ", userId=" + userId + ", createdDate=" + createdDate 
                 +", usersVoted=" + usersVoted + "]";
 	}
 }

@@ -155,8 +155,8 @@
                             <a th:href="@{/dashboard/{user_id} (user_id=${post.userId})}" class="btn btn-primary">Go to author's profile</a>
                         </div>
                     </div>
-                    <div th:text="${post.createdDate}" class="card-footer text-muted" >
-                        2 days ago
+                    <div th:inline="text" class="card-footer text-muted">
+                        [[${#dates.format(post.createdDate, 'MMM dd, yyyy h:mm a')}]]
                     </div>
                 </div>
 

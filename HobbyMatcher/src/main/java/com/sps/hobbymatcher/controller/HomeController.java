@@ -1,7 +1,6 @@
 package com.sps.hobbymatcher.controller;
 
 import java.util.*;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,11 +9,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sps.hobbymatcher.domain.User;
 import com.sps.hobbymatcher.service.UserService;
 import com.sps.hobbymatcher.domain.Hobby;
 import com.sps.hobbymatcher.domain.Post;
+import com.sps.hobbymatcher.domain.Authority;
 import com.sps.hobbymatcher.service.HobbyService;
 import com.sps.hobbymatcher.service.PostService;
 import com.sps.hobbymatcher.repository.HobbyRepository;
@@ -105,8 +106,11 @@ public class HomeController {
     }
 
     @PostMapping("/dashboard/edit")
-    public String edit(@ModelAttribute User user) {
+    public String edit(User user) {
 
+        Authority authority = new Authority();
+            authority.setAuthority("ROLE_USER");
+            user.getAuthorities().add(authority);
         userRepository.save(user);
         return "redirect:/dashboard";
 
