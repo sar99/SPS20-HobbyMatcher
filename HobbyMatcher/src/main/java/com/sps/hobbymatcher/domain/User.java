@@ -95,6 +95,7 @@ public class User implements UserDetails {
     @Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", username=" + username + 
-                       ", password=" + password + ", bio=" + bio + ", connections=" + connections + ", myHobbies=" + myHobbies +", authorities=" + authorities+"]";
+                       ", password=" + password + ", bio=" + bio + 
+                      ", connections=" + connections + ", myHobbies=" + myHobbies +", authorities=" + authorities+"]";
 	}
 }

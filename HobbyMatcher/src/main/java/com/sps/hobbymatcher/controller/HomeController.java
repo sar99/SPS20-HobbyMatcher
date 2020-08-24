@@ -47,7 +47,7 @@ public class HomeController {
     public String about () {
         return "about";
     }
-    
+
     @GetMapping("/dashboard")
     public String home(@AuthenticationPrincipal User user, ModelMap model) {
 
@@ -89,7 +89,7 @@ public class HomeController {
                 return user1.getName().compareTo(user2.getName());
             }
         });
-        
+
         model.put("user", (user1.get()));
         model.put("hobbies", hobbies);
         model.put("connections", users);
@@ -109,8 +109,8 @@ public class HomeController {
     public String edit(User user) {
 
         Authority authority = new Authority();
-            authority.setAuthority("ROLE_USER");
-            user.getAuthorities().add(authority);
+		authority.setAuthority("ROLE_USER");
+		user.getAuthorities().add(authority);
         userRepository.save(user);
         return "redirect:/dashboard";
 

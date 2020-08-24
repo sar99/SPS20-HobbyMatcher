@@ -21,7 +21,6 @@ public class Post {
     private Date createdDate;
 	private Set<Long> usersVoted=new HashSet<>();
 	
-
     public Long getId() {
 		return id;
 	}
@@ -35,7 +34,6 @@ public class Post {
 		this.text = text;
 	}
 	public long getVotes() {
-        // System.out.println("get votes: " + votes);
 		return votes;
 	}
 	public void setVotes(long votes) {
@@ -62,7 +60,8 @@ public class Post {
 
 	@Override
 	public String toString() {
-		return "Post [id=" + id +", text=" + text + ", votes=" + votes + ", userId=" + userId + ", createdDate=" + createdDate 
+		return "Post [id=" + id +", text=" + text
+				+ ", votes=" + votes + ", userId=" + userId + ", createdDate=" + createdDate 
                 +", usersVoted=" + usersVoted + "]";
 	}
 }
