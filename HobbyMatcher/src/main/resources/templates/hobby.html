@@ -58,46 +58,49 @@
     </div>
 
 
-    <div class="card text-center" style="width: 18rem;margin: auto;" >       
+    <div style="display: flex; flex-direction: row; flex-wrap: wrap; margin: auto; justify-content: center;">
+        <div class="card text-center" style="width: 18rem;margin: 10px;" >       
 
-        <div sec:authorize="isAuthenticated()" class="card-body" th:if="${isRegistered eq false}">
-            <p class="card-text">Get started to explore this magical world!</p>
-            <!-- <a th:href="@{/hobbies/{hobby_id}/register (hobby_id=${hobby.id})}" class="btn btn-primary">Register Now!</a> -->
-            <form method="post" th:action="@{/hobbies/{hobby_id}/register (hobby_id=${hobby.id})}">
-                <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-6 col-sm-offset-3" style="margin: auto;">
-                                <input type="submit" name="login-submit" id="login-submit"
-                                class="form-control btn btn-primary" value="Register" />
+            <div sec:authorize="isAuthenticated()" class="card-body" th:if="${isRegistered eq false}">
+                <p class="card-text">Get started to explore this magical world!</p>
+                <!-- <a th:href="@{/hobbies/{hobby_id}/register (hobby_id=${hobby.id})}" class="btn btn-primary">Register Now!</a> -->
+                <form method="post" th:action="@{/hobbies/{hobby_id}/register (hobby_id=${hobby.id})}">
+                    <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-3" style="margin: auto;">
+                                    <input type="submit" name="login-submit" id="login-submit"
+                                    class="form-control btn btn-primary" value="Register" />
+                                </div>
                             </div>
-                        </div>
-                </div>
-            </form>
-        </div>
+                    </div>
+                </form>
+            </div>
 
-        <div sec:authorize="isAuthenticated()" class="card-body" th:if="${isRegistered eq true}">
-            <p class="card-text">Not sure if you like this hobby?</p>
-            <!-- <a th:href="@{/hobbies/{hobby_id}/unregister (hobby_id=${hobby.id})}" class="btn btn-primary">Unregister</a> -->
-            <form method="post" th:action="@{/hobbies/{hobby_id}/unregister (hobby_id=${hobby.id})}">
-                <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-6 col-sm-offset-3" style="margin: auto;">
-                                <input type="submit" name="login-submit" id="login-submit"
-                                class="form-control btn btn-primary" value="Unregister" />
+            <div sec:authorize="isAuthenticated()" class="card-body" th:if="${isRegistered eq true}">
+                <p class="card-text">Not sure if you like this hobby?</p>
+                <!-- <a th:href="@{/hobbies/{hobby_id}/unregister (hobby_id=${hobby.id})}" class="btn btn-primary">Unregister</a> -->
+                <form method="post" th:action="@{/hobbies/{hobby_id}/unregister (hobby_id=${hobby.id})}">
+                    <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-3" style="margin: auto;">
+                                    <input type="submit" name="login-submit" id="login-submit"
+                                    class="form-control btn btn-primary" value="Unregister" />
+                                </div>
                             </div>
-                        </div>
-                </div>
-            </form>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
 
 
-     <div class="card text-center" style="width: 18rem;margin: auto;" >
+        <div class="card text-center" style="width: 18rem;margin: 10px;" th:if="${isRegistered eq true}">
 
-        <div sec:authorize="isAuthenticated()" class="card-body" th:if="${isRegistered eq true}">
-            <p class="card-text">Share your feelings with the world</p>
-            <a th:href="@{/hobbies/{hobby_id}/post (hobby_id=${hobby.id})}" class="btn btn-primary">Write a post</a>
+            <div sec:authorize="isAuthenticated()" class="card-body" >
+                <p class="card-text">Share your feelings with the world</p>
+                <a th:href="@{/hobbies/{hobby_id}/post (hobby_id=${hobby.id})}" class="btn btn-primary">Write a post</a>
+            </div>
         </div>
+
     </div>
 
 
@@ -122,42 +125,51 @@
 
            
 
-            <div style="margin-top: 10vh; width: 90vw;">
+            <div style="margin: auto; margin-top: 10vh;margin-bottom: 10vh; width: 90vw;">
 
-                <div sec:authorize="isAnonymous()" class="card">
-                    <div class="card-body">
+                <div sec:authorize="isAnonymous()" >
+                    <div >
                         Please register to this hobby to see the posts.
                     </div>
                 </div>
-                <div sec:authorize="isAuthenticated()" th:each="post : ${posts}" class="card text-center" style="margin: auto;margin-top:2vh ;width: 80vw;">
+                <div sec:authorize="isAuthenticated()" class="card text-center" style="margin: auto;margin-top:2vh ;width: 80vw;">
 
 
-                    <div class="card" th:if="${isRegistered eq false}">
-                        <div class="card-body">
+                    <div  th:if="${isRegistered eq false}" style="margin: auto; margin-top: 10px;">
+                        <div  style="text-align: center;">
                             Please register to this hobby to see the posts.
                         </div>
                     </div>
 
 
-                    <div class="card-body" th:if="${isRegistered eq true}">
-                        <h5 class="card-title">By: <span th:text="${post.userId}">Author Name</span></h5>
-                        <p th:utext="${post.text}" class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum est temporibus
-                            praesentium
-                            beatae voluptate ut obcaecati atque, ipsa amet dolorem natus excepturi a vel sit, corporis tenetur,
-                            officiis eaque animi.</p>
-                        <div style="display: flex; flex-direction: row;">
+                    <div th:each="post : ${posts}" th:if="${isRegistered eq true}" style="margin-top: 10px;">
+                        <div class="card-body"  >
+                            <h5 class="card-title">By: <span th:text="${post.userId}">Author Name</span></h5>
+                            <p th:utext="${post.text}" class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum est temporibus
+                                praesentium
+                                beatae voluptate ut obcaecati atque, ipsa amet dolorem natus excepturi a vel sit, corporis tenetur,
+                                officiis eaque animi.</p>
+                            <div style="display: flex; flex-direction: row; justify-content: space-between">
+                                <a href='javascript:;' class="like-button" th:id="'post' + ${post.id}" th:onclick="'javascript:clickLike(' + ${post.id} + ', ' + ${hobby.id} + ');'">
+                                    <?xml version="1.0" encoding="utf-8"?>
+                                    <svg width="40" height="40" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M320 1344q0-26-19-45t-45-19q-27 0-45.5 19t-18.5 45q0 27 18.5 45.5t45.5 18.5q26 0 45-18.5t19-45.5zm160-512v640q0 26-19 45t-45 19h-288q-26 0-45-19t-19-45v-640q0-26 19-45t45-19h288q26 0 45 19t19 45zm1184 0q0 86-55 149 15 44 15 76 3 76-43 137 17 56 0 117-15 57-54 94 9 112-49 181-64 76-197 78h-129q-66 0-144-15.5t-121.5-29-120.5-39.5q-123-43-158-44-26-1-45-19.5t-19-44.5v-641q0-25 18-43.5t43-20.5q24-2 76-59t101-121q68-87 101-120 18-18 31-48t17.5-48.5 13.5-60.5q7-39 12.5-61t19.5-52 34-50q19-19 45-19 46 0 82.5 10.5t60 26 40 40.5 24 45 12 50 5 45 .5 39q0 38-9.5 76t-19 60-27.5 56q-3 6-10 18t-11 22-8 24h277q78 0 135 57t57 135z" /></svg>
+                                </a>
 
-                            <a href='javascript:;' class="like-button" th:id="'post' + ${post.id}" th:onclick="'javascript:clickLike(' + ${post.id} + ', ' + ${hobby.id} + ');'">
-                                <?xml version="1.0" encoding="utf-8"?>
-                                <svg width="40" height="40" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M320 1344q0-26-19-45t-45-19q-27 0-45.5 19t-18.5 45q0 27 18.5 45.5t45.5 18.5q26 0 45-18.5t19-45.5zm160-512v640q0 26-19 45t-45 19h-288q-26 0-45-19t-19-45v-640q0-26 19-45t45-19h288q26 0 45 19t19 45zm1184 0q0 86-55 149 15 44 15 76 3 76-43 137 17 56 0 117-15 57-54 94 9 112-49 181-64 76-197 78h-129q-66 0-144-15.5t-121.5-29-120.5-39.5q-123-43-158-44-26-1-45-19.5t-19-44.5v-641q0-25 18-43.5t43-20.5q24-2 76-59t101-121q68-87 101-120 18-18 31-48t17.5-48.5 13.5-60.5q7-39 12.5-61t19.5-52 34-50q19-19 45-19 46 0 82.5 10.5t60 26 40 40.5 24 45 12 50 5 45 .5 39q0 38-9.5 76t-19 60-27.5 56q-3 6-10 18t-11 22-8 24h277q78 0 135 57t57 135z" /></svg>
-                            </a>
-
-                            <a th:href="@{/dashboard/{user_id} (user_id=${post.userId})}" class="btn btn-primary">Go to author's profile</a>
+                                <a th:href="@{/dashboard/{user_id} (user_id=${post.userId})}" class="btn btn-primary">Go to author's profile</a>
+                            </div>
+                            
+                        </div>
+                        <div th:inline="text" class="card-footer text-muted">
+                            [[${#dates.format(post.createdDate, 'MMM dd, yyyy h:mm a')}]]
                         </div>
                     </div>
-                    <div th:inline="text" class="card-footer text-muted">
-                        [[${#dates.format(post.createdDate, 'MMM dd, yyyy h:mm a')}]]
-                    </div>
+
+                    <!-- <div class="card" th:if="${isRegistered eq true}" style="margin: auto; margin-top: 10px;" th:unless="${not #lists.isEmpty(posts)}">
+                        <div class="card-body" style="text-align: center;">
+                            Oops! There are no posts in this hobby yet. Be the first one to write!
+                        </div>
+                    </div> -->
+                    
                 </div>
 
                 
@@ -168,10 +180,9 @@
         </div>
 
 
-        <div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab"
-            style="display: flex;flex-direction: row;flex-wrap: wrap;">
+        <div class="tab-pane fade" id="pills-users" role="tabpanel" aria-labelledby="pills-users-tab" style="display: flex;flex-direction: row;flex-wrap: wrap;  width: 85vw; margin: auto; margin-top: 10vh;">
             <div th:each="user : ${users}">
-                <div th:if="${user.username eq #authentication.getPrincipal().getUsername()}" class="card mb-3 text-white bg-info" style="margin: auto;margin-top: 10vh; width: 90vw;">
+                <div th:if="${user.username eq #authentication.getPrincipal().getUsername()}" class="card mb-3" style="margin: 10px; background-color: #D0F0C0; width: 20vw; text-align: center;">
 
                     <div class="card-body" style="margin: 5px;">
                         <div th:text="${user.name}"> This is some text within a card body.</div>
@@ -181,7 +192,7 @@
                 </div>
 
 
-                <div th:unless="${user.username eq #authentication.getPrincipal().getUsername()}" class="card mb-3 " style="margin: auto;margin-top: 10vh; width: 90vw;">
+                <div th:unless="${user.username eq #authentication.getPrincipal().getUsername()}" class="card mb-3 " style="margin: 10px; text-align: center; width: 20vw;">
 
                     <div class="card-body" style="margin: 5px;">
                         <div th:text="${user.name}"> This is some text within a card body.</div>
@@ -192,7 +203,7 @@
             </div>
         </div>
     </div>
-"
+
 
 
 
