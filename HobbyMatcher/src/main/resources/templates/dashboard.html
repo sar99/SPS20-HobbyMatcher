@@ -11,14 +11,15 @@
     <!-- Just an image -->
     <nav class="navbar navbar-light bg-light justify-content-between">
         <a class="navbar-brand" href="#">
-            <img src="../static/img/logo.png" th:src="@{img/logo.png}" width="50" height="50" alt="">
+            <img src="../../static/img/logo.png" th:src="@{../img/logo.png}" width="50" height="50" alt="">
         </a>
         <div sec:authorize="isAnonymous()">
             <a href="/" th:href="@{/login}"><button type="button" class="btn btn-primary">Log In</button></a>
             <a href="/" th:href="@{/register}"><button type="button" class="btn btn-primary">Sign Up</button></a>
         </div>
         <div sec:authorize="isAuthenticated()">
-            <a href="/" th:href="@{/dashboard/}" ><button type="button" class="btn btn-primary">Welcome, <span sec:authentication="name"></span></button></a>
+
+            <a href="/" th:href="@{/dashboard/}" ><button type="button" class="btn btn-primary">Welcome, <span sec:authentication="name"></span></button></a>                     
             <a href="/" th:href="@{/logout}"><button type="button" class="btn btn-primary">Log Out</button></a>
         </div>
     </nav>
@@ -96,17 +97,32 @@
                         </div>
                     </form>
                 </div>
+                
             </div>
           
-            <div sec:authorize="isAuthenticated()" th:if="${user.username eq #authentication.getPrincipal().getUsername()}">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Edit profile</button>
-            </div>
+            <div sec:authorize="isAuthenticated()"  class="card text-center" th:if="${user.username eq #authentication.getPrincipal().getUsername()}" style="width: 18rem;margin: auto;">
+                <div class="card-body">
+                    <p class="card-text">Customise your profile for everyone to know you better</p>
+                    <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-3" style="margin: auto;">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Edit profile</button>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>   
 
-            <div class="card">
-                <div class="card-body" th:text="${user.bio}">
-                    This is some text within a card body.
+            <div class="card" style="width: 85vw; margin: auto; margin-top: 10vh;">
+                <div class="card-header">
+                    Bio
+                </div>
+                <div class="card-body">
+                    <p class="card-text" th:if="${#strings.isEmpty(user.bio)}">The user has no bio written yet.</p>
+                    <p class="card-text" th:unless="${#strings.isEmpty(user.bio)}" th:text="${user.bio}">The user has no bio written yet.</p>
                 </div>
             </div>
+
             
         </div>
 
@@ -137,13 +153,15 @@
 
 
         <div class="tab-pane fade" id="pills-connections" role="tabpanel" aria-labelledby="pills-contact-tab"
-            style="display: flex;flex-direction: row;flex-wrap: wrap;">
+            style="display: flex;flex-direction: row;flex-wrap: wrap; width: 85vw; margin: auto; margin-top: 10vh;">
 
-            <div th:each="connection : ${connections}" class="card">
+            <div th:each="connection : ${connections}">
 
-                <div class="card-body">
-                    <div th:text="${connection.name}"> This is some text within a card body.</div>
-                    <a th:href="@{/dashboard/{user_id} (user_id=${connection.id})}"><button type="button" class="btn btn-primary" style="margin: 3px;">Go to Profile</button></a>
+                <div class="card mb-3 " style="margin: 10px; text-align: center; width: 20vw;">
+                    <div class="card-body" style="margin: 5px;">
+                        <div th:text="${connection.name}"> This is some text within a card body.</div>
+                        <a th:href="@{/dashboard/{user_id} (user_id=${connection.id})}"><button type="button" class="btn btn-primary" style="margin: 3px;">Go to Profile</button></a>
+                    </div>
                 </div>
                 
             </div>
