@@ -36,11 +36,12 @@ public class HomeRESTController {
 
         List<User> userOpt = userService.findUserByUsername(username);
 
-        if(userOpt.size()==1) {
 
+        if(userOpt.size()==1) {
+            System.out.println("falseeeee");
             return false;
         } else {
-
+            System.out.println("trueeeeeee");
             return true;
         }
     }

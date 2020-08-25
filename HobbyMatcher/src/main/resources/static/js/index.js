@@ -21,8 +21,10 @@ function randomSelector()
             console.log(i);
             // randomCard.childNodes[0] = 
             var url = "/hobbies/" + hobbies[i].id;
+            var src = "/img/" + hobbies[i].name + ".png";
             document.getElementById("random-title").innerHTML = hobbies[i].name; 
             document.getElementById("random-url").setAttribute("href", url);
+            document.getElementById("random-img").setAttribute("src", src);
             if (k <= 20) {
                 setTimeout(counter, 150);
             }

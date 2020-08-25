@@ -45,7 +45,7 @@
     <div style="width: 90vw; display: flex; flex-direction: row; flex-wrap: wrap; margin: auto; " th:if="${not #lists.isEmpty(hobbies)}">
 
         <div th:each="hobby : ${hobbies}" class="card" style="width: 18rem; margin: 10px">
-            <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
+            <img class="card-img-top" th:src="@{img/{image_name}.png (image_name=${hobby.name})}" alt="Card image cap">
             <div class="card-body">
                 <h5 th:text="${hobby.name}" class="card-title">Card title</h5>
                 <p th:text="${hobby.about}" class="card-text">Some quick example text to build on the card title and make up the bulk of the
