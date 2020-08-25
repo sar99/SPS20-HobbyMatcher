@@ -37,38 +37,17 @@ public class CommentController {
     private CommentService commentService;
 
     @PostMapping("/hobbies/{hobbyId}/posts/{postId}/comment")
-	public String postComment(@AuthenticationPrincipal User user, @PathVariable Long hobbyId, @PathVariable Long postId, Comment rootComment, 
-			@RequestParam(required = false) Long parentId, @RequestParam(required = false) String childCommentText) {
+	public String postComment(@AuthenticationPrincipal User user, @PathVariable Long hobbyId, @PathVariable Long postId, Comment comment) {
 
 		Optional<Hobby> hobbyOpt = hobbyService.findHobbyById(hobbyId);
         Optional<Post> postOpt = postService.findPostById(postId);
 
-		if(!StringUtils.isEmpty(rootComment.getText())) {
+        comment.setUserId(user.getId());
+        comment.setCreatedDate(new Date());
+        Comment savedComment = commentService.save(comment);
 
-            rootComment.setUserId(user.getId());
-            rootComment.setCreatedDate(new Date());
-            commentService.save(rootComment);
-
-            (postOpt.get()).getComments().add(rootComment);
-            postService.save(postOpt.get());
-		} else if(parentId!=null) {
-
-			Comment comment=new Comment(); 
-
-			comment.setText(childCommentText);
-			comment.setUserId(user.getId());
-            comment.setCreatedDate(new Date());
-            commentService.save(comment);
-
-            Optional<Comment> parentCommentOpt = commentService.findCommentById(parentId);
-
-			if(parentCommentOpt.isPresent()) {
-
-				(parentCommentOpt.get()).getReplies().add(comment);
-                comment.setParent(parentCommentOpt.get());
-                commentService.save(parentCommentOpt.get());
-			}
-		}
+        (postOpt.get()).getComments().add(savedComment);
+        postService.save(postOpt.get());
 
 		return "redirect:/hobbies/"+hobbyId+"/post/"+postId;
 	}

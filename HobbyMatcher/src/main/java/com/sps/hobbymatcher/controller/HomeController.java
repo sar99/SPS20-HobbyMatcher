@@ -186,7 +186,7 @@ public class HomeController {
             }
         } else {
 
-            model.put("errorMessage1", "Invalid User Id!");
+            model.put("errorMessage2", "Invalid User Id!");
             return "error";
         }
 

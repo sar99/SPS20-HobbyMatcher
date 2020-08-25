@@ -16,8 +16,6 @@ public class Comment {
 	private String text;
     private Long userId;
     private Date createdDate;
-    private Comment parent;
-	private List<Comment> replies = new ArrayList<>();
 
     public Long getId() {
 		return id;
@@ -40,25 +38,12 @@ public class Comment {
     public Date getCreatedDate() {
 		return createdDate;
 	}
-    public Comment getParent() {
-		return parent;
-	}
-    public void setParent(Comment parent) {
-		this.parent = parent;
-	}
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
-	}
-	public List<Comment> getReplies() {
-		return replies;
-	}
-	public void setReplies(List<Comment> replies) {
-		this.replies = replies;
 	}
 
 	@Override
 	public String toString() {
-		return "Comments [ id=" + id + "text=" + text + ", userId=" + userId + ", createdDate=" + createdDate 
-                    +", replies=" + replies + "]";
+		return "Comment [id=" + id +", text=" + text + ", userId=" + userId + ", createdDate=" + createdDate + "]";
 	}
 } 

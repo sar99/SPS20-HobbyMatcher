@@ -62,24 +62,11 @@ public class CommentService {
         Post post = postOpt.get();
         Comment comment = commentOpt.get();
 
-        List<Comment> replies = comment.getReplies();
-        if(replies.size() == 0) {
-
-            Comment parentComment = comment.getParent();
-            (parentComment.getReplies()).remove(comment);
-            commentRepository.save(parentComment);
-        } else {
-
-            (post.getComments()).remove(comment);
-            postService.save(post);
-
-            for (Iterator<Comment> it = replies.iterator(); it.hasNext(); ) {
-
-                commentRepository.delete(it.next());
-            }
-            
-            commentRepository.delete(comment);
-        }
+        (post.getComments()).remove(comment);
+        postService.save(post);
+        
+        commentRepository.delete(comment);
+        
         return ;
     }
 }

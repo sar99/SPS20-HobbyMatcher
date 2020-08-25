@@ -51,7 +51,7 @@ public class PostController {
             model.put("post", new Post());
         } else {
 
-            model.put("ErrorMessage1","Invalid Hobby Id!");
+            model.put("errorMessage3","Invalid Hobby Id!");
             return "error";
         }
 
@@ -81,7 +81,7 @@ public class PostController {
 
         if(!hobbyOpt.isPresent()) {
 
-            model.put("ErrorMessage2", "Invalid Hobby Id!");
+            model.put("errorMessage4", "Invalid Hobby Id!");
             return "error";
         }
 
@@ -124,7 +124,7 @@ public class PostController {
             model.put("usersVoted", usersVoted);
         } else {
 
-            model.put("ErrorMessage3", "Post does not exists!");
+            model.put("errorMessage5", "Post does not exists!");
             return "error";
         }
 

@@ -159,7 +159,7 @@ public class HobbiesController {
             model.put("hobby", hobby);
         } else {
 
-            model.put("errorMessage", "No Such Hobby!");
+            model.put("errorMessage1", "No Such Hobby!");
             return "error";
         }
 
