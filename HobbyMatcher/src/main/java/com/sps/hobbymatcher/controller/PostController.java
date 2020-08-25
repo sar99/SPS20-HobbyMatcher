@@ -107,7 +107,7 @@ public class PostController {
 
         model.put("usersVoted", usersVoted);
 
-        return "post";
+        return "postdisplay";
     }
 
 
