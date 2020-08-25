@@ -39,8 +39,7 @@ public class HomeRESTController {
         if(userOpt.size()==1) {
 
             return false;
-        }
-        else{
+        } else {
 
             return true;
         }
@@ -54,8 +53,7 @@ public class HomeRESTController {
         if(userOpt.isPresent()) {
 
             return userOpt.get().getUsername();
-        }
-        else {
+        } else {
 
             return "Name";
         }

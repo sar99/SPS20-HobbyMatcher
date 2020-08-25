@@ -64,8 +64,8 @@ public class HobbyService {
                 userService.save(user);
                 
                 return saved;
-            }
-            else {
+            } else {
+
                 return hobbyOpt.get(0);
             }
         }

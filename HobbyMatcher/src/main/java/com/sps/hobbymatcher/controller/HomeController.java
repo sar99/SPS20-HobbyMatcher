@@ -83,6 +83,7 @@ public class HomeController {
         for (Iterator<Long> it = hobbiesId.iterator(); it.hasNext(); ) {
 
             Optional<Hobby> hobby = hobbyService.findHobbyById(it.next());
+
             if(hobby.isPresent()) {
 
                 hobbies.add(hobby.get());
@@ -127,72 +128,71 @@ public class HomeController {
 
         boolean isFollowing = false;
         Optional<User> userOpt = userService.findUserById(userId);
-        User user = new User();
 
         if(userOpt.isPresent()) {
 
-            user = userOpt.get();
-        }
+            User user = userOpt.get();
 
-        Set<Long> hobbiesId = user.getMyHobbies();
-        Set<String> usersName = user.getConnections();
-        List<Hobby> hobbies = new ArrayList<>();
-        List<User> users = new ArrayList<>();
+            Set<Long> hobbiesId = user.getMyHobbies();
+            Set<String> usersName = user.getConnections();
+            List<Hobby> hobbies = new ArrayList<>();
+            List<User> users = new ArrayList<>();
 
-        for (Iterator<Long> it = hobbiesId.iterator(); it.hasNext(); ) {
+            for (Iterator<Long> it = hobbiesId.iterator(); it.hasNext(); ) {
 
-            Optional<Hobby> hobby = hobbyService.findHobbyById(it.next());
+                Optional<Hobby> hobby = hobbyService.findHobbyById(it.next());
 
-            if(hobby.isPresent()) {
+                if(hobby.isPresent()) {
 
-                hobbies.add(hobby.get());
+                    hobbies.add(hobby.get());
+                }
             }
-        }
 
-        hobbies = hobbyService.sortHobbiesByName(hobbies);
-        
-        for (Iterator<String> it = usersName.iterator(); it.hasNext(); ) {
+            hobbies = hobbyService.sortHobbiesByName(hobbies);
+            
+            for (Iterator<String> it = usersName.iterator(); it.hasNext(); ) {
 
-            List<User> userList = userService.findUserByUsername(it.next());
+                List<User> userList = userService.findUserByUsername(it.next());
 
-            if(userList.size()>0) {
+                if(userList.size()>0) {
 
-                users.add(userList.get(0));
+                    users.add(userList.get(0));
+                }
             }
-        }
 
-        users = userService.sortUsersByName(users);
+            users = userService.sortUsersByName(users);
 
-        Optional<User> loggedUserOpt = userService.findUserById(loggedUser.getId()); 
-        User curUser = new User();
+            model.put("user", user);
+            model.put("hobbies", hobbies);
+            model.put("connections", users);
 
-        if(loggedUserOpt.isPresent()) {
+            if(loggedUser != null) {
 
-            curUser = loggedUserOpt.get();
-        }
+                Optional<User> loggedUserOpt = userService.findUserById(loggedUser.getId()); 
+                User curUser = loggedUserOpt.get();
+                Set<String> following = curUser.getConnections();
 
-        Set<String> following = curUser.getConnections();
+                for (Iterator<String> it = following.iterator(); it.hasNext(); ) {
 
-        for (Iterator<String> it = following.iterator(); it.hasNext(); ) {
+                    String id = it.next();
 
-            String id = it.next();
+                    if(loggedUser!=null && id.equals(user.getUsername())) {
 
-            if(loggedUser!=null && id.equals(user.getUsername())) {
+                        isFollowing=true;
+                    }
+                }
 
-                isFollowing=true;
-            }
-        }
-
-        if(loggedUser!=null)
                 model.put("isFollowing", isFollowing);
-        model.put("user", user);
-        model.put("hobbies", hobbies);
-        model.put("connections", users);
-        
+            }
+        } else {
+
+            model.put("errorMessage1", "Invalid User Id!");
+            return "error";
+        }
+
         return "dashboard";
     }
-
-
+    
     @PostMapping("/follow/{userId}")
     public String addConnection(@AuthenticationPrincipal User user, @PathVariable Long userId) {
 
@@ -217,6 +217,7 @@ public class HomeController {
             Optional<User> user1 = userService.findUserById(user.getId());
             userService.removeConnection(user1.get(), userOpt.get());
         }
+        
         return "redirect:/dashboard/" + userId;
     }
 }

@@ -93,9 +93,6 @@ public class UserService {
 
             userRepository.save(user);
             hobbyService.save(hobby);
-
-            System.out.println(user);
-            System.out.println(hobby);
         }
 
         return;

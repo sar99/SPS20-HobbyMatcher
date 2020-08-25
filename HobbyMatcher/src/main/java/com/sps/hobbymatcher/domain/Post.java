@@ -1,8 +1,6 @@
 package com.sps.hobbymatcher.domain;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import org.springframework.cloud.gcp.data.datastore.core.mapping.Entity;
 import org.springframework.cloud.gcp.data.datastore.core.mapping.Unindexed;
@@ -20,6 +18,7 @@ public class Post {
     private Long userId;
     private Date createdDate;
 	private Set<Long> usersVoted=new HashSet<>();
+    private List<Comment> comments = new ArrayList<>();
 	
     public Long getId() {
 		return id;
@@ -57,11 +56,17 @@ public class Post {
 	public void setUsersVoted(Set<Long> usersVoted) {
 		this.usersVoted = usersVoted;
 	}
+    public List<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 
 	@Override
 	public String toString() {
 		return "Post [id=" + id +", text=" + text
 				+ ", votes=" + votes + ", userId=" + userId + ", createdDate=" + createdDate 
-                +", usersVoted=" + usersVoted + "]";
+                + ", usersVoted=" + usersVoted + ", comments=" + comments + "]";
 	}
 }

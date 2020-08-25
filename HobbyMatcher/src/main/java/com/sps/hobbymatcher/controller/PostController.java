@@ -18,9 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.sps.hobbymatcher.domain.User;
 import com.sps.hobbymatcher.domain.Post;
 import com.sps.hobbymatcher.domain.Hobby;
+import com.sps.hobbymatcher.domain.Comment;
 import com.sps.hobbymatcher.service.UserService;
 import com.sps.hobbymatcher.service.HobbyService;
 import com.sps.hobbymatcher.service.PostService;
+import com.sps.hobbymatcher.service.CommentService;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
@@ -35,11 +37,24 @@ public class PostController {
     
     @Autowired
     private PostService postService;
+
+    @Autowired
+    private CommentService commentService;
     
     @GetMapping("")
-    public String createPost (ModelMap model) {
+    public String createPost (ModelMap model, @PathVariable Long hobbyId) {
 
-        model.put("post", new Post());
+        Optional<Hobby> hobbyOpt = hobbyService.findHobbyById(hobbyId);
+
+        if(hobbyOpt.isPresent()) {
+
+            model.put("post", new Post());
+        } else {
+
+            model.put("ErrorMessage1","Invalid Hobby Id!");
+            return "error";
+        }
+
         return "post";
     }
     
@@ -61,14 +76,23 @@ public class PostController {
     @GetMapping("/{postId}")
     public String displayPost(@PathVariable Long hobbyId, @PathVariable Long postId, ModelMap model) {
 
-        List<String> usersVoted = new ArrayList<>();
         Optional<Post> postOpt = postService.findPostById(postId);
+        Optional<Hobby> hobbyOpt = hobbyService.findHobbyById(hobbyId);
+
+        if(!hobbyOpt.isPresent()) {
+
+            model.put("ErrorMessage2", "Invalid Hobby Id!");
+            return "error";
+        }
 
         if(postOpt.isPresent()) {
 
             Post post = postOpt.get();
+            Hobby hobby = hobbyOpt.get();
 
             model.put("post", post);
+            model.put("hobby", hobby);
+            model.put("rootComment", new Comment());
 
             Set<Long> usersId = post.getUsersVoted();
             Long authorId = post.getUserId();
@@ -78,6 +102,8 @@ public class PostController {
 
                 model.put("author", authorOpt.get());
             }
+
+            List<String> usersVoted = new ArrayList<>();
 
             for (Iterator<Long> it = usersId.iterator(); it.hasNext(); ) {
 
@@ -89,14 +115,21 @@ public class PostController {
                 }
             }
 
-            usersVoted = userService.sortUsersByName2(usersVoted);
-        }
+            List<Comment> comments = post.getComments();
 
-        model.put("usersVoted", usersVoted);
+            comments = commentService.sortCommentsByDate(comments);
+            usersVoted = userService.sortUsersByName2(usersVoted);
+
+            model.put("comments", comments);
+            model.put("usersVoted", usersVoted);
+        } else {
+
+            model.put("ErrorMessage3", "Post does not exists!");
+            return "error";
+        }
 
         return "postdisplay";
     }
-
 
     @PostMapping("/delete/{postId}")
     public String deletePost (@PathVariable Long hobbyId, @PathVariable Long postId) {
@@ -104,8 +137,6 @@ public class PostController {
         postService.deletePost(postId, hobbyId);
         return "redirect:/hobbies/"+hobbyId;
     }
-    
-
 
     @PostMapping("/like/{postId}")
     public String likePost (@AuthenticationPrincipal User user, @PathVariable Long postId, @PathVariable Long hobbyId) {

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.sps.hobbymatcher.domain.User;
 import com.sps.hobbymatcher.domain.Hobby;
 import com.sps.hobbymatcher.domain.Post;
+import com.sps.hobbymatcher.domain.Comment;
 import com.sps.hobbymatcher.repository.PostRepository;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
@@ -33,6 +34,9 @@ public class PostService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CommentService commentService;
 
     public Optional<Post> findPostById(Long id) {
 
@@ -74,8 +78,7 @@ public class PostService {
             votes--;
 
             post.setVotes(votes);
-        }
-        else {
+        } else {
 
             post.getUsersVoted().add(user.getId());
 
@@ -99,14 +102,19 @@ public class PostService {
 
         Optional<Hobby> hobbyOpt = hobbyService.findHobbyById(hobbyId);
         Optional<Post> postOpt = postRepository.findById(postId);
+        Hobby hobby = hobbyOpt.get();
+        Post post = postOpt.get();
 
-        if(hobbyOpt.isPresent() && postOpt.isPresent()) {
+        Set<Long> posts = hobby.getPosts();
 
-            Hobby hobby = hobbyOpt.get();
-            Set<Long> posts = hobby.getPosts();
+        posts.remove(postId);
+        hobbyService.save(hobby);
 
-            posts.remove(postId);
-            hobbyService.save(hobby);
+        List<Comment> comments = post.getComments();
+
+        for (Iterator<Comment> it = comments.iterator(); it.hasNext(); ) {
+
+            commentService.delete(it.next().getId(), postId);
         }
 
         postRepository.deleteById(postId);

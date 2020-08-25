@@ -153,9 +153,14 @@ public class HobbiesController {
 
                 model.put("isRegistered", isRegistered);
             }
+
             model.put("users", users);
             model.put("posts", posts);
             model.put("hobby", hobby);
+        } else {
+
+            model.put("errorMessage", "No Such Hobby!");
+            return "error";
         }
 
         return "hobby";
