@@ -103,7 +103,7 @@ public class PostController {
                 model.put("author", authorOpt.get());
             }
 
-            List<String> usersVoted = new ArrayList<>();
+            List<User> usersVoted = new ArrayList<>();
 
             for (Iterator<Long> it = usersId.iterator(); it.hasNext(); ) {
 
@@ -111,14 +111,14 @@ public class PostController {
 
                 if(userVoted.isPresent()) {
 
-                    usersVoted.add(userVoted.get().getUsername());
+                    usersVoted.add(userVoted.get());
                 }
             }
 
             List<Comment> comments = post.getComments();
 
             comments = commentService.sortCommentsByDate(comments);
-            usersVoted = userService.sortUsersByName2(usersVoted);
+            usersVoted = userService.sortUsersByName(usersVoted);
 
             model.put("comments", comments);
             model.put("usersVoted", usersVoted);

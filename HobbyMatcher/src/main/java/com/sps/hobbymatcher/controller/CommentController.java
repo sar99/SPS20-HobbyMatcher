@@ -22,6 +22,7 @@ import com.sps.hobbymatcher.service.CommentService;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
+@RequestMapping("/comment")
 public class CommentController {
 
     @Autowired
@@ -36,7 +37,7 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @PostMapping("/hobbies/{hobbyId}/posts/{postId}/comment")
+    @PostMapping("/hobbies/{hobbyId}/posts/{postId}")
 	public String postComment(@AuthenticationPrincipal User user, @PathVariable Long hobbyId, @PathVariable Long postId, Comment comment) {
 
 		Optional<Hobby> hobbyOpt = hobbyService.findHobbyById(hobbyId);

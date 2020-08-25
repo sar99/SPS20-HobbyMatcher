@@ -1,3 +1,41 @@
+
+function initLike(postId, hobbyId)
+{
+    let id = "#post" + postId;
+    let button = document.querySelector(id);
+
+    console.log("onload" + id);
+
+    // button.classList.toggle("active");
+    // button.classList.add("animated");
+    // generateClones(button);
+
+     let url = "/hobbies/" + hobbyId + "/post/api/isliked/" + postId;
+
+    var xhttp = new XMLHttpRequest();
+    var token = $("meta[name='_csrf']").attr("content"); 
+    var header = $("meta[name='_csrf_header']").attr("content");
+    xhttp.open("GET", url,  true);
+    xhttp.setRequestHeader(header, token);
+
+    xhttp.onreadystatechange = function() {
+        if (xhttp.readyState === 4) {
+            console.log(xhttp.response);
+            if(xhttp.response == "true")
+            {
+                console.log("hi");
+                button.classList.add("active");
+                document.getElementById("logged-in-user").style.display="block";
+            }
+
+        }
+    }
+
+    xhttp.send();
+}
+
+
+
 function clickLike(postId, hobbyId)
 {
     let id = "#post" + postId;
@@ -8,6 +46,32 @@ function clickLike(postId, hobbyId)
     button.classList.toggle("active");
     button.classList.add("animated");
     generateClones(button);
+
+    let likesCount = document.getElementById("likes-no");
+    if(likesCount!=null)
+    {
+        if(button.classList.contains("active"))
+        {
+            likesCount.innerHTML++;
+        }
+        else
+        {
+            likesCount.innerHTML--;
+        }
+    }
+
+    let loggedUser = document.getElementById("logged-in-user");
+    if(loggedUser!=null)
+    {
+        if(button.classList.contains("active"))
+        {
+            loggedUser.style.display="block";
+        }
+        else
+        {
+            loggedUser.style.display="none";
+        }
+    }
 
      let url = "/hobbies/" + hobbyId + "/post/like/" + postId;
 
