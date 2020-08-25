@@ -11,14 +11,15 @@
     <!-- Just an image -->
     <nav class="navbar navbar-light bg-light justify-content-between">
         <a class="navbar-brand" href="#">
-            <img src="../static/img/logo.png" th:src="@{img/logo.png}" width="50" height="50" alt="">
+            <img src="../../static/img/logo.png" th:src="@{../img/logo.png}" width="50" height="50" alt="">
         </a>
         <div sec:authorize="isAnonymous()">
             <a href="/" th:href="@{/login}"><button type="button" class="btn btn-primary">Log In</button></a>
             <a href="/" th:href="@{/register}"><button type="button" class="btn btn-primary">Sign Up</button></a>
         </div>
         <div sec:authorize="isAuthenticated()">
-            <a href="/" th:href="@{/dashboard/}" ><button type="button" class="btn btn-primary">Welcome, <span sec:authentication="name"></span></button></a>
+
+            <a href="/" th:href="@{/dashboard/}" ><button type="button" class="btn btn-primary">Welcome, <span sec:authentication="name"></span></button></a>                     
             <a href="/" th:href="@{/logout}"><button type="button" class="btn btn-primary">Log Out</button></a>
         </div>
     </nav>
@@ -40,7 +41,7 @@
 
     <div style="margin-top: 5vh;">
         <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
-            <li class="nav-item">
+            <li>
                 <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
                     aria-controls="pills-profile" aria-selected="true">Profile</a>
             </li>
@@ -56,7 +57,7 @@
     </div>
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-
+            
             <div class="jumbotron jumbotron-fluid">
                 <div class="container">
                     <h1 th:text="${user.name}" class="display-4">Fluid jumbotron</h1>
@@ -96,10 +97,36 @@
                         </div>
                     </form>
                 </div>
+                
             </div>
           
+            <div sec:authorize="isAuthenticated()"  class="card text-center" th:if="${user.username eq #authentication.getPrincipal().getUsername()}" style="width: 18rem;margin: auto;">
+                <div class="card-body">
+                    <p class="card-text">Customise your profile for everyone to know you better</p>
+                    <div class="form-group">
+                            <div class="row">
+                                <div class="col-sm-6 col-sm-offset-3" style="margin: auto;">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Edit profile</button>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>   
+
+            <div class="card" style="width: 85vw; margin: auto; margin-top: 10vh;">
+                <div class="card-header">
+                    Bio
+                </div>
+                <div class="card-body">
+                    <p class="card-text" th:if="${#strings.isEmpty(user.bio)}">The user has no bio written yet.</p>
+                    <p class="card-text" th:unless="${#strings.isEmpty(user.bio)}" th:text="${user.bio}">The user has no bio written yet.</p>
+                </div>
+            </div>
+
             
         </div>
+
+    
 
 
         <div class="tab-pane fade" id="pills-posts" role="tabpanel" aria-labelledby="pills-posts-tab">
@@ -109,7 +136,7 @@
 
 
                 <div th:each="hobby : ${hobbies}" class="card" style="width: 18rem; margin: 10px">
-                    <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
+                    <img class="card-img-top" src="../img/reading.jpeg" alt="Card image cap">
                     <div class="card-body">
                         <h5 th:text="${hobby.name}" class="card-title">Card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
@@ -126,13 +153,15 @@
 
 
         <div class="tab-pane fade" id="pills-connections" role="tabpanel" aria-labelledby="pills-contact-tab"
-            style="display: flex;flex-direction: row;flex-wrap: wrap;">
+            style="display: flex;flex-direction: row;flex-wrap: wrap; width: 85vw; margin: auto; margin-top: 10vh;">
 
-            <div th:each="connection : ${connections}" class="card">
+            <div th:each="connection : ${connections}">
 
-                <div class="card-body">
-                    <div th:text="${connection.name}"> This is some text within a card body.</div>
-                    <a th:href="@{/dashboard/{user_id} (user_id=${connection.id})}"><button type="button" class="btn btn-primary" style="margin: 3px;">Go to Profile</button></a>
+                <div class="card mb-3 " style="margin: 10px; text-align: center; width: 20vw;">
+                    <div class="card-body" style="margin: 5px;">
+                        <div th:text="${connection.name}"> This is some text within a card body.</div>
+                        <a th:href="@{/dashboard/{user_id} (user_id=${connection.id})}"><button type="button" class="btn btn-primary" style="margin: 3px;">Go to Profile</button></a>
+                    </div>
                 </div>
                 
             </div>
@@ -140,6 +169,52 @@
         </div>
     </div>
 
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form th:action="@{/dashboard/edit}" method="post" th:object="${user}">
+                    <div class="modal-body">
+
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <input type="hidden" th:field="${user.id}"  id="id" name="id"/>
+                            <input type="hidden" th:field=${user.username} id="username" name="username" />
+                            <input type="hidden" th:field=${user.myHobbies} id="myHobbies" name="myHobbies" />
+                            <input type="hidden" th:field=${user.password} id="password" name="password" />
+                            <input type="hidden" th:field=${user.connections} id="connections" name="connections" />
+
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" th:attr="value=${user.username}" th:field="*{username}" disabled>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Name </label>
+                                <input type="text" class="form-control" id="name" name="name" th:attr="value=${user.name}" th:field="*{name}" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Bio</label>
+                                <textarea class="form-control" id="bio" name="bio" th:attr="value=${user.bio}" th:field="*{bio}"></textarea>
+                            </div>
+                            
+            
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary" id="submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 

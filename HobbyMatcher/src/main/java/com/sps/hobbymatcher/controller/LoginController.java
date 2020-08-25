@@ -9,7 +9,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import com.sps.hobbymatcher.domain.User;
 import com.sps.hobbymatcher.service.UserService;
-import com.sps.hobbymatcher.repository.UserRepository;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
@@ -18,15 +17,14 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserRepository userRepository;
-    
     @GetMapping("/login")
     public String login(@AuthenticationPrincipal User user) {
-        System.out.println(user);
+
         if(user != null) {
+
             return "redirect:/dashboard";
         }
+
         return "login";
     }
     
@@ -34,8 +32,10 @@ public class LoginController {
     public String register (@AuthenticationPrincipal User user, ModelMap model) {
 
         if(user != null) {
+
             return "redirect:/dashboard";
         }
+        
         model.put("user", new User());
 
         return "register";

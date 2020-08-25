@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Boot Thymeleaf Application - Bootstrap Rich Text Editor</title>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link th:href="@{/css/like.css}" rel="stylesheet" />
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand" href="#">
+            <img  th:src="@{../../../img/logo.png}" width="50" height="50" alt="">
+        </a>
+        <div sec:authorize="isAnonymous()">
+            <a href="/" th:href="@{/login}"><button type="button" class="btn btn-primary">Log In</button></a>
+            <a href="/" th:href="@{/register}"><button type="button" class="btn btn-primary">Sign Up</button></a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a href="/" th:href="@{/dashboard/}" ><button type="button" class="btn btn-primary">Welcome, <span sec:authentication="name"></span></button></a>
+            <a href="/" th:href="@{/logout}"><button type="button" class="btn btn-primary">Log Out</button></a>
+        </div>
+    </nav>
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="/" th:href="@{/}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/" th:href="@{/about}">About Us</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+        </li>
+
+    </ul>
+
+
+    <blockquote class="blockquote text-center" style="width: 85vw; margin: auto; margin-top: 5vh;">
+        <p class="mb-0">Hobby: <span th:text="${hobby.name}"> Hobby Name</span></p>
+        <footer class="blockquote-footer"><cite title="Source Title" th:text="${author.username}">Source Title</cite></footer>
+    </blockquote>
+
+
+    <div class="card" style="width: 85vw; margin: auto; margin-top: 5vh;">
+        <div class="card-body" th:utext="${post.text}">
+            This is some text within a card body. lorem text-centerLorem ipsum dolor sit amet consectetur adipisicing elit. Sint quae commodi libero qui doloremque
+            recusandae magni. Accusantium eaque voluptatum quis possimus itaque consequuntur corrupti, provident eos,
+            vero consectetur iure exercitationem!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint quae commodi libero qui doloremque
+            recusandae magni. Accusantium eaque voluptatum quis possimus itaque consequuntur corrupti, provident eos,
+            vero consectetur iure exercitationem!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint quae commodi libero qui doloremque
+            recusandae magni. Accusantium eaque voluptatum quis possimus itaque consequuntur corrupti, provident eos,
+            vero consectetur iure exercitationem!Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint quae commodi libero qui doloremque
+            recusandae magni. Accusantium eaque voluptatum quis possimus itaque consequuntur corrupti, provident eos,
+            vero consectetur iure exercitationem!
+        </div>
+    </div>
+
+
+ 
+        <div class="form-row align-items-center"  style="width: 75vw; margin: auto; margin-top: 5vh;text-align: center; justify-content: space-between;">
+            <div class="col-auto">
+                <!-- <a href='javascript:;' class="like-button" th:id="'post' + ${post.id}" th:onclick="'javascript:clickLike(' + ${post.id} + ', ' + ${hobby.id} + ');'"> -->
+                <a  class="like-button" th:onclick="'javascript:clickLike(' + ${post.id} + ', ' + ${hobby.id} + ');'" th:id="'post' + ${post.id}">
+                    <?xml version="1.0" encoding="utf-8"?>
+                    <svg width="40" height="40" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M320 1344q0-26-19-45t-45-19q-27 0-45.5 19t-18.5 45q0 27 18.5 45.5t45.5 18.5q26 0 45-18.5t19-45.5zm160-512v640q0 26-19 45t-45 19h-288q-26 0-45-19t-19-45v-640q0-26 19-45t45-19h288q26 0 45 19t19 45zm1184 0q0 86-55 149 15 44 15 76 3 76-43 137 17 56 0 117-15 57-54 94 9 112-49 181-64 76-197 78h-129q-66 0-144-15.5t-121.5-29-120.5-39.5q-123-43-158-44-26-1-45-19.5t-19-44.5v-641q0-25 18-43.5t43-20.5q24-2 76-59t101-121q68-87 101-120 18-18 31-48t17.5-48.5 13.5-60.5q7-39 12.5-61t19.5-52 34-50q19-19 45-19 46 0 82.5 10.5t60 26 40 40.5 24 45 12 50 5 45 .5 39q0 38-9.5 76t-19 60-27.5 56q-3 6-10 18t-11 22-8 24h277q78 0 135 57t57 135z" /></svg>
+                </a>
+            </div>
+            <form class="form-inline" method="post" th:action="@{/comment/hobbies/{hobby_id}/posts/{post_id} (hobby_id=${hobby.id}, post_id=${post.id})}" >
+            <div class="col-auto">
+                <input type="text" class="form-control" style="width: 60vw" id="text" th:field="*{rootComment.text}" name="text" placeholder="Write your comment here...">
+            </div>
+
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+            </div>
+            </form>
+        </div>
+
+
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="width: 75vw; margin: auto; margin-top: 5vh;text-align: center; justify-content: center;">
+        <li class="nav-item">
+            <a class="nav-link active" id="pills-comments-tab" data-toggle="pill" href="#pills-comments" role="tab" aria-controls="pills-comments" aria-selected="true">Comments <span class="badge badge-light" th:text="${#lists.size(comments)}">4</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-likes-tab" data-toggle="pill" href="#pills-likes" role="tab" aria-controls="pills-likes" aria-selected="false"> Likes <span class="badge badge-light" th:text="${#lists.size(usersVoted)}" id="likes-no"> 4 </span></a>
+        </li>
+
+    </ul>
+    <div class="tab-content" id="pills-tabContent" style="width: 75vw; margin: auto; margin-top: 5vh;">
+        <div  class="tab-pane fade show active" id="pills-comments" role="tabpanel" aria-labelledby="pills-comments-tab">
+            <div class="card" th:each="comment: ${comments}">
+                <div class="card-body">
+                    <a class="card-text" style="margin-bottom: 3px;" th:href="@{/dashboard/{user_id} (user_id=${comment.userId})}">Name</a>
+                    <p class="card-text" style="margin-bottom: 3px;" th:text="${comment.text}">With supporting text below as a natural lead-in to additional content.</p>
+                    <p><small class="text-muted" style="margin-bottom: 3px;">[[${#dates.format(post.createdDate, 'MMM dd, yyyy h:mm a')}]] UTC</small></p>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="pills-likes" role="tabpanel" aria-labelledby="pills-likes-tab" style="display: flex;flex-direction: row;flex-wrap: wrap; margin: auto; margin-top: 5vh;">
+
+            <div th:each="user : ${usersVoted}">
+                <div class="card mb-3" style="margin: 10px; background-color: #D0F0C0; width: 20vw; text-align: center;display: none;" id="logged-in-user">
+
+                    <div class="card-body" style="margin: 5px;">
+                        <div th:text="${#authentication.getPrincipal().getName()}"> This is some text within a card body.</div>
+                        <a th:href="@{/dashboard/{user_id} (user_id=${#authentication.getPrincipal().getId()})}"><button type="button" class="btn btn-primary" style="margin: 3px;">Go to Profile</button></a>
+                    </div>
+                    
+                </div>
+                <div th:if="${user.username eq #authentication.getPrincipal().getUsername()}" >
+                    
+                </div>
+
+
+                <div th:unless="${user.username eq #authentication.getPrincipal().getUsername()}" class="card mb-3 " style="margin: 10px; text-align: center; width: 20vw;">
+
+                    <div class="card-body" style="margin: 5px;">
+                        <div th:text="${user.name}"> This is some text within a card body.</div>
+                        <a th:href="@{/dashboard/{user_id} (user_id=${user.id})}"><button type="button" class="btn btn-primary" style="margin: 3px;">Go to Profile</button></a>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/like.js}"></script>
+
+    <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
+                            
+        var postId = /*[[${post.id}]]*/;
+        var hobbyId = /*[[${hobby.id}]]*/;
+        console.log(postId);
+        console.log(hobbyId);
+
+        initLike(postId, hobbyId);
+
+        var comments = /*[[${comments}]]*/;
+        for(var i =0;i<comments.length;i++)
+        {
+            console.log("yooo");
+            console.log(comments[i].text);
+            console.log(comments[i].id);
+        }
+
+        /*]]>*/
+    </script>
+
+</body>
+
+</html>

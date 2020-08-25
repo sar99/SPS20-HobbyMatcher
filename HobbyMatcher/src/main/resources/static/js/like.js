@@ -1,24 +1,3 @@
-function clickLike(postId, hobbyId)
-{
-    let id = "#post" + postId;
-    let button = document.querySelector(id);
-
-    console.log(id);
-
-    button.classList.toggle("active");
-    button.classList.add("animated");
-    generateClones(button);
-
-     let url = "/hobbies/" + hobbyId + "/post/like/" + postId;
-
-    var xhttp = new XMLHttpRequest();
-    var token = $("meta[name='_csrf']").attr("content"); 
-    var header = $("meta[name='_csrf_header']").attr("content");
-    xhttp.open("POST", url,  true);
-    xhttp.setRequestHeader(header, token);
-    xhttp.send();
-}
-
 
 function initLike(postId, hobbyId)
 {
@@ -31,7 +10,7 @@ function initLike(postId, hobbyId)
     // button.classList.add("animated");
     // generateClones(button);
 
-     let url = "/hobbies/" + hobbyId + "/post/isliked/" + postId;
+     let url = "/hobbies/" + hobbyId + "/post/api/isliked/" + postId;
 
     var xhttp = new XMLHttpRequest();
     var token = $("meta[name='_csrf']").attr("content"); 
@@ -46,6 +25,7 @@ function initLike(postId, hobbyId)
             {
                 console.log("hi");
                 button.classList.add("active");
+                document.getElementById("logged-in-user").style.display="block";
             }
 
         }
@@ -53,6 +33,56 @@ function initLike(postId, hobbyId)
 
     xhttp.send();
 }
+
+
+
+function clickLike(postId, hobbyId)
+{
+    let id = "#post" + postId;
+    let button = document.querySelector(id);
+
+    console.log(id);
+
+    button.classList.toggle("active");
+    button.classList.add("animated");
+    generateClones(button);
+
+    let likesCount = document.getElementById("likes-no");
+    if(likesCount!=null)
+    {
+        if(button.classList.contains("active"))
+        {
+            likesCount.innerHTML++;
+        }
+        else
+        {
+            likesCount.innerHTML--;
+        }
+    }
+
+    let loggedUser = document.getElementById("logged-in-user");
+    if(loggedUser!=null)
+    {
+        if(button.classList.contains("active"))
+        {
+            loggedUser.style.display="block";
+        }
+        else
+        {
+            loggedUser.style.display="none";
+        }
+    }
+
+     let url = "/hobbies/" + hobbyId + "/post/like/" + postId;
+
+    var xhttp = new XMLHttpRequest();
+    var token = $("meta[name='_csrf']").attr("content"); 
+    var header = $("meta[name='_csrf_header']").attr("content");
+    xhttp.open("POST", url,  true);
+    xhttp.setRequestHeader(header, token);
+    xhttp.send();
+}
+
 
 function generateClones(button) {
   let clones = randomInt(2, 4);

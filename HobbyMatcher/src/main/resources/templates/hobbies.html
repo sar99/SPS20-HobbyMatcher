@@ -42,7 +42,7 @@
         <div style="font-size: 2.5vh;" ><b>More to Explore..</b></div>
     </div>
 
-    <div style="width: 90vw; display: flex; flex-direction: row; flex-wrap: wrap; margin: auto; ">
+    <div style="width: 90vw; display: flex; flex-direction: row; flex-wrap: wrap; margin: auto; " th:if="${not #lists.isEmpty(hobbies)}">
 
         <div th:each="hobby : ${hobbies}" class="card" style="width: 18rem; margin: 10px">
             <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
@@ -55,6 +55,11 @@
         </div>
 
         
+    </div>
+    <div style="width: 90vw; display: flex; flex-direction: row; flex-wrap: wrap; margin: auto; text-align: center;" th:unless="${not #lists.isEmpty(hobbies)}">
+        <div style="margin: auto; margin-top: 10px; ">
+            Woah! You've tried all the hobbies till now! We're working on getting more hobbies for you! 
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

@@ -2,6 +2,7 @@ package com.sps.hobbymatcher.domain;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.io.*; 
 
 import org.springframework.data.annotation.Id;
 import org.springframework.cloud.gcp.data.datastore.core.mapping.Entity;
@@ -20,6 +21,7 @@ public class User implements UserDetails {
 	private Set<String> connections=new HashSet<>();
 	private Set<Long> myHobbies=new HashSet<>();
     private Set<Authority> authorities = new HashSet<>();
+    private String bio;
 
 	@Override
 	public boolean isAccountNonExpired() {
@@ -83,11 +85,17 @@ public class User implements UserDetails {
 	public void setAuthorities (Set<Authority> authorities) {
 		this.authorities = authorities;
 	}
+    public String getBio() {
+		return bio;
+	}
+	public void setBio(String bio) {
+		this.bio = bio;
+	}
     
     @Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", username=" + username + 
-                      ", password=" + password + ", connections=" + connections + 
-                      ", myHobbies=" + myHobbies +", authorities=" + authorities+"]";
+                       ", password=" + password + ", bio=" + bio + 
+                      ", connections=" + connections + ", myHobbies=" + myHobbies +", authorities=" + authorities+"]";
 	}
 }

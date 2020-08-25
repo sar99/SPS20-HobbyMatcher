@@ -23,8 +23,10 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		// TODO Auto-generated method stub
 		List<User> user=userRepo.findByUsername(username);
 
-		if(user.size()==0)
+		if(user.size()==0) {
 				throw new UsernameNotFoundException("Invalid Username and Password");
+        }
+        
 		return new CustomSecurityUser(user.get(0));
 	}
 }

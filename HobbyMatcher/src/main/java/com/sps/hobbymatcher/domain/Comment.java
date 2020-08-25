@@ -7,19 +7,16 @@ import org.springframework.cloud.gcp.data.datastore.core.mapping.Unindexed;
 import org.springframework.data.annotation.Id;
 
 @Entity
-public class Post {
+public class Comment {
 
     @Id
     private Long id;
 
     @Unindexed
 	private String text;
-	private long votes= 0L;
     private Long userId;
     private Date createdDate;
-	private Set<Long> usersVoted=new HashSet<>();
-    private List<Comment> comments = new ArrayList<>();
-	
+
     public Long getId() {
 		return id;
 	}
@@ -31,12 +28,6 @@ public class Post {
 	}
 	public void setText(String text) {
 		this.text = text;
-	}
-	public long getVotes() {
-		return votes;
-	}
-	public void setVotes(long votes) {
-		this.votes = votes;
 	}
     public Long getUserId() {
 		return userId;
@@ -50,23 +41,9 @@ public class Post {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public Set<Long> getUsersVoted() {
-		return usersVoted;
-	}
-	public void setUsersVoted(Set<Long> usersVoted) {
-		this.usersVoted = usersVoted;
-	}
-    public List<Comment> getComments() {
-		return comments;
-	}
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
 
 	@Override
 	public String toString() {
-		return "Post [id=" + id +", text=" + text
-				+ ", votes=" + votes + ", userId=" + userId + ", createdDate=" + createdDate 
-                + ", usersVoted=" + usersVoted + ", comments=" + comments + "]";
+		return "Comment [id=" + id +", text=" + text + ", userId=" + userId + ", createdDate=" + createdDate + "]";
 	}
-}
+} 
