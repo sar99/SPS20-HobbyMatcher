@@ -15,21 +15,21 @@ function isUnique()
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState === 4) {
             console.log(xhttp.response);
-            // if(xhttp.response == "true")
-            // {
-            //     console.log("green");
-            //     document.getElementById("username-alert").style.display="none";
-            //     isUsernameValidated = true;
-            // }
-            // else
-            // {
-            //     document.getElementById("username-alert").style.display="block";
-            //     console.log("red");
-            //     isUsernameValidated = false;
-            // }
+            if(xhttp.response == "true")
+            {
+                console.log("green");
+                document.getElementById("username-alert").style.display="none";
+                isUsernameValidated = true;
+            }
+            else
+            {
+                document.getElementById("username-alert").style.display="block";
+                console.log("red");
+                isUsernameValidated = false;
+            }
 
-            document.getElementById("username-alert").style.display="none";
-            isUsernameValidated = true;
+            // document.getElementById("username-alert").style.display="none";
+            // isUsernameValidated = true;
             if(isUsernameValidated && isPasswordValidated)
             {
                 document.getElementById("submit").disabled = false;
