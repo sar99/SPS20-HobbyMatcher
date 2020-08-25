@@ -7,7 +7,6 @@ import com.sps.hobbymatcher.domain.Hobby;
 import com.sps.hobbymatcher.domain.User;
 import com.sps.hobbymatcher.domain.Post;
 import com.sps.hobbymatcher.repository.HobbyRepository;
-import com.sps.hobbymatcher.repository.UserRepository;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -27,18 +26,42 @@ public class HobbyService {
     private HobbyRepository hobbyRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
+
+    public Optional<Hobby> findHobbyById(Long id) {
+
+        return hobbyRepository.findById(id);
+    }
+
+    public Set<Hobby> findAllHobbies() {
+
+        return hobbyRepository.findAll();
+    }
+
+    public List<Hobby> sortHobbiesByName(List<Hobby> hobbies) {
+
+        Collections.sort(hobbies, new Comparator<Hobby>(){
+            @Override
+            public int compare(Hobby hobby1, Hobby hobby2) {
+                return hobby1.getName().compareTo(hobby2.getName());
+            }
+        });
+
+        return hobbies;
+    }
 
     public Hobby createHobby(Hobby hobby, User user) {
 
         List<Hobby> hobbyOpt=hobbyRepository.findByName(hobby.getName());
+
         if(hobbyOpt!=null) {
+
             if(hobbyOpt.size()==0) {
                 
                 Hobby saved=hobbyRepository.save(hobby);
                 
                 user.getMyHobbies().add(hobby.getId());
-                userRepository.save(user);
+                userService.save(user);
                 
                 return saved;
             }
@@ -50,6 +73,7 @@ public class HobbyService {
     }
 
     public Hobby save(Hobby hobby) {
+
         return hobbyRepository.save(hobby);
     }
 }

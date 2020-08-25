@@ -22,9 +22,6 @@ import com.sps.hobbymatcher.domain.Hobby;
 import com.sps.hobbymatcher.service.UserService;
 import com.sps.hobbymatcher.service.HobbyService;
 import com.sps.hobbymatcher.service.PostService;
-import com.sps.hobbymatcher.repository.HobbyRepository;
-import com.sps.hobbymatcher.repository.PostRepository;
-import com.sps.hobbymatcher.repository.UserRepository;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @RestController
@@ -40,24 +37,14 @@ public class PostRESTController {
     @Autowired
     private PostService postService;
 
-    @Autowired
-    private HobbyRepository hobbyRepository;
-
-    @Autowired
-    private PostRepository postRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
     @GetMapping("/isliked/{postId}")
     public boolean islikedPost (@AuthenticationPrincipal User user, @PathVariable Long postId, @PathVariable Long hobbyId) {
 
-        Optional<Post> postOpt = postRepository.findById(postId);
+        Optional<Post> postOpt = postService.findPostById(postId);
         Long userId = user.getId();
         boolean hasLiked = false;
 
         if(postOpt.isPresent()) {
-            // postService.likePost(postOpt.get(), user);
 
             Post post = postOpt.get();
             Set<Long> usersId = post.getUsersVoted();
@@ -65,15 +52,14 @@ public class PostRESTController {
             for (Iterator<Long> it = usersId.iterator(); it.hasNext(); ) {
 
                 Long id = it.next();
-                Optional<User> userVoted = userRepository.findById(id);
+                Optional<User> userVoted = userService.findUserById(id);
 
                 if(userVoted.isPresent() && id.equals(userId)) {
+
                     hasLiked = true;
                 }
             }
         }
-           System.out.println("Has Liked?: " + hasLiked);
         return hasLiked;
     }
-
 }

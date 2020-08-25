@@ -19,9 +19,6 @@ import com.sps.hobbymatcher.domain.Post;
 import com.sps.hobbymatcher.domain.Authority;
 import com.sps.hobbymatcher.service.HobbyService;
 import com.sps.hobbymatcher.service.PostService;
-import com.sps.hobbymatcher.repository.HobbyRepository;
-import com.sps.hobbymatcher.repository.PostRepository;
-import com.sps.hobbymatcher.repository.UserRepository;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @RestController
@@ -34,39 +31,33 @@ public class HomeRESTController {
     @Autowired
     private HobbyService hobbyService;
 
-    @Autowired
-    private HobbyRepository hobbyRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
     @GetMapping("/isunique/{username}")
     public boolean isUniqueUsername (@PathVariable String username) {
 
-        List<User> userOpt = userRepository.findByUsername(username);
+        List<User> userOpt = userService.findUserByUsername(username);
 
         if(userOpt.size()==1) {
+
             return false;
         }
-        else
-        {
+        else{
+
             return true;
         }
-        // else
-        // {
-            
-        // }
     }
 
     @GetMapping("/getname/{userId}")
     public String islikedPost (@AuthenticationPrincipal User user, @PathVariable Long userId) {
 
-        Optional<User> userOpt = userRepository.findById(userId);
+        Optional<User> userOpt = userService.findUserById(userId);
 
         if(userOpt.isPresent()) {
+
             return userOpt.get().getUsername();
         }
-        else
+        else {
+
             return "Name";
+        }
     }
 }

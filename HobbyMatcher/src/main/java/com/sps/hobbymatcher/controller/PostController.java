@@ -21,9 +21,6 @@ import com.sps.hobbymatcher.domain.Hobby;
 import com.sps.hobbymatcher.service.UserService;
 import com.sps.hobbymatcher.service.HobbyService;
 import com.sps.hobbymatcher.service.PostService;
-import com.sps.hobbymatcher.repository.HobbyRepository;
-import com.sps.hobbymatcher.repository.PostRepository;
-import com.sps.hobbymatcher.repository.UserRepository;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
@@ -38,30 +35,22 @@ public class PostController {
     
     @Autowired
     private PostService postService;
-
-    @Autowired
-    private HobbyRepository hobbyRepository;
-
-    @Autowired
-    private PostRepository postRepository;
-
-    @Autowired
-    private UserRepository userRepository;
     
     @GetMapping("")
     public String createPost (ModelMap model) {
 
         model.put("post", new Post());
-
         return "post";
-
     }
     
     @PostMapping("")
     public String uploadPost (@PathVariable Long hobbyId, @AuthenticationPrincipal User user, @ModelAttribute Post post) {
+        
         post.setUserId(user.getId());
-        Optional<Hobby> hobbyOpt = hobbyRepository.findById(hobbyId);
+        Optional<Hobby> hobbyOpt = hobbyService.findHobbyById(hobbyId);
+
         if(hobbyOpt.isPresent()) {
+
             Hobby hobby = hobbyOpt.get();
             post = postService.uploadPost(hobby, post);
         }
@@ -73,36 +62,34 @@ public class PostController {
     public String displayPost(@PathVariable Long hobbyId, @PathVariable Long postId, ModelMap model) {
 
         List<String> usersVoted = new ArrayList<>();
-        Optional<Post> postOpt = postRepository.findById(postId);
+        Optional<Post> postOpt = postService.findPostById(postId);
 
         if(postOpt.isPresent()) {
+
             Post post = postOpt.get();
 
             model.put("post", post);
 
             Set<Long> usersId = post.getUsersVoted();
             Long authorId = post.getUserId();
+            Optional<User> authorOpt = userService.findUserById(authorId);
 
-            Optional<User> authorOpt = userRepository.findById(authorId);
             if(authorOpt.isPresent()) {
+
                 model.put("author", authorOpt.get());
             }
 
             for (Iterator<Long> it = usersId.iterator(); it.hasNext(); ) {
 
-                Optional<User> userVoted = userRepository.findById(it.next());
+                Optional<User> userVoted = userService.findUserById(it.next());
 
                 if(userVoted.isPresent()) {
+
                     usersVoted.add(userVoted.get().getUsername());
                 }
             }
 
-            Collections.sort(usersVoted, new Comparator<String>(){
-                @Override
-                public int compare(String user1, String user2) {
-                    return user1.compareTo(user2);
-                }
-            });
+            usersVoted = userService.sortUsersByName2(usersVoted);
         }
 
         model.put("usersVoted", usersVoted);
@@ -115,7 +102,6 @@ public class PostController {
     public String deletePost (@PathVariable Long hobbyId, @PathVariable Long postId) {
         
         postService.deletePost(postId, hobbyId);
-        
         return "redirect:/hobbies/"+hobbyId;
     }
     
@@ -124,13 +110,13 @@ public class PostController {
     @PostMapping("/like/{postId}")
     public String likePost (@AuthenticationPrincipal User user, @PathVariable Long postId, @PathVariable Long hobbyId) {
 
-        Optional<Post> postOpt = postRepository.findById(postId);
+        Optional<Post> postOpt = postService.findPostById(postId);
 
         if(postOpt.isPresent()) {
-            Optional<User> user1 = userRepository.findById(user.getId());
+
+            Optional<User> user1 = userService.findUserById(user.getId());
             postService.likePost(postOpt.get(), user1.get());
         }
-           System.out.println("LIKKEDDDD!!!");
 
         return "redirect:/hobbies/"+hobbyId;
     }
