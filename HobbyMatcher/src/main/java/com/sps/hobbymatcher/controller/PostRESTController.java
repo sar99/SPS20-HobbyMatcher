@@ -28,7 +28,7 @@ import com.sps.hobbymatcher.repository.UserRepository;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @RestController
-@RequestMapping("/hobbies/{hobbyId}/post/isliked")
+@RequestMapping("/hobbies/{hobbyId}/post/api")
 public class PostRESTController {
 
     @Autowired
@@ -49,7 +49,7 @@ public class PostRESTController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/{postId}")
+    @GetMapping("/isliked/{postId}")
     public boolean islikedPost (@AuthenticationPrincipal User user, @PathVariable Long postId, @PathVariable Long hobbyId) {
 
         Optional<Post> postOpt = postRepository.findById(postId);
@@ -75,4 +75,5 @@ public class PostRESTController {
            System.out.println("Has Liked?: " + hasLiked);
         return hasLiked;
     }
+
 }

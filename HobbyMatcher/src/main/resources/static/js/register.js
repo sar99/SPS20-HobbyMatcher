@@ -6,7 +6,7 @@ function isUnique()
 {
     console.log("called");
     var username = document.getElementById("username").value;
-    var url = "/register/api/isunique/" + username;
+    var url = "/api/isunique/" + username;
 
     var xhttp = new XMLHttpRequest();
     xhttp.open("GET", url,  true);

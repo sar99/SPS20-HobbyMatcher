@@ -25,7 +25,7 @@ import com.sps.hobbymatcher.repository.UserRepository;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @RestController
-@RequestMapping("/register/api")
+@RequestMapping("/api")
 public class HomeRESTController {
 
     @Autowired
@@ -56,5 +56,17 @@ public class HomeRESTController {
         // {
             
         // }
+    }
+
+    @GetMapping("/getname/{userId}")
+    public String islikedPost (@AuthenticationPrincipal User user, @PathVariable Long userId) {
+
+        Optional<User> userOpt = userRepository.findById(userId);
+
+        if(userOpt.isPresent()) {
+            return userOpt.get().getUsername();
+        }
+        else
+            return "Name";
     }
 }

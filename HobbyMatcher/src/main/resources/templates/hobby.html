@@ -144,7 +144,7 @@
 
                     <div th:each="post : ${posts}" th:if="${isRegistered eq true}" style="margin-top: 10px;">
                         <div class="card-body"  >
-                            <h5 class="card-title">By: <span th:text="${post.userId}">Author Name</span></h5>
+                            <h5 class="card-title">By: <span th:text="${post.userId}" th:id="'name' + ${post.id}">Author Name</span></h5>
                             <p th:utext="${post.text}" class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum est temporibus
                                 praesentium
                                 beatae voluptate ut obcaecati atque, ipsa amet dolorem natus excepturi a vel sit, corporis tenetur,
@@ -160,7 +160,7 @@
                             
                         </div>
                         <div th:inline="text" class="card-footer text-muted">
-                            [[${#dates.format(post.createdDate, 'MMM dd, yyyy h:mm a')}]]
+                            [[${#dates.format(post.createdDate, 'MMM dd, yyyy h:mm a')}]] UTC
                         </div>
                     </div>
 
@@ -231,6 +231,7 @@
         for(let i =0;i<posts.length;i++)
         {
             initLike(posts[i].id, hobbyId);
+            getName(posts[i].id, posts[i].userId);
         }
 
         /*]]>*/
