@@ -52,10 +52,10 @@ public class HomeRESTController {
         Optional<User> userOpt = userService.findUserById(userId);
 
         if(userOpt.isPresent()) {
-
+            System.out.println(userOpt.get().getUsername());
             return userOpt.get().getUsername();
         } else {
-
+            System.out.println("falseeeeeee");
             return "Name";
         }
     }
