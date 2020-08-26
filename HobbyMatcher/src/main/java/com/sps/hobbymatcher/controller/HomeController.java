@@ -1,6 +1,7 @@
 package com.sps.hobbymatcher.controller;
 
 import java.util.*;
+import java.time.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -61,6 +62,13 @@ public class HomeController {
 
             model.put("hobbies", otherHobbies);
         }
+
+        Date date = new Date();
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int day = localDate.getDayOfMonth();
+
+        model.put("fact", facts[day-1][0]);
+        model.put("hobby", facts[day-1][1]);
 
         return "index";
     }
