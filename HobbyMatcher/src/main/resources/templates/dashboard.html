@@ -136,7 +136,7 @@
 
 
                 <div th:each="hobby : ${hobbies}" class="card" style="width: 18rem; margin: 10px">
-                    <img class="card-img-top" src="../img/reading.jpeg" alt="Card image cap">
+                    <img class="card-img-top" th:src="@{../img/{image_name}.png (image_name=${hobby.name})}" alt="Card image cap">
                     <div class="card-body">
                         <h5 th:text="${hobby.name}" class="card-title">Card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the

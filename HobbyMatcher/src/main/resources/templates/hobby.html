@@ -48,7 +48,7 @@
     </nav> -->
 
     <div class="card mb-3" style="width: 90vw; margin: auto;">
-        <img class="card-img-top" th:src="@{../img/hiking.jpg}" alt="Card image cap">
+        <img class="card-img-top" th:src="@{../img/{image_name}.jpg (image_name=${hobby.name})}" alt="Card image cap">
         <div class="card-body">
             <h5 th:text="${hobby.name}" class="card-title">Hobby Title</h5>
             <p th:text="${hobby.about}" class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugit nemo harum voluptate

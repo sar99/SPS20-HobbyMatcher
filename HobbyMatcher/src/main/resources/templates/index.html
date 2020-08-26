@@ -41,13 +41,11 @@
 
     <div class="jumbotron">
         <h1 class="display-4">Fact of the day!</h1>
-        <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint quae commodi libero qui doloremque
-            recusandae magni. Accusantium eaque voluptatum quis possimus itaque consequuntur corrupti, provident eos,
-            vero consectetur iure exercitationem!</p>
+        <p class="lead" th:text="${fact}">Elizabethan scribe Peter Bales reportedly produced a complete, handwritten copy of the Bible so small it could fit inside a walnut shell!</p>
         <hr class="my-4">
-        <p>We currently have 73 users interested in this hobby. Would you like to give it a try?</p>
+        <p>This hobby currently has <span th:text="${#lists.size(facthobby.users)}">10</span> users interested in it. Would you like to give this hobby a try?</p>
         <p class="lead">
-            <a class="btn btn-primary btn-lg" href="#" role="button">Try out this hobby</a>
+            <a class="btn btn-primary btn-lg" th:href="@{/hobbies/{hobby_id} (hobby_id=${facthobby.id})}" role="button">Try out this hobby</a>
         </p>
     </div>
 
@@ -58,7 +56,7 @@
     </div>
 
     <div class="card" style="width: 18rem;margin: auto; display: none;" id="random-hobby">
-        <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap">
+        <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap" id="random-img">
         <div class="card-body">
             <h5 class="card-title" id="random-title">Reading</h5>
             <p class="card-text">This is the hobby we have selected for you to try. You never know when a random
