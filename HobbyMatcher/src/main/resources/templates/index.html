@@ -41,11 +41,11 @@
 
     <div class="jumbotron">
         <h1 class="display-4">Fact of the day!</h1>
-        <p class="lead">Elizabethan scribe Peter Bales reportedly produced a complete, handwritten copy of the Bible so small it could fit inside a walnut shell!</p>
+        <p class="lead" th:text="${fact}">Elizabethan scribe Peter Bales reportedly produced a complete, handwritten copy of the Bible so small it could fit inside a walnut shell!</p>
         <hr class="my-4">
-        <p>Would you like to give this hobby a try?</p>
+        <p>This hobby currently has <span th:text="${#lists.size(facthobby.users)}">10</span> users interested in it. Would you like to give this hobby a try?</p>
         <p class="lead">
-            <a class="btn btn-primary btn-lg" href="/hobbies/5715948350734336" role="button">Try out this hobby</a>
+            <a class="btn btn-primary btn-lg" th:href="@{/hobbies/{hobby_id} (hobby_id=${facthobby.id})}" role="button">Try out this hobby</a>
         </p>
     </div>
 
