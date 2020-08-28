@@ -4,40 +4,32 @@
 <title>About</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+<link th:href="@{/css/about.css}" rel="stylesheet" />
 <body>
 
 
     <!-- Just an image -->
-    <nav class="navbar navbar-light bg-light justify-content-between">
+    <nav class="navbar l-header navbar-light justify-content-between">
         <a class="navbar-brand" href="#">
             <img src="../static/img/logo.png" th:src="@{img/logo.png}" width="50" height="50" alt="">
         </a>
-        <div sec:authorize="isAnonymous()">
-            <a href="/" th:href="@{/login}"><button type="button" class="btn btn-primary">Log In</button></a>
-            <a href="/" th:href="@{/register}"><button type="button" class="btn btn-primary">Sign Up</button></a>
+        <div class="nav-menu" sec:authorize="isAnonymous()">
+            <a class="nav-stuff" href="/" th:href="@{/}">Home</a>
+            <a class="nav-stuff" href="/" th:href="@{/about}">About Us</a>
+            <a class="nav-stuff" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+            <a class="nav-stuff" href="/" th:href="@{/login}" >Log In</a>
+            <a class="nav-stuff" href="/" th:href="@{/register}" >Sign Up</a>
         </div>
         <div sec:authorize="isAuthenticated()">
-            <a href="/" th:href="@{/dashboard/}" ><button type="button" class="btn btn-primary">Welcome, <span sec:authentication="name"></span></button></a>
-            <a href="/" th:href="@{/logout}"><button type="button" class="btn btn-primary">Log Out</button></a>
+            <a class="nav-stuff" href="/" th:href="@{/}">Home</a>
+            <a class="nav-stuff" href="/" th:href="@{/about}">About Us</a>
+            <a class="nav-stuff" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+            <a class="nav-stuff" href="/" th:href="@{/dashboard}" >Welcome, <span sec:authentication="name"></span></a>
+            <a class="nav-stuff" href="/" th:href="@{/logout}">Log Out</a>
         </div>
     </nav>
 
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="/" th:href="@{/}">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/" th:href="@{/about}">About Us</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
-        </li>
-
-
-    </ul>
-
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron">
         <div class="container">
             <h1 class="display-4">About Us</h1>
             <p class="lead">A web app, where users with common hobbies and interests  are able to connect with each other. 
@@ -52,7 +44,7 @@ Our Web app provides a common platform for users to share their thoughts through
         <div class="card">
             <div class="card-header" id="headingOne">
                 <h5 class="mb-0">
-                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                    <button class="btn card-header" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
                         aria-controls="collapseOne">
                         I want to explore a new hobby, is there a provision of suggesting a popular hobby?
                     </button>
@@ -68,7 +60,7 @@ Our Web app provides a common platform for users to share their thoughts through
         <div class="card">
             <div class="card-header" id="headingTwo">
                 <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                    <button class="btn card-header collapsed" data-toggle="collapse" data-target="#collapseTwo"
                         aria-expanded="false" aria-controls="collapseTwo">
                         Can I see the hobbies of my connections?
                     </button>
@@ -83,7 +75,7 @@ Our Web app provides a common platform for users to share their thoughts through
         <div class="card">
             <div class="card-header" id="headingThree">
                 <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"
+                    <button class="btn card-header collapsed" data-toggle="collapse" data-target="#collapseThree"
                         aria-expanded="false" aria-controls="collapseThree">
                         Can I start a conversation with my connection?
                     </button>
