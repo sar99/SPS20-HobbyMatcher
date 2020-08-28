@@ -4,38 +4,39 @@
 <title>Home</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link th:href="@{/css/index.css}" rel="stylesheet" />
 
 <body>
 
 
     <!-- Just an image -->
-    <nav class="navbar navbar-light bg-light justify-content-between">
+    <nav class="navbar l-header navbar-light justify-content-between">
         <a class="navbar-brand" href="#">
             <img src="../static/img/logo.png" th:src="@{img/logo.png}" width="50" height="50" alt="">
         </a>
-        <div sec:authorize="isAnonymous()">
-            <a href="/" th:href="@{/login}" ><button type="button" class="btn btn-primary">Log In</button></a>
-            <a href="/" th:href="@{/register}" ><button type="button" class="btn btn-primary">Sign Up</button></a>
+        <!--<h2 class="nav-heading">Welcome To HobbyLobby !</h2>-->
+        <div class="nav-menu" sec:authorize="isAnonymous()">
+            <a class="nav-stuff" href="/" th:href="@{/}">Home</a>
+            <a class="nav-stuff" href="/" th:href="@{/about}">About Us</a>
+            <a class="nav-stuff" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+            <a class="nav-stuff" href="/" th:href="@{/login}" >Log In</a>
+            <a class="nav-stuff" href="/" th:href="@{/register}" >Sign Up</a>
         </div>
         <div sec:authorize="isAuthenticated()">
-            <a href="/" th:href="@{/dashboard}" ><button type="button" class="btn btn-primary">Welcome, <span sec:authentication="name"></span></button></a>
-            <a href="/" th:href="@{/logout}" ><button type="button" class="btn btn-primary">Log Out</button></a>
+            <a class="nav-stuff" href="/" th:href="@{/}">Home</a>
+            <a class="nav-stuff" href="/" th:href="@{/about}">About Us</a>
+            <a class="nav-stuff" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+            <a class="nav-stuff" href="/" th:href="@{/dashboard}" >Welcome, <span sec:authentication="name"></span></a>
+            <a class="nav-stuff" href="/" th:href="@{/logout}">Log Out</a>
         </div>
     </nav>
 
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="/" th:href="@{/}">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/" th:href="@{/about}">About Us</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
-        </li>
-
-
-    </ul>
+     <section class="banner">
+        <img src="img/pic.jpg" alt="welcomeBanner">
+        <div class="left"><h1>Welcome To</h1></div>
+        <div class="right"><h1>HobbyLobby.</h1></div>
+        <h5 class="tagline">Connect. Share. Inspire. Learn.</h5>
+    </section> 
 
 
 
@@ -43,25 +44,25 @@
         <h1 class="display-4">Fact of the day!</h1>
         <p class="lead" th:text="${fact}">Elizabethan scribe Peter Bales reportedly produced a complete, handwritten copy of the Bible so small it could fit inside a walnut shell!</p>
         <hr class="my-4">
-        <p>This hobby currently has <span th:text="${#lists.size(facthobby.users)}">10</span> users interested in it. Would you like to give this hobby a try?</p>
+        <p>This hobby currently has <span th:text="${#lists.size(facthobby.users)}">10</span> users interested in it. Would you like to give this hobby a try?</p><br>
         <p class="lead">
-            <a class="btn btn-primary btn-lg" th:href="@{/hobbies/{hobby_id} (hobby_id=${facthobby.id})}" role="button">Try out this hobby</a>
+            <a class="click" th:href="@{/hobbies/{hobby_id} (hobby_id=${facthobby.id})}" role="button">Try out this hobby</a>
         </p>
     </div>
 
 
 
     <div class="card" style="margin: auto; margin-top: 10px; margin-bottom: 10px; text-align: center; width:20vw;" id="random-selector-button">
-        <button type="button" class="btn btn-primary" onclick="randomSelector()">Randomly select a hobby</button>
+        <button type="button" class="click" onclick="randomSelector()">Randomly select a hobby</button>
     </div>
 
-    <div class="card" style="width: 18rem;margin: auto; display: none;" id="random-hobby">
+    <div class="card jumbotron" style="width: 18rem;margin: auto; display: none;" id="random-hobby">
         <img class="card-img-top" src="./img/reading.jpeg" alt="Card image cap" id="random-img">
         <div class="card-body">
             <h5 class="card-title" id="random-title">Reading</h5>
             <p class="card-text">This is the hobby we have selected for you to try. You never know when a random
-                hobby may become your favourite!</p>
-            <a href="#" class="btn btn-primary" id="random-url">Try it out</a>
+                hobby may become your favourite!</p><br>
+            <a href="#" class="click" id="random-url">Try it out</a>
         </div>
     </div>
 
