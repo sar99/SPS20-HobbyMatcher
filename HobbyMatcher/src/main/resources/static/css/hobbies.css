@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+:root{
+    /*variables*/
+    --header-height: 3em;
+    --font-semi: 600;
+    /*colors*/
+    --first-color: /*#f78502;*/ #4070f4;
+    --second-color: /*#c04207;*/ #0e2431;
+    /*typo*/
+    --body-font :'Poppins', sans-serif;
+    --big-font-size: 2rem;
+    --h2-font-size: 1.25rem;
+    --normal-font-size: 0.938rem; 
+}
+body{
+    font-family: var(--body-font);
+}
+.navbar{
+    background: white;
+}
+.nav-heading{
+    color: #9c9c9c;
+}
+.btn{
+    background: white;
+    color: #9c9c9c;
+}
+.nav-stuff{
+    padding: 0px 15px;
+    background: white;
+    color: #9c9c9c;
+    text-decoration: none;
+}
+.nav-link{
+    padding: 0px 20px;
+    background: white;
+    color: #9c9c9c;
+    text-decoration: none;
+}
+.nav{
+    height: var(--header-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: var(--font-semi);
+}
+.l-header{
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: var(--z-fixed);
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(146,161,176,.15);
+}
+.heading{
+    color: white;
+    font-size: 2em;
+}
+.all{
+    background: #0e2431;
+}
+.click{
+    cursor: pointer;
+    background-color: white;
+    padding: 6px;
+    border: 2px solid black;
+    border-radius: 0px;
+    color: black;
+}
+a:hover{
+    text-decoration: none;
+    color: #4e4c4c;
+}
+.click:hover{
+    text-decoration: none;
+    color: white;
+    background: #0e2431;
+}
