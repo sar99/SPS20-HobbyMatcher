@@ -12,25 +12,9 @@
     --h2-font-size: 1.25rem;
     --normal-font-size: 0.938rem; 
 }
-/*body{
-    font-family: var(--body-font);
-}
-.navbar{
-    background: white;
-}
-.nav-heading{
-    color: #9c9c9c;
-}
-.btn{
-    background: white;
-    color: #9c9c9c;
-}
-.nav-link{
-    background: white;
-    color: #9c9c9c;
-    padding: 0px 20px;
-}*/
-body{
+body, html{
+    width: 100%;
+    height: 100%; 
     font-family: var(--body-font);
 }
 .navbar{
@@ -62,80 +46,95 @@ body{
     align-items: center;
     font-weight: var(--font-semi);
 }
-.banner{
-    text-align: right;
-    width: 100%;
-    top: 50px;
-}
 .l-header{
     width: 100%;
-    position: fixed;
     top: 0;
     left: 0;
     z-index: var(--z-fixed);
     background-color: #fff;
     box-shadow: 0 1px 4px rgba(146,161,176,.15);
 }
-.left{
-    position: absolute;
-    bottom: 70%;
-    left:60px;
-}
-.right{
-    position: absolute;
-    bottom: 60%;
-    left:60px;
-}
-.tagline{
-    position: absolute;
-    bottom: 50%;
-    left: 60px;
-    color: #9c9c9c;
-}
-.jumbotron{
-    background-color: #0e2431;
+.heading{
     color: white;
     text-align: center;
 }
+.container{
+    width: 100%;
+    height: 100%; 
+}
+.left{
+    width: 20%;
+    height: 100%;
+    float: left;
+    background-color: white;
+    border-collapse: collapse;
+}
+.middle{
+    width: 60%;
+    height: 80%;
+    float: left;
+    background-color: #0e2431;
+    border-collapse: collapse;
+}
+.reg-middle{
+    width: 60%;
+    height: 100%;
+    float: left;
+    background-color: #0e2431;
+    border-collapse: collapse;
+}
+.right{
+    width: 20%;
+    height: 100%;
+    position: relative;
+    float: right;
+    background-color: white;
+    border-collapse: collapse;
+}
+.bd-grid{
+    max-width: 1024px;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-column-gap: 2rem;
+    width: calc(100% - 2rem);
+    margin-left: var(--mb-2);
+    margin-right: var(--mb-2);
+}
+.naam{
+    text-align: left;
+    width: 500px;
+    left: 200px;
+}
 .click{
     cursor: pointer;
-<<<<<<< HEAD
-    background-color: #40b3c7;
-    padding: 6px;
-    border: 4px solid #40b3c7;
-    border-radius: 36px;
-    color: black;
-=======
     background-color: #0e2431;
     padding: 6px;
     border: 4px solid white;
     color: white;
 }
-.click2{
-    cursor: pointer;
-    background-color: white;
-    padding: 6px;
-    border: 4px solid #0e2431;
-    color: #0e2431;
->>>>>>> hobbies-page
+.reg{
+    text-align: center;
+    color: white;
 }
-a:hover{
+.bot{
+    text-align: center;
+    color: white;
+}
+.nav-stuff:hover{
     text-decoration: none;
     color: #4e4c4c;
 }
+a:hover{
+    text-decoration: none;
+    color: #40b3c7;
+}
 .click:hover{
     text-decoration: none;
-<<<<<<< HEAD
-    color: white;
-    box-shadow: #9c9c9c;
-}
-=======
+    background: #0e2431;
     border: 4px solid #40b3c7;
     color: #40b3c7;
 }
-.click2:hover{
+.reg:hover{
     text-decoration: none;
-    border: 4px solid #40b3c7;
     color: #40b3c7;
 }
->>>>>>> hobbies-page

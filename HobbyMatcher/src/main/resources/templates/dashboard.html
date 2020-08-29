@@ -1,49 +1,41 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
     xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<title>Home</title>
+<title>Profile</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
+<link th:href="@{/css/dashboard.css}" rel="stylesheet" />
 <body>
 
 
     <!-- Just an image -->
-    <nav class="navbar navbar-light bg-light justify-content-between">
+    <nav class="navbar l-header navbar-light justify-content-between">
         <a class="navbar-brand" href="#">
-            <img src="../../static/img/logo.png" th:src="@{../img/logo.png}" width="50" height="50" alt="">
+            <img src="../static/img/logo.png" th:src="@{img/logo.png}" width="50" height="50" alt="">
         </a>
-        <div sec:authorize="isAnonymous()">
-            <a href="/" th:href="@{/login}"><button type="button" class="btn btn-primary">Log In</button></a>
-            <a href="/" th:href="@{/register}"><button type="button" class="btn btn-primary">Sign Up</button></a>
+        <!--<h2 class="nav-heading">Welcome To HobbyLobby !</h2>-->
+        <div class="nav-menu" sec:authorize="isAnonymous()">
+            <a class="nav-stuff" href="/" th:href="@{/}">Home</a>
+            <a class="nav-stuff" href="/" th:href="@{/about}">About Us</a>
+            <a class="nav-stuff" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+            <a class="nav-stuff" href="/" th:href="@{/login}" >Log In</a>
+            <a class="nav-stuff" href="/" th:href="@{/register}" >Sign Up</a>
         </div>
         <div sec:authorize="isAuthenticated()">
-
-            <a href="/" th:href="@{/dashboard/}" ><button type="button" class="btn btn-primary">Welcome, <span sec:authentication="name"></span></button></a>                     
-            <a href="/" th:href="@{/logout}"><button type="button" class="btn btn-primary">Log Out</button></a>
+            <a class="nav-stuff" href="/" th:href="@{/}">Home</a>
+            <a class="nav-stuff" href="/" th:href="@{/about}">About Us</a>
+            <a class="nav-stuff" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+            <a class="nav-stuff" href="/" th:href="@{/dashboard}" >Welcome, <span sec:authentication="name"></span></a>
+            <a class="nav-stuff" href="/" th:href="@{/logout}">Log Out</a>
         </div>
     </nav>
-
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link" href="/" th:href="@{/}">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/" th:href="@{/about}">About Us</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
-        </li>
-
-
-    </ul>
-
+    <br><br>
 
     <div style="margin-top: 5vh;">
         <ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
             <li>
                 <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
-                    aria-controls="pills-profile" aria-selected="true">Profile</a>
+                    aria-controls="pills-profile" aria-selected="true" >Profile</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="pills-posts-tab" data-toggle="pill" href="#pills-posts" role="tab"
@@ -59,11 +51,12 @@
         <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
             
             <div class="jumbotron jumbotron-fluid">
-                <div class="container">
+                <div class="container left">
                     <h1 th:text="${user.name}" class="display-4">Fluid jumbotron</h1>
                     <p th:text="${user.username}" class="lead">This is a modified jumbotron that occupies the entire horizontal space of its
                         parent.</p>
                 </div>
+                
             </div>
 
             <div class="card text-center" style="width: 18rem;margin: auto;" th:if="${user.username ne #authentication.getPrincipal().getUsername()}">       
