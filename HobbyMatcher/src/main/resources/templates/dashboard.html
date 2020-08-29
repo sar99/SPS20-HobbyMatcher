@@ -51,10 +51,21 @@
         <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
             
             <div class="jumbotron jumbotron-fluid">
-                <div class="container left">
+                <div class="container">
                     <h1 th:text="${user.name}" class="display-4">Fluid jumbotron</h1>
                     <p th:text="${user.username}" class="lead">This is a modified jumbotron that occupies the entire horizontal space of its
                         parent.</p>
+                </div>
+                <div class="container">
+                    <div class="card" style="width: 85vw; margin: auto; margin-top: 10vh;">
+                        <div class="card-header" style="color:black;">
+                            Bio
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text" style="color:black;" th:if="${#strings.isEmpty(user.bio)}">The user has no bio written yet.</p>
+                            <p class="card-text" style="color:black;" th:unless="${#strings.isEmpty(user.bio)}" th:text="${user.bio}">The user has no bio written yet.</p>
+                        </div>
+                    </div>
                 </div>
                 
             </div>
@@ -95,26 +106,16 @@
           
             <div sec:authorize="isAuthenticated()"  class="card text-center" th:if="${user.username eq #authentication.getPrincipal().getUsername()}" style="width: 18rem;margin: auto;">
                 <div class="card-body">
-                    <p class="card-text">Customise your profile for everyone to know you better</p>
+                    <p class="card-text jumbotron">Customise your profile for everyone to know you better</p>
                     <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-6 col-sm-offset-3" style="margin: auto;">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Edit profile</button>
+                                    <button type="button" class="click" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Edit profile</button>
                                 </div>
                             </div>
                     </div>
                 </div>
-            </div>   
-
-            <div class="card" style="width: 85vw; margin: auto; margin-top: 10vh;">
-                <div class="card-header">
-                    Bio
-                </div>
-                <div class="card-body">
-                    <p class="card-text" th:if="${#strings.isEmpty(user.bio)}">The user has no bio written yet.</p>
-                    <p class="card-text" th:unless="${#strings.isEmpty(user.bio)}" th:text="${user.bio}">The user has no bio written yet.</p>
-                </div>
-            </div>
+            </div> 
 
             
         </div>
@@ -122,7 +123,7 @@
     
 
 
-        <div class="tab-pane fade" id="pills-posts" role="tabpanel" aria-labelledby="pills-posts-tab">
+        <div class="tab-pane fade all" id="pills-posts" role="tabpanel" aria-labelledby="pills-posts-tab">
 
 
             <div style="width: 90vw; display: flex; flex-direction: row; flex-wrap: wrap; margin: auto; ">
@@ -134,7 +135,7 @@
                         <h5 th:text="${hobby.name}" class="card-title">Card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
                             card's content.</p>
-                        <a th:href="@{/hobbies/{hobby_id} (hobby_id=${hobby.id})}" class="btn btn-primary">Try this hobby</a>
+                        <a th:href="@{/hobbies/{hobby_id} (hobby_id=${hobby.id})}" class="click">Try this hobby</a>
                     </div>
                 </div>
 
@@ -145,7 +146,7 @@
         </div>
 
 
-        <div class="tab-pane fade" id="pills-connections" role="tabpanel" aria-labelledby="pills-contact-tab"
+        <div class="tab-pane fade all" id="pills-connections" role="tabpanel" aria-labelledby="pills-contact-tab"
             style="display: flex;flex-direction: row;flex-wrap: wrap; width: 85vw; margin: auto; margin-top: 10vh;">
 
             <div th:each="connection : ${connections}">
@@ -153,7 +154,7 @@
                 <div class="card mb-3 " style="margin: 10px; text-align: center; width: 20vw;">
                     <div class="card-body" style="margin: 5px;">
                         <div th:text="${connection.name}"> This is some text within a card body.</div>
-                        <a th:href="@{/dashboard/{user_id} (user_id=${connection.id})}"><button type="button" class="btn btn-primary" style="margin: 3px;">Go to Profile</button></a>
+                        <a th:href="@{/dashboard/{user_id} (user_id=${connection.id})}"><button type="button" class="click" style="margin: 3px;">Go to Profile</button></a>
                     </div>
                 </div>
                 
@@ -201,8 +202,8 @@
                         
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <input type="submit" class="btn btn-primary" id="submit">
+                        <button type="button" class="click" data-dismiss="modal">Close</button>
+                        <input type="submit" class="click" id="submit">
                     </div>
                 </form>
             </div>

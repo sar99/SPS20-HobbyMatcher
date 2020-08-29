@@ -58,7 +58,29 @@ body{
     background-color: #fff;
     box-shadow: 0 1px 4px rgba(146,161,176,.15);
 }
+.jumbotron{
+    background: #0e2431;
+    color: white;
+}
+.click{
+    cursor: pointer;
+    background-color: white;
+    padding: 6px;
+    border: 2px solid black;
+    border-radius: 0px;
+    color: black;
+}
+.all{
+    background: #0e2431;
+    height: 100%;
+}
+
 a:hover{
     text-decoration: none;
     color: #4e4c4c;
+}
+.click:hover{
+    text-decoration: none;
+    color: white;
+    background: #0e2431;
 }

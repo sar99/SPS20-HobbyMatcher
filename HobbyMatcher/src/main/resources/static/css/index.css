@@ -99,16 +99,10 @@ body{
 }
 .click{
     cursor: pointer;
-<<<<<<< HEAD
-    background-color: #40b3c7;
-    padding: 6px;
-    border: 4px solid #40b3c7;
-    border-radius: 36px;
-    color: black;
-=======
     background-color: #0e2431;
     padding: 6px;
     border: 4px solid white;
+    border-radius: 36px;
     color: white;
 }
 .click2{
@@ -117,7 +111,6 @@ body{
     padding: 6px;
     border: 4px solid #0e2431;
     color: #0e2431;
->>>>>>> hobbies-page
 }
 a:hover{
     text-decoration: none;
@@ -125,11 +118,6 @@ a:hover{
 }
 .click:hover{
     text-decoration: none;
-<<<<<<< HEAD
-    color: white;
-    box-shadow: #9c9c9c;
-}
-=======
     border: 4px solid #40b3c7;
     color: #40b3c7;
 }
@@ -138,4 +126,4 @@ a:hover{
     border: 4px solid #40b3c7;
     color: #40b3c7;
 }
->>>>>>> hobbies-page
+
