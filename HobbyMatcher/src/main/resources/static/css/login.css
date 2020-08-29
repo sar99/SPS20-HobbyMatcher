@@ -1,0 +1,140 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+:root{
+    /*variables*/
+    --header-height: 3em;
+    --font-semi: 600;
+    /*colors*/
+    --first-color: /*#f78502;*/ #4070f4;
+    --second-color: /*#c04207;*/ #0e2431;
+    /*typo*/
+    --body-font :'Poppins', sans-serif;
+    --big-font-size: 2rem;
+    --h2-font-size: 1.25rem;
+    --normal-font-size: 0.938rem; 
+}
+body, html{
+    width: 100%;
+    height: 100%; 
+    font-family: var(--body-font);
+}
+.navbar{
+    background: white;
+}
+.nav-heading{
+    color: #9c9c9c;
+}
+.btn{
+    background: white;
+    color: #9c9c9c;
+}
+.nav-stuff{
+    padding: 0px 15px;
+    background: white;
+    color: #9c9c9c;
+    text-decoration: none;
+}
+.nav-link{
+    padding: 0px 20px;
+    background: white;
+    color: #9c9c9c;
+    text-decoration: none;
+}
+.nav{
+    height: var(--header-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: var(--font-semi);
+}
+.l-header{
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: var(--z-fixed);
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(146,161,176,.15);
+}
+.heading{
+    color: white;
+    text-align: center;
+}
+.container{
+    width: 100%;
+    height: 100%; 
+}
+.left{
+    width: 20%;
+    height: 100%;
+    float: left;
+    background-color: white;
+    border-collapse: collapse;
+}
+.middle{
+    width: 60%;
+    height: 80%;
+    float: left;
+    background-color: #0e2431;
+    border-collapse: collapse;
+}
+.reg-middle{
+    width: 60%;
+    height: 100%;
+    float: left;
+    background-color: #0e2431;
+    border-collapse: collapse;
+}
+.right{
+    width: 20%;
+    height: 100%;
+    position: relative;
+    float: right;
+    background-color: white;
+    border-collapse: collapse;
+}
+.bd-grid{
+    max-width: 1024px;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-column-gap: 2rem;
+    width: calc(100% - 2rem);
+    margin-left: var(--mb-2);
+    margin-right: var(--mb-2);
+}
+.naam{
+    text-align: left;
+    width: 500px;
+    left: 200px;
+}
+.click{
+    cursor: pointer;
+    background-color: #0e2431;
+    padding: 6px;
+    border: 4px solid white;
+    color: white;
+}
+.reg{
+    text-align: center;
+    color: white;
+}
+.bot{
+    text-align: center;
+    color: white;
+}
+.nav-stuff:hover{
+    text-decoration: none;
+    color: #4e4c4c;
+}
+a:hover{
+    text-decoration: none;
+    color: #40b3c7;
+}
+.click:hover{
+    text-decoration: none;
+    background: #0e2431;
+    border: 4px solid #40b3c7;
+    color: #40b3c7;
+}
+.reg:hover{
+    text-decoration: none;
+    color: #40b3c7;
+}

@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
+        <link th:href="@{/css/login.css}" rel="stylesheet" />
         <title>Login</title>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -11,8 +12,76 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
     <body>
+        <nav class="navbar l-header navbar-light justify-content-between">
+            <a class="navbar-brand" href="#">
+                <img src="../static/img/logo.png" th:src="@{img/logo.png}" width="50" height="50" alt="">
+            </a>
+            <div class="nav-menu" sec:authorize="isAnonymous()">
+                <a class="nav-stuff" href="/" th:href="@{/}">Home</a>
+                <a class="nav-stuff" href="/" th:href="@{/about}">About Us</a>
+                <a class="nav-stuff" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+                <a class="nav-stuff" href="/" th:href="@{/login}" >Log In</a>
+                <a class="nav-stuff" href="/" th:href="@{/register}" >Sign Up</a>
+            </div>
+            <div sec:authorize="isAuthenticated()">
+                <a class="nav-stuff" href="/" th:href="@{/}">Home</a>
+                <a class="nav-stuff" href="/" th:href="@{/about}">About Us</a>
+                <a class="nav-stuff" href="/" th:href="@{/hobbies}">The Hobby Lobby</a>
+                <a class="nav-stuff" href="/" th:href="@{/dashboard}" >Welcome, <span sec:authentication="name"></span></a>
+                <a class="nav-stuff" href="/" th:href="@{/logout}">Log Out</a>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="left"></div>
+            <div class="middle">
+                <br><br>
+                <h1 style="text-align: center; color: white;">Login page</h1>
 
-        <div class="row" >
+                <form th:action="@{/login}" method="post">
+                    <div th:if="${param.error}">
+                        <div class="alert alert-danger" style="width: 500px; text-align: center; left: 80px;">Invalid username or
+                        password.</div>
+                    </div>
+
+                    <div th:if="${param.logout}">
+                        <div class="alert alert-info" style="width: 500px; text-align: center; left: 80px;">You have been logged out.</div>
+                    </div>
+
+                    <div class="form-group col-sm-10 col-sm-offset-3" style="margin: auto;" >
+                        <label for="username">Username</label>: <input type="text"
+                        id="username" name="username" class="form-control"
+                        autofocus="autofocus" placeholder="Username" required/>
+                    </div>
+                    <div class="form-group col-sm-10 col-sm-offset-3" style="margin: auto;">
+                        <label for="password">Password</label>: <input type="password"
+                        id="password" name="password" class="form-control"
+                        placeholder="Password" required/>
+                    </div>
+                    <br><br>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3" style="margin: auto;">
+                                <input type="submit" name="login-submit" id="login-submit"
+                                class="form-control click" value="Log In" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group bot">
+                        <span>New user? <a class="reg" href="/" th:href="@{/register}">Register
+                            here</a></span>
+                    </div>
+                </form>
+            </div>
+            <div class="right"></div>
+        </div>
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    </body>
+</html>
+        <!--<div class="row" >
             <div class="col-md-6 col-md-offset-3" style="margin: auto; margin-top: 10vh;">
                 <h1>Login page</h1>
 
@@ -51,11 +120,10 @@
                 </form>
             </div>
         </div>
-
-
+    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
     </body>
-</html>
+</html>-->

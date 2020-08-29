@@ -18,12 +18,13 @@ public class LoginController {
     private UserService userService;
 
     @GetMapping("/login")
-    public String login(@AuthenticationPrincipal User user) {
+    public String login(@AuthenticationPrincipal User user, ModelMap model) {
 
         if(user != null) {
 
             return "redirect:/dashboard";
         }
+        model.put("user", new User());
 
         return "login";
     }
@@ -35,9 +36,7 @@ public class LoginController {
 
             return "redirect:/dashboard";
         }
-        
         model.put("user", new User());
-
         return "register";
     }
     
