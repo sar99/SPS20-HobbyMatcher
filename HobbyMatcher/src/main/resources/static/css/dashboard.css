@@ -74,7 +74,9 @@ body{
     background: #0e2431;
     height: 100%;
 }
-
+.custom{
+    text-align: center;
+}
 a:hover{
     text-decoration: none;
     color: #4e4c4c;

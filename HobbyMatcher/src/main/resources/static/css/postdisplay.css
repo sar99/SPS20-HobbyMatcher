@@ -91,12 +91,8 @@ body{
     border: 4px solid white;
     color: white;
 }
-.post{
-    padding: 3px 100px;
-}
 .container{
     background: #0e2431;
-    text-align: center;
 }
 .like-button {
   display: flex;
@@ -112,7 +108,7 @@ body{
 }
 .like-button svg path {
     cursor: pointer;
-    fill: #333;
+    fill: white;
     transition: fill .4s ease-out;
 }
 .like-button.active svg path {   
